@@ -4,6 +4,12 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.15.0",
+  "fledgling": {
+    "provider": "github",
+    "workflow": "release.yml",
+    "environment": "publish",
+    "permissions": "publish"
+  },
   "scripts": {
     "cli": "node packages/imagegen-guide/examples/generate.ts",
     "check": "pnpm --filter imagegen-guide run check",

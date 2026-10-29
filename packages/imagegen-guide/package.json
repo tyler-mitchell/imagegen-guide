@@ -14,6 +14,7 @@
     "LICENSE"
   ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
     "./core": {
       "types": "./dist/core.d.mts",
