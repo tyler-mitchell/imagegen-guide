@@ -168,6 +168,10 @@ export async function detectCatalogue({
   const { default: ready } = await import("@techstark/opencv-js");
   const cv = await (ready as unknown as PromiseLike<typeof ready>);
   const targets = leaves(catalogue.images);
+  if (regions.length < targets.length)
+    throw new RangeError(
+      `Expected ${targets.length} separate foreground regions, found ${regions.length}. Check tile separation, background, threshold, and minArea; omit detection to use planned crop bounds.`,
+    );
   const expected = cv.matFromArray(
     targets.length,
     2,

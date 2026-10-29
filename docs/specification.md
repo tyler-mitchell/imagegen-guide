@@ -213,7 +213,9 @@ Detected leaf bounds describe the source pixels. They do not enforce the planned
 ratio through padding or resizing. Shadows can affect these bounds. Group bounds
 remain planned; detection does not locate their labels or certify their crops.
 Merged tiles, retained guide outlines, and nonuniform backgrounds do not meet this
-segmentation contract.
+segmentation contract. If fewer regions than leaf images remain after filtering,
+`detectCatalogue` raises `RangeError` with both counts. It does not return a
+catalogue with missing crops.
 
 `compareCatalogues({ expected, actual })` returns each leaf ID, both rectangles,
 and signed differences for x, y, width, and height. Both catalogues use the same

@@ -36,7 +36,7 @@ const atlas = await createAtlas({
 });
 
 // Give atlas.schematic and atlas.prompt to your image generator.
-// Then extract by ID from the image it returns. Source dimensions are read from the image.
+// Inspect the result: each image must fit its guide rectangle.
 const [settings] = await cropImages({
   atlas,
   source: await readFile("generated.png"),
@@ -45,7 +45,7 @@ const [settings] = await cropImages({
 await writeFile("settings.png", settings.bytes);
 ```
 
-The guide, prompt, and crop geometry come from the same atlas. Google Fonts labels load by family and weight; callers can supply font bytes for offline use. Image generation and storage remain with the caller.
+`cropImages` uses the guide rectangles by default and scales them to the source dimensions. It preserves source alpha; it does not remove backgrounds or fix artwork outside a rectangle.
 
 ## See the output
 
@@ -53,15 +53,15 @@ The [generated 100-icon atlas](docs/assets/generated-icons.png) is a separate vi
 
 ![A generated atlas of 100 labeled application icons](docs/assets/generated-icons.png)
 
-Run the example program to save a guide, prompt, layout JSON, and catalogue:
+Run the example, generate `atlas.png` from its guide and prompt, then crop it from the saved layout:
 
 ```sh
-pnpm run cli -- --example mixed
-pnpm run cli -- --example variants
-pnpm run cli -- --example icons --source atlas.png
+vp run cli -- --example mixed --out examples/output
+# Send examples/output/mixed-light.guide.png and examples/output/mixed-light.prompt.txt to the generator.
+vp run cli -- crop --layout examples/output/mixed-light.layout.json --source atlas.png --out examples/output/crops
 ```
 
-Outputs go to `examples/output/`. The `--source` form reads the generated image's dimensions and saves leaf crops. Use `--ids settings,search` to select IDs or `--config path/to/config.json` for your own atlas.
+The crop command saves `examples/output/crops/app-icons/settings.png` and the other leaf images. Use `--ids settings,search` to select images. `--config path/to/config.json` defines your own atlas. Omit it from the crop command to use planned bounds.
 
 ## Layout controls
 
@@ -89,7 +89,7 @@ Outputs go to `examples/output/`. The `--source` form reads the generated image'
 
 See the runnable [variant configuration](packages/imagegen-guide/examples/configs/variants.json) for a full atlas. Groups retain their hierarchy in the catalogue and can be cropped by ID. Cells also support mixed ratios, explicit dimensions, weighted columns, spans, scoped descriptions, labels, and appearance overrides.
 
-For separated foreground tiles on a uniform background, `detectCatalogue` can locate observed leaf bounds. `compareCatalogues` reports signed differences from planned bounds. Detection does not correct merged tiles or certify image quality.
+To locate observed bounds, set `"crop": { "detect": {} }` in the configuration and pass it to `generate --source` or `crop --config`. Detection requires one separate foreground region per leaf image on a uniform background. Connected tiles, shadows across gaps, and missing tiles make detection fail. Use the crop command above for planned bounds. `compareCatalogues` reports differences; neither path certifies image quality.
 
 ## Package and development
 
