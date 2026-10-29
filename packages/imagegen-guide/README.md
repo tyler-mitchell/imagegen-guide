@@ -3,8 +3,8 @@
 Define an image atlas once. Produce its SVG guide, prompt, crop geometry, and image catalogue without a UI or image-generation provider.
 
 ```ts
-import { readFile } from "node:fs/promises";
-import { createAtlas, cropImages } from "imagegen-guide";
+import { readFile, writeFile } from "node:fs/promises";
+import { createAtlas, cropImages, createGif } from "imagegen-guide";
 
 const atlas = await createAtlas({
   config: {
@@ -21,10 +21,17 @@ const atlas = await createAtlas({
 
 // Send atlas.schematic and atlas.prompt to the generator of your choice.
 // Inspect the result: each image must fit its guide rectangle.
-const crops = await cropImages({ atlas, source: await readFile("generated.png") });
-// Each crop carries its image ID, bytes, and format.
+const source = await readFile("generated.png");
+const crops = await cropImages({ atlas, source });
+for (const crop of crops) await writeFile(`${crop.id}.png`, crop.bytes);
+const gif = await createGif({ atlas, source });
+await writeFile("icons.gif", gif);
 ```
 
-`cropImages` uses planned rectangles, scaled to the source dimensions. It preserves source alpha but does not remove backgrounds or fix artwork outside a rectangle. Use `detectCatalogue` only when each tile is separate on a uniform background; see the [CLI workflow](https://github.com/tyler-mitchell/imagegen-guide#see-the-output).
+`atlas.imageIds` lists the configured IDs. TypeScript suggests them for crop IDs and GIF frame IDs. Crops include their source rectangles, scale to the source size, and keep source alpha. They do not fix misaligned art.
+
+The GIF uses all leaf images in layout order at 100 ms per frame. Detection needs separate tiles on a uniform background. See the [CLI workflow](https://github.com/tyler-mitchell/imagegen-guide#see-the-output).
+
+Pass `frames` to change GIF order or timing. The [run-cycle example](https://github.com/tyler-mitchell/imagegen-guide#animate-named-frames) shows both forms. The [six-region guide](https://github.com/tyler-mitchell/imagegen-guide/blob/main/packages/imagegen-guide/examples/configs/adventurer-animations.json) shows labels, dimension lines, and wider regions for sword poses.
 
 MIT licensed.

@@ -13,6 +13,8 @@ Do not add a configuration UI or operational infrastructure.
 Use Type Atlas for TypeScript navigation. Use Vite+ for package and build commands.
 Write documentation with ASD-STE100 rules. Documents define the product and its
 contracts; they must not contain conversation history or agent progress narration.
+Use `skills/imagegen-guide/SKILL.md` when generating an atlas or cropping its images.
+
 # Agent Workflow
 
 ## Shared branches

@@ -24,11 +24,18 @@ export const schema = type.module({
     "detect?": "DetectionOptions",
     "viewport?": "Rectangle",
   },
+  OutputOptions: {
+    "background?": "string",
+    "transparentCrops?": "boolean",
+  },
   ImageStyle: {
     "fill?": "string",
     "backgroundImage?": "string",
     "backgroundSize?": "string",
     "backgroundPosition?": "string",
+    "backgroundRepeat?": "'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat'",
+    "dimensionLines?": "boolean",
+    "dimensionLineColor?": "string",
     "stroke?": "string",
     "strokeWidth?": "Nonnegative",
     "radius?": "Nonnegative",
@@ -84,6 +91,7 @@ export const schema = type.module({
     "align?": "Alignment",
     "verticalAlign?": "Alignment",
     "crop?": "CropOptions",
+    "output?": "OutputOptions",
     "appearance?": {
       "preset?": "'light' | 'dark'",
       "background?": "string",
@@ -110,9 +118,16 @@ export const schema = type.module({
     height: "number.integer > 0",
     cells: "ResolvedCell[]",
   },
-  Atlas: { layout: "Layout", schematic: "string", prompt: "string" },
+  Atlas: { layout: "Layout", schematic: "string", prompt: "string", imageIds: "string[]" },
   ImageFormat: "'png' | 'jpeg' | 'webp' | 'avif'",
-  Crop: { id: "string", bytes: type.instanceOf(Uint8Array), format: "ImageFormat" },
+  Crop: {
+    id: "string",
+    bytes: type.instanceOf(Uint8Array),
+    format: "ImageFormat",
+    crop: "Rectangle",
+  },
+  FrameDelay: "number.integer > 0",
+  GifFrame: { id: "string", "delay?": "FrameDelay" },
   Source: {
     id: "string",
     "uri?": "string",
@@ -152,6 +167,14 @@ export type Config = typeof schema.Config.infer;
 export type Layout = typeof schema.Layout.infer;
 export type Rectangle = typeof schema.Rectangle.infer;
 export type Catalogue = typeof schema.Catalogue.infer;
-export type Atlas = typeof schema.Atlas.infer;
+type CellId<Cell> = Cell extends { id: infer Id extends string }
+  ?
+      | Id
+      | (Cell extends { children: { cells: infer Cells extends readonly unknown[] } }
+          ? CellId<Cells[number]>
+          : never)
+  : never;
+export type ImageId<C extends Config> = CellId<C["cells"][number]>;
+export type Atlas<Id extends string = string> = typeof schema.Atlas.infer & { imageIds: Id[] };
 export type Crop = typeof schema.Crop.infer;
 export type Comparison = typeof schema.Comparison.infer;

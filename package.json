@@ -11,8 +11,9 @@
     "permissions": "publish"
   },
   "scripts": {
-    "cli": "node packages/imagegen-guide/examples/generate.ts",
+    "cli": "node packages/imagegen-guide/examples/cli.ts",
     "check": "pnpm --filter imagegen-guide run check",
+    "test": "vp run -r test",
     "build": "vp run -r build",
     "dependencies:close": "gh pr close",
     "dependencies:list": "gh pr list --state open --search 'author:app/dependabot' --limit 100",

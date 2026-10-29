@@ -26,7 +26,13 @@ const config = {
   appearance: {
     preset: "light",
     background: "#ffffff",
-    image: { fill: "none", stroke: "#333333", strokeWidth: 1, radius: 0 },
+    image: {
+      fill: "none",
+      stroke: "#333333",
+      strokeWidth: 1,
+      radius: 0,
+      dimensionLines: true,
+    },
     label: {
       position: "below",
       fontFamily: "Inter",
@@ -37,6 +43,7 @@ const config = {
       align: "center",
     },
   },
+  output: { transparentCrops: true, background: "#ffffff" },
   align: "center",
   defaults: { aspectRatio: "1:1" },
   prompt: "Create a consistent set of app icons.",
@@ -66,6 +73,16 @@ Padding and gaps can use uniform values or individual sides and axes.
 Labels can wrap to a configured line count. Set `fontFamily`, `fontWeight`, and
 `fontStyle` to use a Google Font. The core loads the requested face and text.
 Callers can supply Satori font data for offline rendering.
+Set `image.dimensionLines: true` at the atlas, row, column, or cell level to draw
+width and height dimension lines on the schematic. The lines use the resolved image
+size in canvas pixels. They do not change the image rectangle. The prompt tells
+the image generator to omit them from the generated source. The default annotation
+color is `#6AB0DE`; set `image.dimensionLineColor` to override it without changing
+the image border color.
+Set `image.backgroundImage` to a CSS `url(...)` value to show a reference image
+in a schematic region. Use `backgroundSize` and `backgroundPosition` to place it.
+The image does not repeat by default; set `backgroundRepeat` to allow repetition.
+The reference does not alter crop geometry or appear in crops of a generated source.
 
 ### Nested groups
 
@@ -171,6 +188,8 @@ the fixed canvas; explicit image dimensions, labels, gaps, and padding remain fi
 connects group layouts; each child completes before the next sibling is allocated.
 The returned boxes supply placement and occupied bounds. Standard image ratios retain exact
 integer proportions. The canvas retains its configured dimensions and ratio.
+If fixed dimensions, labels, gaps, and padding cannot fit, `createAtlas` raises
+`RangeError` instead of returning off-canvas rectangles.
 
 Satori renders the packed positions and exposes node rectangles through
 `onNodeDetected`. The layout records those rectangles by image ID. Catalogues and
@@ -187,6 +206,11 @@ image IDs, bounds, and descriptions. Shared descriptions appear once per scope.
 Nested scopes identify their parent group. Each catalogue entry retains its full
 prompt context for individual regeneration. The output has no provider-specific
 parameters or API request format.
+`atlas.imageIds` lists group and leaf IDs in layout order. A TypeScript config
+literal preserves these IDs for `cropImages.ids` and `createGif.frames`.
+When `output.transparentCrops` is true, the prompt requests transparent
+background pixels inside each image rectangle and `output.background` outside
+the rectangles. The schematic can use its own background and image fills.
 
 ## Image catalogue and crops
 
@@ -197,15 +221,27 @@ image bytes and font bytes remain separate.
 `cropImages` takes an atlas and source bytes, optional image IDs, and an output
 format. It reads the actual source dimensions and maps the atlas geometry to
 them. Advanced callers can pass a catalogue with detected or planned bounds.
-It returns cropped image bytes with
-their IDs and format. Omit IDs to extract all leaf entries. Select a group ID to
-extract its complete image region. Formats are PNG (default),
+It returns each image's ID, source crop rectangle, bytes, and format. Omit IDs
+to extract all leaf entries in layout order. Supplied IDs set output order and
+can repeat an image. Select a group ID to extract its complete image region.
+Formats are PNG (default),
 JPEG, WebP, and AVIF. The caller saves files or imports bytes into an artifact store.
+Unknown IDs raise `RangeError` instead of returning fewer images.
+PNG crops preserve source alpha. They do not remove opaque backgrounds or content
+that crosses the planned crop boundary.
+
+`createGif({ atlas, source })` uses every leaf image in layout order. The default
+delay is 100 ms per frame and `loop: 0` repeats indefinitely. Pass `delay` to
+change all frame delays. Pass `frames` as ordered IDs or `{ id, delay }` entries
+to select, repeat, and override frames. An empty sequence or unknown ID raises
+`RangeError`. Advanced callers can pass a catalogue instead of an atlas. Frames
+use a shared transparent canvas sized to the largest crop; smaller crops are
+centered without resizing. The caller saves the returned GIF bytes.
 
 `detectCatalogue({ source, catalogue, options })` locates separated foreground
 tiles on a uniform background. OpenCV segments connected components and matches
 their normalized positions to planned leaf positions. The default background is
-the first source pixel, the threshold is 5, and the minimum component area is
+the first source pixel, the threshold is 10, and the minimum component area is
 one quarter of the smallest planned leaf area. Configuration can override these
 values through `crop.detect`.
 

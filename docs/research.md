@@ -1,7 +1,7 @@
 # Dependency research
 
 Scope: headless layout, schematic output, and image extraction.
-Sources were retrieved on 2026-10-11.
+Sources were retrieved on 2026-10-11 and 2026-10-29.
 
 | Package        | Installed version | Role                                         |
 | -------------- | ----------------- | -------------------------------------------- |
@@ -10,6 +10,7 @@ Sources were retrieved on 2026-10-11.
 | Satori         | 0.47.1            | Layout rectangles and SVG schematic          |
 | Sharp          | 0.35.5            | Image extraction and encoding                |
 | @thi.ng/layout | 4.1.21            | Stacked allocation and native nested layouts |
+| defu           | 6.1.7             | Recursive configuration defaults             |
 
 ## Layout and schematic output
 
@@ -58,6 +59,25 @@ The default entry bundles its layout engine; it does not require a project-owned
 Source: [Satori usage](https://github.com/vercel/satori), sections “Use without JSX”,
 “Fonts”, and “Pixel Grid Rounding”.
 
+Satori accepts SVG image data as an `<img>` source. Dimension lines use that
+supported image path as an absolute schematic overlay. OpenCV's `arrowedLine`
+draws into a raster `Mat`, so it does not provide vector annotations for the
+SVG guide. Sources: [Satori images](https://github.com/vercel/satori#images) and
+[OpenCV drawing functions](https://docs.opencv.org/4.13.0/d6/d6e/group__imgproc__draw.html).
+Dimension lines use the same measured line and inward arrows on both axes, as
+described in [AutoCAD's dimension anatomy](https://help.autodesk.com/cloudhelp/2027/ENU/AutoCAD-MAC-Core/files/GUID-EEC547BD-477F-4FA8-9831-A3AC3BE80F92.htm).
+Satori also supports CSS `backgroundImage: url(...)`, `backgroundSize`,
+`backgroundPosition`, and `backgroundRepeat` for per-cell schematic references. Source:
+[Satori CSS support](https://github.com/vercel/satori#css).
+
+### Configuration defaults
+
+`defu(object, ...defaults)` gives the leftmost object priority, recursively
+merges plain objects, and does not mutate its inputs. Arrays concatenate when
+both sides define them. Cell, row, column, and appearance style defaults have
+no overlapping array fields, so this merge preserves the configured override
+order. Source: [defu usage and remarks](https://github.com/unjs/defu#usage).
+
 ### Yoga
 
 Yoga is an embeddable layout engine. Its aspect ratio is width divided by height.
@@ -89,8 +109,9 @@ sharp(input).extract({ left, top, width, height }).png().toBuffer();
 ```
 
 Sharp accepts integer pixel rectangles and supplies image extraction and encoding.
-It accepts SVG input for raster output. Sharp requires a Node-compatible runtime;
-its entry point must be separate from the framework-independent layout entry point.
+It accepts SVG input for raster output. Its `join.animated` option joins an
+ordered array of images into GIF frames. Sharp loads only when an image operation
+runs; guide creation does not load it.
 
 Sources: [extraction](https://sharp.pixelplumbing.com/api-resize/#extract),
 [input](https://sharp.pixelplumbing.com/api-constructor/), and
@@ -106,8 +127,8 @@ Select Satori for the initial headless schematic and layout path. Its public
 callback supplies the required rectangles and image identity. A separate Yoga
 integration or XML serializer is not required for this path.
 
-Select Sharp for the separate image-extraction entry point. The core layout path
-must not import Sharp. Its native runtime belongs to the crop operation.
+Select Sharp for image extraction and GIF encoding. The public package entry
+point can expose both guide and image operations because Sharp loads on demand.
 
 ## Rectangle packing
 
@@ -140,12 +161,52 @@ packing. Source: [pixel-grid rounding](https://github.com/vercel/satori#pixel-gr
 
 ## Source-region detection
 
-OpenCV supplies `inRange`, `connectedComponentsWithStats`, and `BFMatcher`.
-These operations segment foreground regions on a uniform background and match
-normalized region positions. Connected-component statistics supply actual integer
-bounding boxes. They do not distinguish a tile from its shadow or reconstruct
-group labels. Keep source pixels unchanged during extraction.
+OpenCV's `inRange` and `connectedComponentsWithStats` segment foreground regions
+on a uniform background. [Munkres](https://github.com/havelessbemore/munkres#usage)
+assigns detected regions to planned IDs one-to-one by minimum center distance.
+
+```ts
+const assignments = munkres(
+  targets.map(({ crop }) =>
+    regions.map((region) => {
+      const x = crop.x + crop.width / 2 - region.x - region.width / 2;
+      const y = crop.y + crop.height / 2 - region.y - region.height / 2;
+      return x * x + y * y;
+    }),
+  ),
+);
+```
+
+Connected-component statistics supply actual integer bounds. They do not
+distinguish a tile from its shadow or reconstruct group labels. Extraction
+preserves source pixels.
 
 Sources: [OpenCV shape analysis](https://docs.opencv.org/4.13.0/d3/dc0/group__imgproc__shape.html),
-[OpenCV matching](https://docs.opencv.org/4.13.0/d5/d6f/tutorial_feature_flann_matcher.html),
-and [OpenCV JavaScript package](https://github.com/TechStark/opencv-js).
+[Munkres assignment API](https://github.com/havelessbemore/munkres#usage),
+and [Sharp animated joins](https://sharp.pixelplumbing.com/api-constructor/#join).
+
+## GIF timing and task inputs
+
+```ts
+sharp(frames, { join: { animated: true } }).gif({
+  delay: [100, 180, 100],
+  loop: 0,
+  keepDuplicateFrames: true,
+});
+```
+
+Sharp 0.35.5 accepts an image array for animated joins and a number or array
+for GIF delay. An array permits one frame to use another delay. Sources:
+[Sharp constructor](https://sharp.pixelplumbing.com/api-constructor/#join) and
+[GIF output](https://sharp.pixelplumbing.com/api-output/#gif).
+
+The CLI reads config and source paths at run time. Vite+ caches scripts only
+when script caching is enabled. Leave script caching off so an external input
+change cannot replay old guide output. Source:
+[Vite+ task caching](https://viteplus.dev/guide/cache#when-is-caching-enabled).
+Vite+ exports the test API from `vite-plus/test`; `vp test` runs Vitest without
+a separate Vitest dependency. Source: [Vite+ tests](https://viteplus.dev/guide/test).
+
+`cmd-mesh@0.5.0` accepts ArkType token parsers in `ParameterDescriptor.type`.
+Its public `dist/types.d.ts` uses `string.integer.parse` for a numeric flag.
+Use that parser for numeric CLI values; a plain `number` rejects text tokens.

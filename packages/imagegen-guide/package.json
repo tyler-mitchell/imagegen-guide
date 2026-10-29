@@ -30,6 +30,7 @@
     "prepack": "pnpm run build",
     "dev": "vp pack --watch",
     "check": "vp check",
+    "test": "vp test",
     "check:fix": "vp check --fix"
   },
   "dependencies": {
@@ -37,6 +38,8 @@
     "@thi.ng/layout": "catalog:",
     "arktype": "catalog:",
     "css-tree": "^3.2.1",
+    "defu": "catalog:",
+    "munkres": "^2.1.1",
     "ofetch": "^1.5.1",
     "satori": "catalog:",
     "sharp": "catalog:"
@@ -46,6 +49,7 @@
     "@types/css-tree": "^3.2.0",
     "@types/node": "catalog:",
     "cmd-mesh": "catalog:",
+    "package-management": "^0.1.0",
     "publint": "^0.3.8",
     "typescript": "catalog:",
     "vite": "catalog:",

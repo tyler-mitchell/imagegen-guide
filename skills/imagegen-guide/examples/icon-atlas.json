@@ -1,0 +1,21 @@
+{
+  "id": "icon-atlas",
+  "canvas": { "width": 1536, "aspectRatio": "4:3", "padding": 48 },
+  "grid": { "columns": 4, "gap": 48 },
+  "defaults": { "aspectRatio": "1:1" },
+  "output": { "background": "transparent", "transparentCrops": true },
+  "cells": [
+    { "id": "settings", "label": { "text": "Settings" }, "prompt": "A settings gear." },
+    { "id": "search", "label": { "text": "Search" }, "prompt": "A magnifying glass." },
+    { "id": "files", "label": { "text": "Files" }, "prompt": "A folder." },
+    { "id": "voice", "label": { "text": "Voice" }, "prompt": "A microphone." },
+    { "id": "calendar", "label": { "text": "Calendar" }, "prompt": "A calendar." },
+    { "id": "camera", "label": { "text": "Camera" }, "prompt": "A camera." },
+    { "id": "music", "label": { "text": "Music" }, "prompt": "A musical note." },
+    { "id": "mail", "label": { "text": "Mail" }, "prompt": "An envelope." },
+    { "id": "maps", "label": { "text": "Maps" }, "prompt": "A map pin." },
+    { "id": "photos", "label": { "text": "Photos" }, "prompt": "A photo." },
+    { "id": "video", "label": { "text": "Video" }, "prompt": "A video camera." },
+    { "id": "notes", "label": { "text": "Notes" }, "prompt": "A notepad." }
+  ]
+}

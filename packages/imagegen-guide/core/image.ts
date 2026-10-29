@@ -1,4 +1,5 @@
 import satori from "satori";
+import { munkres } from "munkres";
 import { createCatalogue } from "./catalogue.ts";
 import { schema, type Atlas, type Catalogue, type Crop, type Rectangle } from "./schema.ts";
 
@@ -165,99 +166,69 @@ export async function detectCatalogue({
   options?: typeof schema.DetectionOptions.infer;
 }): Promise<Catalogue> {
   const regions = await detectRegions({ source, catalogue, options });
-  const { default: ready } = await import("@techstark/opencv-js");
-  const cv = await (ready as unknown as PromiseLike<typeof ready>);
   const targets = leaves(catalogue.images);
   if (regions.length < targets.length)
     throw new RangeError(
       `Expected ${targets.length} separate foreground regions, found ${regions.length}. Check tile separation, background, threshold, and minArea; omit detection to use planned crop bounds.`,
     );
-  const expected = cv.matFromArray(
-    targets.length,
-    2,
-    cv.CV_32F,
-    targets.flatMap((image) => [
-      image.crop.x + image.crop.width / 2,
-      image.crop.y + image.crop.height / 2,
-    ]),
+  const detected = new Map(
+    munkres(
+      targets.map(({ crop }) =>
+        regions.map((region) => {
+          const x = crop.x + crop.width / 2 - region.x - region.width / 2;
+          const y = crop.y + crop.height / 2 - region.y - region.height / 2;
+          return x * x + y * y;
+        }),
+      ),
+    ).map(([target, match]) => {
+      const { x, y, width, height } = regions[match]!;
+      return [targets[target]!.id, { x, y, width, height }] as const;
+    }),
   );
-  const actual = new cv.Mat(),
-    matches = new cv.DMatchVector(),
-    matcher = new cv.BFMatcher(cv.NORM_L2, true);
-  try {
-    const points = cv.matFromArray(
-      regions.length,
-      2,
-      cv.CV_32F,
-      regions.flatMap((region) => [region.x + region.width / 2, region.y + region.height / 2]),
-    );
-    points.copyTo(actual);
-    points.delete();
-    for (const matrix of [expected, actual])
-      for (const axis of [0, 1]) {
-        const column = matrix.col(axis);
-        cv.normalize(column, column, 0, 1, cv.NORM_MINMAX);
-        column.delete();
-      }
-    matcher.match(expected, actual, matches);
-    const detected = new Map(
-      Array.from({ length: matches.size() }, (_, index) => {
-        const match = matches.get(index),
-          target = targets[match.queryIdx]!,
-          region = regions[match.trainIdx]!;
-        return [
-          target.id,
-          {
-            x: region.x,
-            y: region.y,
-            width: region.width,
-            height: region.height,
-          },
-        ] as const;
-      }),
-    );
-    const images = (entries: Catalogue["images"]): Catalogue["images"] =>
-      entries.map((entry) => {
-        if (!entry.children) return { ...entry, crop: detected.get(entry.id)! };
-        const children = images(entry.children);
-        const points = cv.matFromArray(
-          children.length * 2,
-          1,
-          cv.CV_32SC2,
-          children.flatMap(({ crop }) => [
-            crop.x,
-            crop.y,
-            crop.x + crop.width - 1,
-            crop.y + crop.height - 1,
-          ]),
-        );
-        const crop = cv.boundingRect(points);
-        points.delete();
-        return { ...entry, crop, children };
-      });
-    return schema.Catalogue.assert({ ...catalogue, images: images(catalogue.images) });
-  } finally {
-    for (const resource of [expected, actual, matches, matcher]) resource.delete();
-  }
+  const images = (entries: Catalogue["images"]): Catalogue["images"] =>
+    entries.map((entry) => {
+      if (!entry.children) return { ...entry, crop: detected.get(entry.id)! };
+      const children = images(entry.children);
+      const x = Math.min(...children.map((child) => child.crop.x));
+      const y = Math.min(...children.map((child) => child.crop.y));
+      return {
+        ...entry,
+        crop: {
+          x,
+          y,
+          width: Math.max(...children.map((child) => child.crop.x + child.crop.width)) - x,
+          height: Math.max(...children.map((child) => child.crop.y + child.crop.height)) - y,
+        },
+        children,
+      };
+    });
+  return schema.Catalogue.assert({ ...catalogue, images: images(catalogue.images) });
 }
 
+type CropSelection<Id extends string = string> =
+  | {
+      atlas: Atlas<Id>;
+      catalogue?: never;
+      sourceId?: string;
+      viewport?: Rectangle;
+      detect?: typeof schema.DetectionOptions.infer;
+    }
+  | { catalogue: Catalogue; atlas?: never; sourceId?: never; viewport?: never; detect?: never };
+
 /** Extract leaf images by default, or select images and groups by ID. */
-export async function cropImages({
+export async function cropImages<const Id extends string = string>({
   source,
   ids,
   format = "png",
   ...selection
 }: {
   source: Uint8Array;
-  ids?: readonly string[];
+  ids?: readonly NoInfer<Id>[];
   format?: typeof schema.ImageFormat.infer;
-} & (
-  | { atlas: Atlas; catalogue?: never; sourceId?: string; viewport?: Rectangle }
-  | { catalogue: Catalogue; atlas?: never; sourceId?: never; viewport?: never }
-)): Promise<Crop[]> {
+} & CropSelection<Id>): Promise<Crop[]> {
   const { default: sharp } = await import("sharp");
   const metadata = selection.catalogue ? undefined : await sharp(source).metadata();
-  const catalogue =
+  const planned =
     selection.catalogue ??
     createCatalogue({
       layout: selection.atlas!.layout,
@@ -268,12 +239,19 @@ export async function cropImages({
         ...(selection.viewport ? { viewport: selection.viewport } : {}),
       },
     });
-  const select = (images: Catalogue["images"]): Catalogue["images"] =>
-    images.flatMap((image) => {
-      const selected = ids ? ids.includes(image.id) : !image.children;
-      return [...(selected ? [image] : []), ...(image.children ? select(image.children) : [])];
-    });
-  const images = select(catalogue.images);
+  const catalogue = selection.detect
+    ? await detectCatalogue({ source, catalogue: planned, options: selection.detect })
+    : planned;
+  const entries = (images: Catalogue["images"]): Catalogue["images"] =>
+    images.flatMap((image) => [image, ...(image.children ? entries(image.children) : [])]);
+  const byId = new Map(entries(catalogue.images).map((image) => [image.id, image]));
+  const images = ids
+    ? ids.map((id) => {
+        const image = byId.get(id);
+        if (!image) throw new RangeError(`Unknown image ID: ${id}`);
+        return image;
+      })
+    : leaves(catalogue.images);
   const crops: Crop[] = [];
   for (const image of images) {
     const { x: left, y: top, width, height } = image.crop;
@@ -281,7 +259,63 @@ export async function cropImages({
       .extract({ left, top, width, height })
       .toFormat(format)
       .toBuffer();
-    crops.push({ id: image.id, bytes, format });
+    crops.push({ id: image.id, bytes, format, crop: image.crop });
   }
   return crops;
+}
+
+/** Animate all leaf images, or use an explicit frame order and timing overrides. */
+export async function createGif<const Id extends string = string>({
+  source,
+  frames,
+  delay = 100,
+  loop = 0,
+  ...selection
+}: {
+  source: Uint8Array;
+  frames?: readonly (
+    | NoInfer<Id>
+    | (Omit<typeof schema.GifFrame.infer, "id"> & { id: NoInfer<Id> })
+  )[];
+  delay?: typeof schema.FrameDelay.infer;
+  loop?: typeof schema.Index.infer;
+} & CropSelection<Id>): Promise<Uint8Array> {
+  if (frames?.length === 0) throw new RangeError("A GIF needs at least one frame.");
+  const { default: sharp } = await import("sharp");
+  const crops = await cropImages({
+    source,
+    ids: frames?.map((frame) => (typeof frame === "string" ? frame : frame.id)),
+    ...selection,
+  });
+  const sequence = frames ?? crops.map((crop) => crop.id);
+  if (sequence.length === 0) throw new RangeError("A GIF needs at least one frame.");
+  const ordered = crops.map((crop) => crop.bytes);
+  const sizes = [];
+  for (const bytes of ordered) sizes.push(await sharp(bytes).metadata());
+  const width = Math.max(...sizes.map((size) => size.width!));
+  const height = Math.max(...sizes.map((size) => size.height!));
+  const images = [];
+  for (const [index, bytes] of ordered.entries()) {
+    const left = Math.floor((width - sizes[index]!.width!) / 2);
+    const top = Math.floor((height - sizes[index]!.height!) / 2);
+    images.push(
+      await sharp(bytes)
+        .extend({
+          left,
+          top,
+          right: width - sizes[index]!.width! - left,
+          bottom: height - sizes[index]!.height! - top,
+          background: "#00000000",
+        })
+        .png()
+        .toBuffer(),
+    );
+  }
+  return sharp(images, { join: { animated: true } })
+    .gif({
+      delay: sequence.map((frame) => (typeof frame === "string" ? delay : (frame.delay ?? delay))),
+      loop,
+      keepDuplicateFrames: true,
+    })
+    .toBuffer();
 }
