@@ -1,0 +1,89 @@
+{
+  "id": "nested-icon-families",
+  "canvas": { "width": 1536, "aspectRatio": "4:3", "padding": 24 },
+  "grid": { "columns": 3, "gap": 16 },
+  "crop": { "detect": {} },
+  "appearance": { "label": { "fontFamily": "Inter", "fontSize": 18, "lineHeight": 24, "gap": 8 } },
+  "defaults": { "label": { "position": "above" } },
+  "prompt": "Create consistent app icons with crisp symbols, rounded tiles, soft depth, and restrained gradients.",
+  "cells": [
+    {
+      "id": "settings",
+      "label": { "text": "Settings" },
+      "prompt": "A gear.",
+      "children": {
+        "grid": { "columns": 2, "gap": 8 },
+        "defaults": { "aspectRatio": "1:1" },
+        "cells": [
+          { "id": "settings-light", "label": { "text": "Light" }, "prompt": "Light variant." },
+          { "id": "settings-dark", "label": { "text": "Dark" }, "prompt": "Dark variant." }
+        ]
+      }
+    },
+    {
+      "id": "search",
+      "label": { "text": "Search" },
+      "prompt": "A magnifying glass.",
+      "children": {
+        "grid": { "columns": 2, "gap": 8 },
+        "defaults": { "aspectRatio": "1:1" },
+        "cells": [
+          { "id": "search-light", "label": { "text": "Light" }, "prompt": "Light variant." },
+          { "id": "search-dark", "label": { "text": "Dark" }, "prompt": "Dark variant." }
+        ]
+      }
+    },
+    {
+      "id": "files",
+      "label": { "text": "Files" },
+      "prompt": "A folder.",
+      "children": {
+        "grid": { "columns": 2, "gap": 8 },
+        "defaults": { "aspectRatio": "1:1" },
+        "cells": [
+          { "id": "files-light", "label": { "text": "Light" }, "prompt": "Light variant." },
+          { "id": "files-dark", "label": { "text": "Dark" }, "prompt": "Dark variant." }
+        ]
+      }
+    },
+    {
+      "id": "voice",
+      "label": { "text": "Voice" },
+      "prompt": "A microphone.",
+      "children": {
+        "grid": { "columns": 2, "gap": 8 },
+        "defaults": { "aspectRatio": "1:1" },
+        "cells": [
+          { "id": "voice-light", "label": { "text": "Light" }, "prompt": "Light variant." },
+          { "id": "voice-dark", "label": { "text": "Dark" }, "prompt": "Dark variant." }
+        ]
+      }
+    },
+    {
+      "id": "tools",
+      "label": { "text": "Tools" },
+      "prompt": "A wrench and screwdriver.",
+      "children": {
+        "grid": { "columns": 2, "gap": 8 },
+        "defaults": { "aspectRatio": "1:1" },
+        "cells": [
+          { "id": "tools-light", "label": { "text": "Light" }, "prompt": "Light variant." },
+          { "id": "tools-dark", "label": { "text": "Dark" }, "prompt": "Dark variant." }
+        ]
+      }
+    },
+    {
+      "id": "camera",
+      "label": { "text": "Camera" },
+      "prompt": "A camera.",
+      "children": {
+        "grid": { "columns": 2, "gap": 8 },
+        "defaults": { "aspectRatio": "1:1" },
+        "cells": [
+          { "id": "camera-light", "label": { "text": "Light" }, "prompt": "Light variant." },
+          { "id": "camera-dark", "label": { "text": "Dark" }, "prompt": "Dark variant." }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "../node_modules/@varlock/bumpy/config-schema.json",
+  "baseBranch": "release",
+  "changedFilePatterns": [
+    "core/**",
+    "examples/**",
+    "README.md",
+    "LICENSE",
+    "package.json",
+    "vite.config.ts"
+  ],
+  "updateInternalDependencies": "patch",
+  "publish": {
+    "provenance": true
+  }
+}

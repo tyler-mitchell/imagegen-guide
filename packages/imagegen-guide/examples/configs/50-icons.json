@@ -1,0 +1,261 @@
+{
+  "id": "50-icon-lattice",
+  "layout": "grid",
+  "canvas": {
+    "width": 1536,
+    "aspectRatio": "2:3",
+    "padding": 0
+  },
+  "grid": {
+    "columns": 6,
+    "gap": 0,
+    "padding": 0
+  },
+  "defaults": {
+    "aspectRatio": "1:1",
+    "label": false
+  },
+  "appearance": {
+    "background": "#ffffff",
+    "image": {
+      "fill": "#ffffff",
+      "backgroundImage": "linear-gradient(45deg, #cbd5e1 25%, transparent 25%), linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #cbd5e1 75%), linear-gradient(-45deg, transparent 75%, #cbd5e1 75%)",
+      "backgroundSize": "16px 16px",
+      "backgroundPosition": "0 0, 0 8px, 8px -8px, -8px 0",
+      "stroke": "#111827",
+      "strokeWidth": 2,
+      "radius": 0
+    }
+  },
+  "prompt": "Create an app icon sprite sheet with exactly 50 icons in the attached 54-square lattice. Preserve exactly six columns and nine rows on the 1536 by 2304 canvas: each square is exactly 256 by 256 pixels. Fill the first 50 cells with the listed icons, left to right then top to bottom. Only cells 51 through 54 are unused: leave these four bottom-right squares entirely plain white, without symbols. The last row starts with Eye and Eye Off; do not leave the entire last row blank. Preserve every square's position and boundaries exactly. Each occupied square has its specified solid-color background reaching all four edges and all four sharp 90-degree corners. NO rounded tile corners, gutters, padding, outer margins, footer, extra bands, captions, or exterior shadows. Replace checkerboards and guide lines with the specified backgrounds. Use crisp white symbols with subtle internal depth. If resolution differs, scale the entire lattice uniformly.",
+  "cells": [
+    {
+      "id": "settings",
+      "prompt": "A white settings symbol on a solid blue square background."
+    },
+    {
+      "id": "search",
+      "prompt": "A white search symbol on a solid purple square background."
+    },
+    {
+      "id": "home",
+      "prompt": "A white home symbol on a solid orange square background."
+    },
+    {
+      "id": "files",
+      "prompt": "A white files symbol on a solid green square background."
+    },
+    {
+      "id": "folder",
+      "prompt": "A white folder symbol on a solid red square background."
+    },
+    {
+      "id": "document",
+      "prompt": "A white document symbol on a solid blue square background."
+    },
+    {
+      "id": "notes",
+      "prompt": "A white notes symbol on a solid purple square background."
+    },
+    {
+      "id": "calendar",
+      "prompt": "A white calendar symbol on a solid orange square background."
+    },
+    {
+      "id": "clock",
+      "prompt": "A white clock symbol on a solid green square background."
+    },
+    {
+      "id": "mail",
+      "prompt": "A white mail symbol on a solid red square background."
+    },
+    {
+      "id": "chat",
+      "prompt": "A white chat symbol on a solid blue square background."
+    },
+    {
+      "id": "contacts",
+      "prompt": "A white contacts symbol on a solid purple square background."
+    },
+    {
+      "id": "phone",
+      "prompt": "A white phone symbol on a solid orange square background."
+    },
+    {
+      "id": "video-call",
+      "prompt": "A white video call symbol on a solid green square background."
+    },
+    {
+      "id": "browser",
+      "prompt": "A white browser symbol on a solid red square background."
+    },
+    {
+      "id": "globe",
+      "prompt": "A white globe symbol on a solid blue square background."
+    },
+    {
+      "id": "camera",
+      "prompt": "A white camera symbol on a solid purple square background."
+    },
+    {
+      "id": "photos",
+      "prompt": "A white photos symbol on a solid orange square background."
+    },
+    {
+      "id": "gallery",
+      "prompt": "A white gallery symbol on a solid green square background."
+    },
+    {
+      "id": "image",
+      "prompt": "A white image symbol on a solid red square background."
+    },
+    {
+      "id": "video",
+      "prompt": "A white video symbol on a solid blue square background."
+    },
+    {
+      "id": "music",
+      "prompt": "A white music symbol on a solid purple square background."
+    },
+    {
+      "id": "microphone",
+      "prompt": "A white microphone symbol on a solid orange square background."
+    },
+    {
+      "id": "volume",
+      "prompt": "A white volume symbol on a solid green square background."
+    },
+    {
+      "id": "headphones",
+      "prompt": "A white headphones symbol on a solid red square background."
+    },
+    {
+      "id": "play",
+      "prompt": "A white play symbol on a solid blue square background."
+    },
+    {
+      "id": "pause",
+      "prompt": "A white pause symbol on a solid purple square background."
+    },
+    {
+      "id": "stop",
+      "prompt": "A white stop symbol on a solid orange square background."
+    },
+    {
+      "id": "record",
+      "prompt": "A white record symbol on a solid green square background."
+    },
+    {
+      "id": "download",
+      "prompt": "A white download symbol on a solid red square background."
+    },
+    {
+      "id": "upload",
+      "prompt": "A white upload symbol on a solid blue square background."
+    },
+    {
+      "id": "cloud",
+      "prompt": "A white cloud symbol on a solid purple square background."
+    },
+    {
+      "id": "sync",
+      "prompt": "A white sync symbol on a solid orange square background."
+    },
+    {
+      "id": "refresh",
+      "prompt": "A white refresh symbol on a solid green square background."
+    },
+    {
+      "id": "backup",
+      "prompt": "A white backup symbol on a solid red square background."
+    },
+    {
+      "id": "save",
+      "prompt": "A white save symbol on a solid blue square background."
+    },
+    {
+      "id": "share",
+      "prompt": "A white share symbol on a solid purple square background."
+    },
+    {
+      "id": "link",
+      "prompt": "A white link symbol on a solid orange square background."
+    },
+    {
+      "id": "copy",
+      "prompt": "A white copy symbol on a solid green square background."
+    },
+    {
+      "id": "paste",
+      "prompt": "A white paste symbol on a solid red square background."
+    },
+    {
+      "id": "cut",
+      "prompt": "A white cut symbol on a solid blue square background."
+    },
+    {
+      "id": "delete",
+      "prompt": "A white delete symbol on a solid purple square background."
+    },
+    {
+      "id": "archive",
+      "prompt": "A white archive symbol on a solid orange square background."
+    },
+    {
+      "id": "trash",
+      "prompt": "A white trash symbol on a solid green square background."
+    },
+    {
+      "id": "lock",
+      "prompt": "A white lock symbol on a solid red square background."
+    },
+    {
+      "id": "unlock",
+      "prompt": "A white unlock symbol on a solid blue square background."
+    },
+    {
+      "id": "shield",
+      "prompt": "A white shield symbol on a solid purple square background."
+    },
+    {
+      "id": "key",
+      "prompt": "A white key symbol on a solid orange square background."
+    },
+    {
+      "id": "eye",
+      "prompt": "A white eye symbol on a solid green square background."
+    },
+    {
+      "id": "eye-off",
+      "prompt": "A white eye off symbol on a solid red square background."
+    },
+    {
+      "id": "empty-51",
+      "image": {
+        "backgroundImage": "none"
+      },
+      "prompt": "Cell 51 is an unused control region. Leave it entirely plain white: no symbol, texture, border, or shadow."
+    },
+    {
+      "id": "empty-52",
+      "image": {
+        "backgroundImage": "none"
+      },
+      "prompt": "Cell 52 is an unused control region. Leave it entirely plain white: no symbol, texture, border, or shadow."
+    },
+    {
+      "id": "empty-53",
+      "image": {
+        "backgroundImage": "none"
+      },
+      "prompt": "Cell 53 is an unused control region. Leave it entirely plain white: no symbol, texture, border, or shadow."
+    },
+    {
+      "id": "empty-54",
+      "image": {
+        "backgroundImage": "none"
+      },
+      "prompt": "Cell 54 is an unused control region. Leave it entirely plain white: no symbol, texture, border, or shadow."
+    }
+  ]
+}

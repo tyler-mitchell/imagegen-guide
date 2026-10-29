@@ -1,0 +1,21 @@
+{
+  "id": "portrait-media",
+  "canvas": {
+    "height": 1440,
+    "aspectRatio": "9:16",
+    "padding": { "top": 24, "right": 20, "bottom": 32, "left": 20 }
+  },
+  "grid": { "columns": 2, "gap": { "row": 16, "column": 12 } },
+  "align": "start",
+  "verticalAlign": "start",
+  "appearance": { "label": { "fontFamily": "Inter", "fontSize": 18, "lineHeight": 24, "gap": 8 } },
+  "defaults": { "aspectRatio": "2:3" },
+  "cells": [
+    { "id": "portrait", "label": { "text": "Portrait · 2:3", "position": "above" } },
+    { "id": "poster", "aspectRatio": "9:16", "label": { "text": "Poster · 9:16" } },
+    { "id": "cover", "aspectRatio": "3:4", "label": { "text": "Cover · 3:4" } },
+    { "id": "square", "aspectRatio": "1:1", "label": { "text": "Square" } },
+    { "id": "landscape", "aspectRatio": "4:3", "label": { "text": "Landscape · 4:3" } },
+    { "id": "thumbnail", "aspectRatio": "3:2" }
+  ]
+}

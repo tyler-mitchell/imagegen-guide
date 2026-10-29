@@ -1,0 +1,97 @@
+{
+  "id": "nested-appearance-states",
+  "crop": { "detect": {} },
+  "canvas": { "width": 1536, "aspectRatio": "4:3", "padding": 24 },
+  "grid": { "columns": 2, "gap": 16 },
+  "appearance": { "label": { "fontFamily": "Inter", "fontSize": 18, "lineHeight": 24, "gap": 8 } },
+  "defaults": { "label": { "position": "above" } },
+  "prompt": "Create app icons with crisp symbols, soft depth, and restrained gradients.",
+  "cells": [
+    {
+      "id": "settings",
+      "label": { "text": "Settings" },
+      "prompt": "A gear.",
+      "children": {
+        "grid": { "columns": 1, "gap": 12 },
+        "defaults": { "label": { "position": "above" } },
+        "cells": [
+          {
+            "id": "settings-light",
+            "label": { "text": "Light" },
+            "prompt": "Pale tiles with dark symbols.",
+            "children": {
+              "grid": { "columns": 2, "gap": 8 },
+              "cells": [
+                { "id": "settings-light-default", "label": { "text": "Default" } },
+                {
+                  "id": "settings-light-active",
+                  "label": { "text": "Active" },
+                  "prompt": "A restrained green accent."
+                }
+              ]
+            }
+          },
+          {
+            "id": "settings-dark",
+            "label": { "text": "Dark" },
+            "prompt": "Charcoal tiles with silver symbols.",
+            "children": {
+              "grid": { "columns": 2, "gap": 8 },
+              "cells": [
+                { "id": "settings-dark-default", "label": { "text": "Default" } },
+                {
+                  "id": "settings-dark-active",
+                  "label": { "text": "Active" },
+                  "prompt": "A restrained green accent."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "search",
+      "label": { "text": "Search" },
+      "prompt": "A magnifying glass.",
+      "children": {
+        "grid": { "columns": 1, "gap": 12 },
+        "defaults": { "label": { "position": "above" } },
+        "cells": [
+          {
+            "id": "search-light",
+            "label": { "text": "Light" },
+            "prompt": "Pale tiles with dark symbols.",
+            "children": {
+              "grid": { "columns": 2, "gap": 8 },
+              "cells": [
+                { "id": "search-light-default", "label": { "text": "Default" } },
+                {
+                  "id": "search-light-active",
+                  "label": { "text": "Active" },
+                  "prompt": "A restrained green accent."
+                }
+              ]
+            }
+          },
+          {
+            "id": "search-dark",
+            "label": { "text": "Dark" },
+            "prompt": "Charcoal tiles with silver symbols.",
+            "children": {
+              "grid": { "columns": 2, "gap": 8 },
+              "cells": [
+                { "id": "search-dark-default", "label": { "text": "Default" } },
+                {
+                  "id": "search-dark-active",
+                  "label": { "text": "Active" },
+                  "prompt": "A restrained green accent."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

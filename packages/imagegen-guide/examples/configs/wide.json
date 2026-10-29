@@ -1,0 +1,25 @@
+{
+  "id": "wide-media",
+  "canvas": { "width": 1536, "aspectRatio": "16:9", "padding": 24 },
+  "grid": { "columns": ["2fr", "1fr", "1fr"], "gap": { "row": 16, "column": 20 } },
+  "appearance": { "label": { "fontFamily": "Inter", "fontSize": 18, "lineHeight": 24, "gap": 8 } },
+  "defaults": { "aspectRatio": "3:2" },
+  "prompt": "Create cinematic landscapes with a consistent illustrated style.",
+  "cells": [
+    {
+      "id": "mountains",
+      "aspectRatio": "16:9",
+      "label": { "text": "Mountains · 16:9", "position": "above" }
+    },
+    { "id": "forest", "aspectRatio": "2:3", "label": { "text": "Forest · 2:3" } },
+    { "id": "coast", "label": { "text": "Coast · 3:2" } },
+    {
+      "id": "desert",
+      "columnSpan": 2,
+      "aspectRatio": "16:9",
+      "label": { "text": "Desert · two preferred columns" }
+    },
+    { "id": "island", "aspectRatio": "1:1" },
+    { "id": "river", "label": { "text": "River · 3:2" } }
+  ]
+}

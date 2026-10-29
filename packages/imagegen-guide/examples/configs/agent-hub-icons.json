@@ -1,0 +1,253 @@
+{
+  "id": "agent-hub-icons",
+  "layout": "grid",
+  "canvas": {
+    "width": 1536,
+    "aspectRatio": "1:1",
+    "padding": 24
+  },
+  "grid": {
+    "columns": 6,
+    "gap": 12
+  },
+  "defaults": {
+    "aspectRatio": "1:1",
+    "label": {
+      "position": "below",
+      "fontSize": 16,
+      "lineHeight": 20,
+      "gap": 4
+    }
+  },
+  "appearance": {
+    "background": "#181818",
+    "image": {
+      "fill": "#303236",
+      "stroke": "#62656a",
+      "strokeWidth": 1,
+      "radius": 0
+    },
+    "label": {
+      "color": "#dedede"
+    }
+  },
+  "prompt": "Create one coherent app icon family from the supplied reference strip. Refurbish matching reference motifs and extend the same family for new subjects. Consistent tile size, glyph weight, upper-left light, subtle depth and restrained color. Utility tiles graphite with pale glyphs; selective colorful tiles match the reference. One icon per image region. Preserve guide labels outside artwork.",
+  "cells": [
+    {
+      "id": "settings",
+      "label": {
+        "text": "Settings"
+      }
+    },
+    {
+      "id": "controls",
+      "label": {
+        "text": "Controls"
+      }
+    },
+    {
+      "id": "keyboard",
+      "label": {
+        "text": "Keyboard"
+      }
+    },
+    {
+      "id": "navigation",
+      "label": {
+        "text": "Navigation"
+      }
+    },
+    {
+      "id": "sync",
+      "label": {
+        "text": "Sync"
+      }
+    },
+    {
+      "id": "tools",
+      "label": {
+        "text": "Tools"
+      }
+    },
+    {
+      "id": "team",
+      "label": {
+        "text": "Team"
+      }
+    },
+    {
+      "id": "processor",
+      "label": {
+        "text": "Processor"
+      }
+    },
+    {
+      "id": "ai",
+      "label": {
+        "text": "AI"
+      }
+    },
+    {
+      "id": "layers",
+      "label": {
+        "text": "Layers"
+      }
+    },
+    {
+      "id": "apps",
+      "label": {
+        "text": "Apps"
+      }
+    },
+    {
+      "id": "browser",
+      "label": {
+        "text": "Browser"
+      }
+    },
+    {
+      "id": "calculator",
+      "label": {
+        "text": "Calculator"
+      }
+    },
+    {
+      "id": "calendar",
+      "label": {
+        "text": "Calendar"
+      }
+    },
+    {
+      "id": "notes",
+      "label": {
+        "text": "Notes"
+      }
+    },
+    {
+      "id": "files",
+      "label": {
+        "text": "Files"
+      }
+    },
+    {
+      "id": "gamepad",
+      "label": {
+        "text": "Gamepad"
+      }
+    },
+    {
+      "id": "microphone",
+      "label": {
+        "text": "Microphone"
+      }
+    },
+    {
+      "id": "text",
+      "label": {
+        "text": "Text"
+      }
+    },
+    {
+      "id": "favorites",
+      "label": {
+        "text": "Favorites"
+      }
+    },
+    {
+      "id": "search",
+      "label": {
+        "text": "Search"
+      }
+    },
+    {
+      "id": "attachments",
+      "label": {
+        "text": "Attachments"
+      }
+    },
+    {
+      "id": "assistant",
+      "label": {
+        "text": "Assistant"
+      }
+    },
+    {
+      "id": "automation",
+      "label": {
+        "text": "Automation"
+      }
+    },
+    {
+      "id": "tasks",
+      "label": {
+        "text": "Tasks"
+      }
+    },
+    {
+      "id": "terminal",
+      "label": {
+        "text": "Terminal"
+      }
+    },
+    {
+      "id": "database",
+      "label": {
+        "text": "Database"
+      }
+    },
+    {
+      "id": "network",
+      "label": {
+        "text": "Network"
+      }
+    },
+    {
+      "id": "artifacts",
+      "label": {
+        "text": "Artifacts"
+      }
+    },
+    {
+      "id": "image",
+      "label": {
+        "text": "Image"
+      }
+    },
+    {
+      "id": "video",
+      "label": {
+        "text": "Video"
+      }
+    },
+    {
+      "id": "audio",
+      "label": {
+        "text": "Audio"
+      }
+    },
+    {
+      "id": "code",
+      "label": {
+        "text": "Code"
+      }
+    },
+    {
+      "id": "history",
+      "label": {
+        "text": "History"
+      }
+    },
+    {
+      "id": "notifications",
+      "label": {
+        "text": "Notifications"
+      }
+    },
+    {
+      "id": "power",
+      "label": {
+        "text": "Power"
+      }
+    }
+  ]
+}

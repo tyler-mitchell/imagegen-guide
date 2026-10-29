@@ -1,0 +1,97 @@
+{
+  "id": "app-icons",
+  "canvas": {
+    "width": 1200,
+    "aspectRatio": "4:3",
+    "padding": 48
+  },
+  "grid": {
+    "columns": ["1fr", "1fr", "1fr"],
+    "gap": 32
+  },
+  "appearance": {
+    "preset": "light",
+    "image": {
+      "strokeWidth": 2
+    },
+    "label": {
+      "fontFamily": "Inter",
+      "fontSize": 22,
+      "lineHeight": 28,
+      "gap": 16
+    }
+  },
+  "align": "center",
+  "defaults": {
+    "aspectRatio": "1:1"
+  },
+  "prompt": "Create a consistent set of app icons with soft depth and clear silhouettes.",
+  "rows": {
+    "1": {
+      "prompt": "Use restrained accent colors."
+    }
+  },
+  "columns": {
+    "2": {
+      "prompt": "Keep the composition simple."
+    }
+  },
+  "cells": [
+    {
+      "id": "settings",
+      "row": 0,
+      "column": 0,
+      "label": {
+        "text": "Settings"
+      },
+      "prompt": "A gear."
+    },
+    {
+      "id": "search",
+      "row": 0,
+      "column": 1,
+      "label": {
+        "text": "Search",
+        "position": "above"
+      },
+      "prompt": "A magnifying glass."
+    },
+    {
+      "id": "canvas",
+      "row": 0,
+      "column": 2,
+      "aspectRatio": "4:3",
+      "label": {
+        "text": "Canvas · 4:3"
+      },
+      "prompt": "A drawing surface."
+    },
+    {
+      "id": "files",
+      "row": 1,
+      "column": 0,
+      "label": {
+        "text": "Files"
+      },
+      "prompt": "A folder."
+    },
+    {
+      "id": "voice",
+      "row": 1,
+      "column": 1,
+      "aspectRatio": "2:3",
+      "label": {
+        "text": "Voice · 2:3",
+        "position": "above"
+      },
+      "prompt": "A microphone."
+    },
+    {
+      "id": "tools",
+      "row": 1,
+      "column": 2,
+      "aspectRatio": "16:9",
+      "prompt": "A wrench and screwdriver. No label."
+    }
+  ]
+}

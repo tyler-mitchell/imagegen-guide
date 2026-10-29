@@ -1,0 +1,1413 @@
+{
+  "id": "minecraft-classic-skin-uv",
+  "layout": "grid",
+  "canvas": {
+    "width": 1536,
+    "aspectRatio": "4:3",
+    "padding": 24
+  },
+  "grid": {
+    "columns": [1024, 416],
+    "gap": 24,
+    "padding": 0
+  },
+  "appearance": {
+    "background": "#ffffff",
+    "image": {
+      "fill": "#ffffff",
+      "strokeWidth": 0,
+      "radius": 0
+    },
+    "label": {
+      "fontFamily": "Inter",
+      "fontSize": 16,
+      "lineHeight": 24,
+      "gap": 8,
+      "position": "above",
+      "align": "left",
+      "color": "#111827"
+    }
+  },
+  "prompt": "Generate a Minecraft classic-model skin texture on the exact canonical 64 by 64 UV map shown at left, enlarged 16 times to a 1024 by 1024 texture region. Keep the surrounding caption and the coordinate key at right exactly where the guide puts them; labels are outside the skin texture and MUST NOT enter it. Preserve every UV face position, size, blank unused texel, and base and outer-layer mapping. Paint ONE coherent adventurer: brown hair, tan skin, blue eyes, turquoise tunic and sleeves, navy trousers, brown boots. Flat unwrapped pixel-art textures only: never character renders, cube renders, body-part collages, or perspective images. Each logical Minecraft pixel is a sharp square block. No gradients, antialiasing, rounded boundaries, gutters, or shadows. Replace colored UV placeholders with skin textures. Keep unused texels white; they are unmapped and must not receive text or decorations. Outer layers repeat their corresponding base clothing and hair. Preserve the 64 by 64 coordinate system. Do not rearrange the nets. Preserve the coordinate-key labels and color swatches outside the texture.",
+  "cells": [
+    {
+      "id": "skin-uv",
+      "width": 1024,
+      "height": 1024,
+      "label": {
+        "text": "Classic Minecraft skin — 64×64 UV"
+      },
+      "children": {
+        "grid": {
+          "columns": 64,
+          "gap": 0,
+          "padding": 0
+        },
+        "defaults": {
+          "label": false
+        },
+        "cells": [
+          {
+            "id": "head-base",
+            "row": 0,
+            "column": 0,
+            "columnSpan": 32,
+            "aspectRatio": {
+              "width": 32,
+              "height": 16
+            },
+            "prompt": "Head base: net origin (0,0); classic cuboid 8 by 8 by 8. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 32,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "head-base-top",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#93c5fd"
+                  }
+                },
+                {
+                  "id": "head-base-bottom",
+                  "row": 0,
+                  "column": 16,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#93c5fd"
+                  }
+                },
+                {
+                  "id": "head-base-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#93c5fd"
+                  }
+                },
+                {
+                  "id": "head-base-front",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#93c5fd"
+                  }
+                },
+                {
+                  "id": "head-base-right",
+                  "row": 1,
+                  "column": 16,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#93c5fd"
+                  }
+                },
+                {
+                  "id": "head-base-back",
+                  "row": 1,
+                  "column": 24,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#93c5fd"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "head-outer",
+            "row": 0,
+            "column": 32,
+            "columnSpan": 32,
+            "aspectRatio": {
+              "width": 32,
+              "height": 16
+            },
+            "prompt": "Head outer: net origin (32,0); classic cuboid 8 by 8 by 8. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 32,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "head-outer-top",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#dbeafe"
+                  }
+                },
+                {
+                  "id": "head-outer-bottom",
+                  "row": 0,
+                  "column": 16,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#dbeafe"
+                  }
+                },
+                {
+                  "id": "head-outer-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#dbeafe"
+                  }
+                },
+                {
+                  "id": "head-outer-front",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#dbeafe"
+                  }
+                },
+                {
+                  "id": "head-outer-right",
+                  "row": 1,
+                  "column": 16,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#dbeafe"
+                  }
+                },
+                {
+                  "id": "head-outer-back",
+                  "row": 1,
+                  "column": 24,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 8
+                  },
+                  "image": {
+                    "fill": "#dbeafe"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "right-leg-base",
+            "row": 16,
+            "column": 0,
+            "columnSpan": 16,
+            "aspectRatio": {
+              "width": 16,
+              "height": 16
+            },
+            "prompt": "Right leg base: net origin (0,16); classic cuboid 4 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 16,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "right-leg-base-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#c4b5fd"
+                  }
+                },
+                {
+                  "id": "right-leg-base-bottom",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#c4b5fd"
+                  }
+                },
+                {
+                  "id": "right-leg-base-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#c4b5fd"
+                  }
+                },
+                {
+                  "id": "right-leg-base-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#c4b5fd"
+                  }
+                },
+                {
+                  "id": "right-leg-base-right",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#c4b5fd"
+                  }
+                },
+                {
+                  "id": "right-leg-base-back",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#c4b5fd"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "torso-base",
+            "row": 16,
+            "column": 16,
+            "columnSpan": 24,
+            "aspectRatio": {
+              "width": 24,
+              "height": 16
+            },
+            "prompt": "Torso base: net origin (16,16); classic cuboid 8 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 24,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "torso-base-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#86efac"
+                  }
+                },
+                {
+                  "id": "torso-base-bottom",
+                  "row": 0,
+                  "column": 12,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#86efac"
+                  }
+                },
+                {
+                  "id": "torso-base-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#86efac"
+                  }
+                },
+                {
+                  "id": "torso-base-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#86efac"
+                  }
+                },
+                {
+                  "id": "torso-base-right",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#86efac"
+                  }
+                },
+                {
+                  "id": "torso-base-back",
+                  "row": 1,
+                  "column": 16,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#86efac"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "right-arm-base",
+            "row": 16,
+            "column": 40,
+            "columnSpan": 16,
+            "aspectRatio": {
+              "width": 16,
+              "height": 16
+            },
+            "prompt": "Right arm base: net origin (40,16); classic cuboid 4 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 16,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "right-arm-base-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#fdba74"
+                  }
+                },
+                {
+                  "id": "right-arm-base-bottom",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#fdba74"
+                  }
+                },
+                {
+                  "id": "right-arm-base-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fdba74"
+                  }
+                },
+                {
+                  "id": "right-arm-base-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fdba74"
+                  }
+                },
+                {
+                  "id": "right-arm-base-right",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fdba74"
+                  }
+                },
+                {
+                  "id": "right-arm-base-back",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fdba74"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "right-leg-outer",
+            "row": 32,
+            "column": 0,
+            "columnSpan": 16,
+            "aspectRatio": {
+              "width": 16,
+              "height": 16
+            },
+            "prompt": "Right leg outer: net origin (0,32); classic cuboid 4 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 16,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "right-leg-outer-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#ede9fe"
+                  }
+                },
+                {
+                  "id": "right-leg-outer-bottom",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#ede9fe"
+                  }
+                },
+                {
+                  "id": "right-leg-outer-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#ede9fe"
+                  }
+                },
+                {
+                  "id": "right-leg-outer-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#ede9fe"
+                  }
+                },
+                {
+                  "id": "right-leg-outer-right",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#ede9fe"
+                  }
+                },
+                {
+                  "id": "right-leg-outer-back",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#ede9fe"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "torso-outer",
+            "row": 32,
+            "column": 16,
+            "columnSpan": 24,
+            "aspectRatio": {
+              "width": 24,
+              "height": 16
+            },
+            "prompt": "Torso outer: net origin (16,32); classic cuboid 8 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 24,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "torso-outer-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#dcfce7"
+                  }
+                },
+                {
+                  "id": "torso-outer-bottom",
+                  "row": 0,
+                  "column": 12,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#dcfce7"
+                  }
+                },
+                {
+                  "id": "torso-outer-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#dcfce7"
+                  }
+                },
+                {
+                  "id": "torso-outer-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#dcfce7"
+                  }
+                },
+                {
+                  "id": "torso-outer-right",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#dcfce7"
+                  }
+                },
+                {
+                  "id": "torso-outer-back",
+                  "row": 1,
+                  "column": 16,
+                  "columnSpan": 8,
+                  "aspectRatio": {
+                    "width": 8,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#dcfce7"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "right-arm-outer",
+            "row": 32,
+            "column": 40,
+            "columnSpan": 16,
+            "aspectRatio": {
+              "width": 16,
+              "height": 16
+            },
+            "prompt": "Right arm outer: net origin (40,32); classic cuboid 4 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 16,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "right-arm-outer-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#ffedd5"
+                  }
+                },
+                {
+                  "id": "right-arm-outer-bottom",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#ffedd5"
+                  }
+                },
+                {
+                  "id": "right-arm-outer-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#ffedd5"
+                  }
+                },
+                {
+                  "id": "right-arm-outer-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#ffedd5"
+                  }
+                },
+                {
+                  "id": "right-arm-outer-right",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#ffedd5"
+                  }
+                },
+                {
+                  "id": "right-arm-outer-back",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#ffedd5"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "left-leg-outer",
+            "row": 48,
+            "column": 0,
+            "columnSpan": 16,
+            "aspectRatio": {
+              "width": 16,
+              "height": 16
+            },
+            "prompt": "Left leg outer: net origin (0,48); classic cuboid 4 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 16,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "left-leg-outer-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#fce7f3"
+                  }
+                },
+                {
+                  "id": "left-leg-outer-bottom",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#fce7f3"
+                  }
+                },
+                {
+                  "id": "left-leg-outer-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fce7f3"
+                  }
+                },
+                {
+                  "id": "left-leg-outer-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fce7f3"
+                  }
+                },
+                {
+                  "id": "left-leg-outer-right",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fce7f3"
+                  }
+                },
+                {
+                  "id": "left-leg-outer-back",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fce7f3"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "left-leg-base",
+            "row": 48,
+            "column": 16,
+            "columnSpan": 16,
+            "aspectRatio": {
+              "width": 16,
+              "height": 16
+            },
+            "prompt": "Left leg base: net origin (16,48); classic cuboid 4 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 16,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "left-leg-base-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#f9a8d4"
+                  }
+                },
+                {
+                  "id": "left-leg-base-bottom",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#f9a8d4"
+                  }
+                },
+                {
+                  "id": "left-leg-base-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#f9a8d4"
+                  }
+                },
+                {
+                  "id": "left-leg-base-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#f9a8d4"
+                  }
+                },
+                {
+                  "id": "left-leg-base-right",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#f9a8d4"
+                  }
+                },
+                {
+                  "id": "left-leg-base-back",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#f9a8d4"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "left-arm-base",
+            "row": 48,
+            "column": 32,
+            "columnSpan": 16,
+            "aspectRatio": {
+              "width": 16,
+              "height": 16
+            },
+            "prompt": "Left arm base: net origin (32,48); classic cuboid 4 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 16,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "left-arm-base-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#fde68a"
+                  }
+                },
+                {
+                  "id": "left-arm-base-bottom",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#fde68a"
+                  }
+                },
+                {
+                  "id": "left-arm-base-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fde68a"
+                  }
+                },
+                {
+                  "id": "left-arm-base-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fde68a"
+                  }
+                },
+                {
+                  "id": "left-arm-base-right",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fde68a"
+                  }
+                },
+                {
+                  "id": "left-arm-base-back",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fde68a"
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "id": "left-arm-outer",
+            "row": 48,
+            "column": 48,
+            "columnSpan": 16,
+            "aspectRatio": {
+              "width": 16,
+              "height": 16
+            },
+            "prompt": "Left arm outer: net origin (48,48); classic cuboid 4 by 12 by 4. Match its corresponding base or outer textures.",
+            "children": {
+              "grid": {
+                "columns": 16,
+                "gap": 0,
+                "padding": 0
+              },
+              "defaults": {
+                "label": false
+              },
+              "cells": [
+                {
+                  "id": "left-arm-outer-top",
+                  "row": 0,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#fef3c7"
+                  }
+                },
+                {
+                  "id": "left-arm-outer-bottom",
+                  "row": 0,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 4
+                  },
+                  "image": {
+                    "fill": "#fef3c7"
+                  }
+                },
+                {
+                  "id": "left-arm-outer-left",
+                  "row": 1,
+                  "column": 0,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fef3c7"
+                  }
+                },
+                {
+                  "id": "left-arm-outer-front",
+                  "row": 1,
+                  "column": 4,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fef3c7"
+                  }
+                },
+                {
+                  "id": "left-arm-outer-right",
+                  "row": 1,
+                  "column": 8,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fef3c7"
+                  }
+                },
+                {
+                  "id": "left-arm-outer-back",
+                  "row": 1,
+                  "column": 12,
+                  "columnSpan": 4,
+                  "aspectRatio": {
+                    "width": 4,
+                    "height": 12
+                  },
+                  "image": {
+                    "fill": "#fef3c7"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "coordinate-key",
+      "width": 416,
+      "label": {
+        "text": "UV coordinate key"
+      },
+      "children": {
+        "grid": {
+          "columns": 1,
+          "gap": 8,
+          "padding": 0
+        },
+        "defaults": {
+          "width": 416,
+          "height": 24,
+          "label": {
+            "fontSize": 14,
+            "lineHeight": 20,
+            "gap": 4,
+            "position": "above",
+            "align": "left"
+          }
+        },
+        "cells": [
+          {
+            "id": "key-head-base",
+            "label": {
+              "text": "Head base — (0, 0)"
+            },
+            "image": {
+              "fill": "#93c5fd"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-head-outer",
+            "label": {
+              "text": "Head outer — (32, 0)"
+            },
+            "image": {
+              "fill": "#dbeafe"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-right-leg-base",
+            "label": {
+              "text": "Right leg base — (0, 16)"
+            },
+            "image": {
+              "fill": "#c4b5fd"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-torso-base",
+            "label": {
+              "text": "Torso base — (16, 16)"
+            },
+            "image": {
+              "fill": "#86efac"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-right-arm-base",
+            "label": {
+              "text": "Right arm base — (40, 16)"
+            },
+            "image": {
+              "fill": "#fdba74"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-right-leg-outer",
+            "label": {
+              "text": "Right leg outer — (0, 32)"
+            },
+            "image": {
+              "fill": "#ede9fe"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-torso-outer",
+            "label": {
+              "text": "Torso outer — (16, 32)"
+            },
+            "image": {
+              "fill": "#dcfce7"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-right-arm-outer",
+            "label": {
+              "text": "Right arm outer — (40, 32)"
+            },
+            "image": {
+              "fill": "#ffedd5"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-left-leg-outer",
+            "label": {
+              "text": "Left leg outer — (0, 48)"
+            },
+            "image": {
+              "fill": "#fce7f3"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-left-leg-base",
+            "label": {
+              "text": "Left leg base — (16, 48)"
+            },
+            "image": {
+              "fill": "#f9a8d4"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-left-arm-base",
+            "label": {
+              "text": "Left arm base — (32, 48)"
+            },
+            "image": {
+              "fill": "#fde68a"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          },
+          {
+            "id": "key-left-arm-outer",
+            "label": {
+              "text": "Left arm outer — (48, 48)"
+            },
+            "image": {
+              "fill": "#fef3c7"
+            },
+            "prompt": "Preserve this external key swatch and caption. It is not part of the skin texture."
+          }
+        ]
+      }
+    }
+  ]
+}

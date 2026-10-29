@@ -1,0 +1,41 @@
+{
+  "id": "label-options",
+  "canvas": { "width": 1200, "height": 900, "padding": 24 },
+  "grid": { "columns": 4, "gap": 16 },
+  "appearance": { "label": { "fontFamily": "Inter", "fontSize": 18, "lineHeight": 24, "gap": 8 } },
+  "defaults": { "aspectRatio": "1:1", "label": { "text": "Shared label" } },
+  "rows": { "0": { "label": { "position": "above" }, "prompt": "Use cool colors." } },
+  "columns": { "3": { "label": { "align": "right" }, "prompt": "Use a simple silhouette." } },
+  "cells": [
+    {
+      "id": "wrapped",
+      "label": {
+        "text": "A longer caption that wraps above the image",
+        "maxLines": 2,
+        "align": "left"
+      }
+    },
+    { "id": "below", "label": { "text": "Caption below", "position": "below" } },
+    { "id": "hidden", "label": false },
+    { "id": "right", "label": { "text": "Right aligned" } },
+    {
+      "id": "fixed",
+      "width": 160,
+      "height": 240,
+      "image": { "fill": "#dbeafe", "stroke": "#2563eb", "strokeWidth": 2, "radius": 12 },
+      "label": { "text": "160 × 240 · optional radius" }
+    },
+    {
+      "id": "plain",
+      "image": { "fill": "#fef3c7" },
+      "label": { "text": "One line", "wrap": false }
+    },
+    { "id": "inherited" },
+    {
+      "id": "span",
+      "columnSpan": 2,
+      "aspectRatio": "16:9",
+      "label": { "text": "Wide image · two preferred columns", "align": "left" }
+    }
+  ]
+}

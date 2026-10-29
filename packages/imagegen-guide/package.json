@@ -1,0 +1,58 @@
+{
+  "name": "imagegen-guide",
+  "version": "0.0.0",
+  "description": "Headless image-layout guides, crop geometry, and image catalogues.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tyler-mitchell/imagegen-guide.git",
+    "directory": "packages/imagegen-guide"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "exports": {
+    "./core": {
+      "types": "./dist/core.d.mts",
+      "import": "./dist/core.mjs"
+    },
+    "./core/image": {
+      "types": "./dist/image.d.mts",
+      "import": "./dist/image.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vp pack",
+    "prepack": "pnpm run build",
+    "dev": "vp pack --watch",
+    "check": "vp check",
+    "check:fix": "vp check --fix"
+  },
+  "dependencies": {
+    "@techstark/opencv-js": "catalog:",
+    "@thi.ng/layout": "catalog:",
+    "arktype": "catalog:",
+    "satori": "catalog:",
+    "sharp": "catalog:"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/core": "^0.18.1",
+    "@fontsource/inter": "catalog:",
+    "@types/node": "catalog:",
+    "cmd-mesh": "catalog:",
+    "publint": "^0.3.8",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

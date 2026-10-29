@@ -1,0 +1,447 @@
+{
+  "id": "100-app-icons-lattice",
+  "layout": "grid",
+  "canvas": {
+    "width": 2000,
+    "aspectRatio": "1:1",
+    "padding": 0
+  },
+  "grid": {
+    "columns": 10,
+    "gap": 0,
+    "padding": 0
+  },
+  "defaults": {
+    "aspectRatio": "1:1",
+    "label": false
+  },
+  "rows": {
+    "0": { "prompt": "Image row 1 of 10: use its ten listed icons in order." },
+    "1": { "prompt": "Image row 2 of 10: use its ten listed icons in order." },
+    "2": { "prompt": "Image row 3 of 10: use its ten listed icons in order." },
+    "3": { "prompt": "Image row 4 of 10: use its ten listed icons in order." },
+    "4": { "prompt": "Image row 5 of 10: use its ten listed icons in order." },
+    "5": { "prompt": "Image row 6 of 10: use its ten listed icons in order." },
+    "6": { "prompt": "Image row 7 of 10: use its ten listed icons in order." },
+    "7": { "prompt": "Image row 8 of 10: use its ten listed icons in order." },
+    "8": { "prompt": "Image row 9 of 10: use its ten listed icons in order." },
+    "9": {
+      "prompt": "Image row 10 of 10: use its ten listed icons in order, filling the bottom edge. No footer or unused band."
+    }
+  },
+  "appearance": {
+    "background": "#ffffff",
+    "image": {
+      "fill": "#ffffff",
+      "backgroundImage": "linear-gradient(45deg, #cbd5e1 25%, transparent 25%), linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #cbd5e1 75%), linear-gradient(-45deg, transparent 75%, #cbd5e1 75%)",
+      "backgroundSize": "16px 16px",
+      "backgroundPosition": "0 0, 0 8px, 8px -8px, -8px 0",
+      "stroke": "#111827",
+      "strokeWidth": 2,
+      "radius": 0
+    }
+  },
+  "prompt": "Create exactly 100 app icons in exactly 10 columns and 10 rows, matching the schematic's continuous square lattice. Each cell occupies exactly 1/10 of the canvas width and 1/10 of its height. Fill EVERY square completely, including the bottom-right cell. Each icon background reaches all four edges and corners of its square. Use sharp 90-degree corners: NO rounded tiles, rounded clipping, corner cutouts, transparent corners, whitespace, gutters, outer margins, or blank cells. Adjacent square backgrounds touch. Keep each symbol inside its own square. Use the supplied icon order, left to right then top to bottom. Replace all checkerboards and lattice lines with artwork. No captions, guide lines, checkerboards, exterior shadows, or extra rows or columns. Use consistent crisp symbols and subtle internal depth.",
+  "cells": [
+    {
+      "id": "settings",
+      "prompt": "Settings"
+    },
+    {
+      "id": "search",
+      "prompt": "Search"
+    },
+    {
+      "id": "home",
+      "prompt": "Home"
+    },
+    {
+      "id": "files",
+      "prompt": "Files"
+    },
+    {
+      "id": "folder",
+      "prompt": "Folder"
+    },
+    {
+      "id": "document",
+      "prompt": "Document"
+    },
+    {
+      "id": "notes",
+      "prompt": "Notes"
+    },
+    {
+      "id": "calendar",
+      "prompt": "Calendar"
+    },
+    {
+      "id": "clock",
+      "prompt": "Clock"
+    },
+    {
+      "id": "mail",
+      "prompt": "Mail"
+    },
+    {
+      "id": "chat",
+      "prompt": "Chat"
+    },
+    {
+      "id": "contacts",
+      "prompt": "Contacts"
+    },
+    {
+      "id": "phone",
+      "prompt": "Phone"
+    },
+    {
+      "id": "video-call",
+      "prompt": "Video Call"
+    },
+    {
+      "id": "browser",
+      "prompt": "Browser"
+    },
+    {
+      "id": "globe",
+      "prompt": "Globe"
+    },
+    {
+      "id": "camera",
+      "prompt": "Camera"
+    },
+    {
+      "id": "photos",
+      "prompt": "Photos"
+    },
+    {
+      "id": "gallery",
+      "prompt": "Gallery"
+    },
+    {
+      "id": "image",
+      "prompt": "Image"
+    },
+    {
+      "id": "video",
+      "prompt": "Video"
+    },
+    {
+      "id": "music",
+      "prompt": "Music"
+    },
+    {
+      "id": "microphone",
+      "prompt": "Microphone"
+    },
+    {
+      "id": "volume",
+      "prompt": "Volume"
+    },
+    {
+      "id": "headphones",
+      "prompt": "Headphones"
+    },
+    {
+      "id": "play",
+      "prompt": "Play"
+    },
+    {
+      "id": "pause",
+      "prompt": "Pause"
+    },
+    {
+      "id": "stop",
+      "prompt": "Stop"
+    },
+    {
+      "id": "record",
+      "prompt": "Record"
+    },
+    {
+      "id": "download",
+      "prompt": "Download"
+    },
+    {
+      "id": "upload",
+      "prompt": "Upload"
+    },
+    {
+      "id": "cloud",
+      "prompt": "Cloud"
+    },
+    {
+      "id": "sync",
+      "prompt": "Sync"
+    },
+    {
+      "id": "refresh",
+      "prompt": "Refresh"
+    },
+    {
+      "id": "backup",
+      "prompt": "Backup"
+    },
+    {
+      "id": "save",
+      "prompt": "Save"
+    },
+    {
+      "id": "share",
+      "prompt": "Share"
+    },
+    {
+      "id": "link",
+      "prompt": "Link"
+    },
+    {
+      "id": "copy",
+      "prompt": "Copy"
+    },
+    {
+      "id": "paste",
+      "prompt": "Paste"
+    },
+    {
+      "id": "cut",
+      "prompt": "Cut"
+    },
+    {
+      "id": "delete",
+      "prompt": "Delete"
+    },
+    {
+      "id": "archive",
+      "prompt": "Archive"
+    },
+    {
+      "id": "trash",
+      "prompt": "Trash"
+    },
+    {
+      "id": "lock",
+      "prompt": "Lock"
+    },
+    {
+      "id": "unlock",
+      "prompt": "Unlock"
+    },
+    {
+      "id": "shield",
+      "prompt": "Shield"
+    },
+    {
+      "id": "key",
+      "prompt": "Key"
+    },
+    {
+      "id": "eye",
+      "prompt": "Eye"
+    },
+    {
+      "id": "eye-off",
+      "prompt": "Eye Off"
+    },
+    {
+      "id": "star",
+      "prompt": "Star"
+    },
+    {
+      "id": "heart",
+      "prompt": "Heart"
+    },
+    {
+      "id": "bookmark",
+      "prompt": "Bookmark"
+    },
+    {
+      "id": "flag",
+      "prompt": "Flag"
+    },
+    {
+      "id": "pin",
+      "prompt": "Pin"
+    },
+    {
+      "id": "tag",
+      "prompt": "Tag"
+    },
+    {
+      "id": "bell",
+      "prompt": "Bell"
+    },
+    {
+      "id": "bell-off",
+      "prompt": "Bell Off"
+    },
+    {
+      "id": "location",
+      "prompt": "Location"
+    },
+    {
+      "id": "map",
+      "prompt": "Map"
+    },
+    {
+      "id": "navigation",
+      "prompt": "Navigation"
+    },
+    {
+      "id": "compass",
+      "prompt": "Compass"
+    },
+    {
+      "id": "wifi",
+      "prompt": "WiFi"
+    },
+    {
+      "id": "bluetooth",
+      "prompt": "Bluetooth"
+    },
+    {
+      "id": "network",
+      "prompt": "Network"
+    },
+    {
+      "id": "server",
+      "prompt": "Server"
+    },
+    {
+      "id": "database",
+      "prompt": "Database"
+    },
+    {
+      "id": "terminal",
+      "prompt": "Terminal"
+    },
+    {
+      "id": "code",
+      "prompt": "Code"
+    },
+    {
+      "id": "braces",
+      "prompt": "Braces"
+    },
+    {
+      "id": "bug",
+      "prompt": "Bug"
+    },
+    {
+      "id": "tools",
+      "prompt": "Tools"
+    },
+    {
+      "id": "sliders",
+      "prompt": "Sliders"
+    },
+    {
+      "id": "filter",
+      "prompt": "Filter"
+    },
+    {
+      "id": "sort",
+      "prompt": "Sort"
+    },
+    {
+      "id": "list",
+      "prompt": "List"
+    },
+    {
+      "id": "grid",
+      "prompt": "Grid"
+    },
+    {
+      "id": "layout",
+      "prompt": "Layout"
+    },
+    {
+      "id": "layers",
+      "prompt": "Layers"
+    },
+    {
+      "id": "window",
+      "prompt": "Window"
+    },
+    {
+      "id": "monitor",
+      "prompt": "Monitor"
+    },
+    {
+      "id": "laptop",
+      "prompt": "Laptop"
+    },
+    {
+      "id": "tablet",
+      "prompt": "Tablet"
+    },
+    {
+      "id": "mobile",
+      "prompt": "Mobile"
+    },
+    {
+      "id": "keyboard",
+      "prompt": "Keyboard"
+    },
+    {
+      "id": "mouse",
+      "prompt": "Mouse"
+    },
+    {
+      "id": "gamepad",
+      "prompt": "Gamepad"
+    },
+    {
+      "id": "printer",
+      "prompt": "Printer"
+    },
+    {
+      "id": "calculator",
+      "prompt": "Calculator"
+    },
+    {
+      "id": "wallet",
+      "prompt": "Wallet"
+    },
+    {
+      "id": "credit-card",
+      "prompt": "Credit Card"
+    },
+    {
+      "id": "shopping-cart",
+      "prompt": "Shopping Cart"
+    },
+    {
+      "id": "bag",
+      "prompt": "Bag"
+    },
+    {
+      "id": "gift",
+      "prompt": "Gift"
+    },
+    {
+      "id": "chart",
+      "prompt": "Chart"
+    },
+    {
+      "id": "analytics",
+      "prompt": "Analytics"
+    },
+    {
+      "id": "activity",
+      "prompt": "Activity"
+    },
+    {
+      "id": "battery",
+      "prompt": "Battery"
+    },
+    {
+      "id": "power",
+      "prompt": "Power"
+    },
+    {
+      "id": "expand",
+      "prompt": "Expand"
+    }
+  ]
+}

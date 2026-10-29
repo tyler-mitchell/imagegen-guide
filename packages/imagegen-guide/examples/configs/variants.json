@@ -1,0 +1,3534 @@
+{
+  "canvas": {
+    "width": 2048,
+    "aspectRatio": "1:1",
+    "padding": 24
+  },
+  "grid": {
+    "columns": 10,
+    "gap": 12
+  },
+  "appearance": {
+    "image": {
+      "fill": "#ffffff",
+      "backgroundImage": "linear-gradient(45deg, #cbd5e1 25%, transparent 25%), linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #cbd5e1 75%), linear-gradient(-45deg, transparent 75%, #cbd5e1 75%)",
+      "backgroundSize": "16px 16px",
+      "backgroundPosition": "0 0, 0 8px, 8px -8px, -8px 0",
+      "stroke": "#111827",
+      "strokeWidth": 2
+    },
+    "label": {
+      "fontFamily": "Inter",
+      "fontSize": 12,
+      "lineHeight": 16,
+      "gap": 4
+    }
+  },
+  "prompt": "Image 1 is the fixed schematic; image 2 supplies icon style only. Fill all 400 square image regions in the 100 named families. In every family, top-left is Light, top-right is Dark, bottom-left is Active, and bottom-right is Disabled. Repeat the same symbol in all four positions. Light uses a pale tile; Dark uses a dark tile; Active uses a colored accent; Disabled uses subdued gray. Preserve the schematic's family grouping, image order, sizes, positions, gaps, margins, and family captions exactly. Fill each image region edge-to-edge, with no inset or exterior shadow. Use crisp symbols, rounded tiles, and soft internal depth. Remove guide borders and placeholder fills. Add no variant captions. Do not copy the style reference's layout or captions. Scale the whole schematic uniformly if output resolution differs.",
+  "id": "100-icon-families",
+  "defaults": {
+    "image": { "backgroundImage": "none", "strokeWidth": 0 }
+  },
+  "cells": [
+    {
+      "id": "settings",
+      "label": {
+        "text": "Settings"
+      },
+      "prompt": "Settings",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "settings-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "settings-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "settings-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "settings-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "search",
+      "label": {
+        "text": "Search"
+      },
+      "prompt": "Search",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "search-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "search-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "search-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "search-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "home",
+      "label": {
+        "text": "Home"
+      },
+      "prompt": "Home",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "home-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "home-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "home-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "home-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "files",
+      "label": {
+        "text": "Files"
+      },
+      "prompt": "Files",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "files-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "files-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "files-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "files-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "folder",
+      "label": {
+        "text": "Folder"
+      },
+      "prompt": "Folder",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "folder-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "folder-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "folder-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "folder-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "document",
+      "label": {
+        "text": "Document"
+      },
+      "prompt": "Document",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "document-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "document-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "document-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "document-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calendar",
+      "label": {
+        "text": "Calendar"
+      },
+      "prompt": "Calendar",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "calendar-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "calendar-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "calendar-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "calendar-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "clock",
+      "label": {
+        "text": "Clock"
+      },
+      "prompt": "Clock",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "clock-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "clock-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "clock-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "clock-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "camera",
+      "label": {
+        "text": "Camera"
+      },
+      "prompt": "Camera",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "camera-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "camera-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "camera-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "camera-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "photos",
+      "label": {
+        "text": "Photos"
+      },
+      "prompt": "Photos",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "photos-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "photos-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "photos-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "photos-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "video",
+      "label": {
+        "text": "Video"
+      },
+      "prompt": "Video",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "video-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "video-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "video-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "video-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "music",
+      "label": {
+        "text": "Music"
+      },
+      "prompt": "Music",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "music-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "music-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "music-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "music-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "microphone",
+      "label": {
+        "text": "Microphone"
+      },
+      "prompt": "Microphone",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "microphone-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "microphone-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "microphone-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "microphone-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "speaker",
+      "label": {
+        "text": "Speaker"
+      },
+      "prompt": "Speaker",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "speaker-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "speaker-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "speaker-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "speaker-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "headphones",
+      "label": {
+        "text": "Headphones"
+      },
+      "prompt": "Headphones",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "headphones-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "headphones-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "headphones-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "headphones-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "phone",
+      "label": {
+        "text": "Phone"
+      },
+      "prompt": "Phone",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "phone-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "phone-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "phone-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "phone-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "messages",
+      "label": {
+        "text": "Messages"
+      },
+      "prompt": "Messages",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "messages-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "messages-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "messages-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "messages-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "mail",
+      "label": {
+        "text": "Mail"
+      },
+      "prompt": "Mail",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "mail-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "mail-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "mail-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "mail-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "contacts",
+      "label": {
+        "text": "Contacts"
+      },
+      "prompt": "Contacts",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "contacts-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "contacts-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "contacts-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "contacts-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "user",
+      "label": {
+        "text": "User"
+      },
+      "prompt": "User",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "user-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "user-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "user-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "user-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "users",
+      "label": {
+        "text": "Users"
+      },
+      "prompt": "Users",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "users-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "users-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "users-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "users-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "lock",
+      "label": {
+        "text": "Lock"
+      },
+      "prompt": "Lock",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "lock-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "lock-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "lock-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "lock-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "key",
+      "label": {
+        "text": "Key"
+      },
+      "prompt": "Key",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "key-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "key-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "key-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "key-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "shield",
+      "label": {
+        "text": "Shield"
+      },
+      "prompt": "Shield",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "shield-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "shield-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "shield-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "shield-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "bell",
+      "label": {
+        "text": "Bell"
+      },
+      "prompt": "Bell",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "bell-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "bell-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "bell-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "bell-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "bookmark",
+      "label": {
+        "text": "Bookmark"
+      },
+      "prompt": "Bookmark",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "bookmark-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "bookmark-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "bookmark-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "bookmark-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "star",
+      "label": {
+        "text": "Star"
+      },
+      "prompt": "Star",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "star-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "star-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "star-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "star-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "heart",
+      "label": {
+        "text": "Heart"
+      },
+      "prompt": "Heart",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "heart-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "heart-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "heart-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "heart-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "flag",
+      "label": {
+        "text": "Flag"
+      },
+      "prompt": "Flag",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "flag-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "flag-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "flag-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "flag-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "pin",
+      "label": {
+        "text": "Pin"
+      },
+      "prompt": "Pin",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "pin-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "pin-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "pin-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "pin-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "map",
+      "label": {
+        "text": "Map"
+      },
+      "prompt": "Map",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "map-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "map-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "map-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "map-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "compass",
+      "label": {
+        "text": "Compass"
+      },
+      "prompt": "Compass",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "compass-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "compass-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "compass-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "compass-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "globe",
+      "label": {
+        "text": "Globe"
+      },
+      "prompt": "Globe",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "globe-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "globe-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "globe-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "globe-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "browser",
+      "label": {
+        "text": "Browser"
+      },
+      "prompt": "Browser",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "browser-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "browser-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "browser-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "browser-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "cloud",
+      "label": {
+        "text": "Cloud"
+      },
+      "prompt": "Cloud",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "cloud-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "cloud-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "cloud-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "cloud-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "download",
+      "label": {
+        "text": "Download"
+      },
+      "prompt": "Download",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "download-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "download-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "download-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "download-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "upload",
+      "label": {
+        "text": "Upload"
+      },
+      "prompt": "Upload",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "upload-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "upload-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "upload-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "upload-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "sync",
+      "label": {
+        "text": "Sync"
+      },
+      "prompt": "Sync",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "sync-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "sync-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "sync-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "sync-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "refresh",
+      "label": {
+        "text": "Refresh"
+      },
+      "prompt": "Refresh",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "refresh-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "refresh-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "refresh-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "refresh-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "share",
+      "label": {
+        "text": "Share"
+      },
+      "prompt": "Share",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "share-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "share-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "share-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "share-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "link",
+      "label": {
+        "text": "Link"
+      },
+      "prompt": "Link",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "link-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "link-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "link-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "link-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "copy",
+      "label": {
+        "text": "Copy"
+      },
+      "prompt": "Copy",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "copy-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "copy-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "copy-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "copy-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "paste",
+      "label": {
+        "text": "Paste"
+      },
+      "prompt": "Paste",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "paste-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "paste-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "paste-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "paste-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "cut",
+      "label": {
+        "text": "Cut"
+      },
+      "prompt": "Cut",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "cut-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "cut-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "cut-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "cut-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "trash",
+      "label": {
+        "text": "Trash"
+      },
+      "prompt": "Trash",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "trash-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "trash-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "trash-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "trash-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "archive",
+      "label": {
+        "text": "Archive"
+      },
+      "prompt": "Archive",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "archive-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "archive-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "archive-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "archive-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "save",
+      "label": {
+        "text": "Save"
+      },
+      "prompt": "Save",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "save-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "save-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "save-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "save-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "print",
+      "label": {
+        "text": "Print"
+      },
+      "prompt": "Print",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "print-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "print-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "print-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "print-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit",
+      "label": {
+        "text": "Edit"
+      },
+      "prompt": "Edit",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "edit-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "edit-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "edit-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "edit-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "draw",
+      "label": {
+        "text": "Draw"
+      },
+      "prompt": "Draw",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "draw-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "draw-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "draw-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "draw-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "brush",
+      "label": {
+        "text": "Brush"
+      },
+      "prompt": "Brush",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "brush-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "brush-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "brush-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "brush-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "palette",
+      "label": {
+        "text": "Palette"
+      },
+      "prompt": "Palette",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "palette-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "palette-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "palette-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "palette-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "layers",
+      "label": {
+        "text": "Layers"
+      },
+      "prompt": "Layers",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "layers-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "layers-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "layers-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "layers-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "crop",
+      "label": {
+        "text": "Crop"
+      },
+      "prompt": "Crop",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "crop-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "crop-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "crop-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "crop-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "grid",
+      "label": {
+        "text": "Grid"
+      },
+      "prompt": "Grid",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "grid-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "grid-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "grid-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "grid-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "layout",
+      "label": {
+        "text": "Layout"
+      },
+      "prompt": "Layout",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "layout-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "layout-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "layout-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "layout-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "code",
+      "label": {
+        "text": "Code"
+      },
+      "prompt": "Code",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "code-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "code-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "code-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "code-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "terminal",
+      "label": {
+        "text": "Terminal"
+      },
+      "prompt": "Terminal",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "terminal-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "terminal-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "terminal-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "terminal-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "database",
+      "label": {
+        "text": "Database"
+      },
+      "prompt": "Database",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "database-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "database-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "database-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "database-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "server",
+      "label": {
+        "text": "Server"
+      },
+      "prompt": "Server",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "server-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "server-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "server-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "server-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "network",
+      "label": {
+        "text": "Network"
+      },
+      "prompt": "Network",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "network-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "network-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "network-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "network-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "wifi",
+      "label": {
+        "text": "Wifi"
+      },
+      "prompt": "Wifi",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "wifi-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "wifi-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "wifi-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "wifi-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "bluetooth",
+      "label": {
+        "text": "Bluetooth"
+      },
+      "prompt": "Bluetooth",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "bluetooth-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "bluetooth-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "bluetooth-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "bluetooth-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "battery",
+      "label": {
+        "text": "Battery"
+      },
+      "prompt": "Battery",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "battery-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "battery-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "battery-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "battery-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "power",
+      "label": {
+        "text": "Power"
+      },
+      "prompt": "Power",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "power-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "power-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "power-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "power-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "display",
+      "label": {
+        "text": "Display"
+      },
+      "prompt": "Display",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "display-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "display-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "display-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "display-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "keyboard",
+      "label": {
+        "text": "Keyboard"
+      },
+      "prompt": "Keyboard",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "keyboard-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "keyboard-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "keyboard-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "keyboard-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "mouse",
+      "label": {
+        "text": "Mouse"
+      },
+      "prompt": "Mouse",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "mouse-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "mouse-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "mouse-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "mouse-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "gamepad",
+      "label": {
+        "text": "Gamepad"
+      },
+      "prompt": "Gamepad",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "gamepad-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "gamepad-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "gamepad-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "gamepad-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "calculator",
+      "label": {
+        "text": "Calculator"
+      },
+      "prompt": "Calculator",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "calculator-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "calculator-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "calculator-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "calculator-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "wallet",
+      "label": {
+        "text": "Wallet"
+      },
+      "prompt": "Wallet",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "wallet-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "wallet-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "wallet-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "wallet-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "card",
+      "label": {
+        "text": "Card"
+      },
+      "prompt": "Card",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "card-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "card-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "card-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "card-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "receipt",
+      "label": {
+        "text": "Receipt"
+      },
+      "prompt": "Receipt",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "receipt-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "receipt-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "receipt-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "receipt-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "cart",
+      "label": {
+        "text": "Cart"
+      },
+      "prompt": "Cart",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "cart-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "cart-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "cart-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "cart-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "store",
+      "label": {
+        "text": "Store"
+      },
+      "prompt": "Store",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "store-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "store-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "store-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "store-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "gift",
+      "label": {
+        "text": "Gift"
+      },
+      "prompt": "Gift",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "gift-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "gift-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "gift-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "gift-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "tag",
+      "label": {
+        "text": "Tag"
+      },
+      "prompt": "Tag",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "tag-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "tag-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "tag-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "tag-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "chart",
+      "label": {
+        "text": "Chart"
+      },
+      "prompt": "Chart",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "chart-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "chart-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "chart-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "chart-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "activity",
+      "label": {
+        "text": "Activity"
+      },
+      "prompt": "Activity",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "activity-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "activity-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "activity-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "activity-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "dashboard",
+      "label": {
+        "text": "Dashboard"
+      },
+      "prompt": "Dashboard",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "dashboard-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "dashboard-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "dashboard-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "dashboard-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "tasks",
+      "label": {
+        "text": "Tasks"
+      },
+      "prompt": "Tasks",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "tasks-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "tasks-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "tasks-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "tasks-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "checklist",
+      "label": {
+        "text": "Checklist"
+      },
+      "prompt": "Checklist",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "checklist-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "checklist-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "checklist-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "checklist-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "notes",
+      "label": {
+        "text": "Notes"
+      },
+      "prompt": "Notes",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "notes-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "notes-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "notes-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "notes-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "book",
+      "label": {
+        "text": "Book"
+      },
+      "prompt": "Book",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "book-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "book-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "book-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "book-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "help",
+      "label": {
+        "text": "Help"
+      },
+      "prompt": "Help",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "help-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "help-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "help-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "help-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "info",
+      "label": {
+        "text": "Info"
+      },
+      "prompt": "Info",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "info-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "info-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "info-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "info-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "warning",
+      "label": {
+        "text": "Warning"
+      },
+      "prompt": "Warning",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "warning-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "warning-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "warning-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "warning-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "check",
+      "label": {
+        "text": "Check"
+      },
+      "prompt": "Check",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "check-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "check-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "check-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "check-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "plus",
+      "label": {
+        "text": "Plus"
+      },
+      "prompt": "Plus",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "plus-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "plus-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "plus-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "plus-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "minus",
+      "label": {
+        "text": "Minus"
+      },
+      "prompt": "Minus",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "minus-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "minus-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "minus-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "minus-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "close",
+      "label": {
+        "text": "Close"
+      },
+      "prompt": "Close",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "close-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "close-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "close-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "close-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "menu",
+      "label": {
+        "text": "Menu"
+      },
+      "prompt": "Menu",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "menu-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "menu-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "menu-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "menu-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "filter",
+      "label": {
+        "text": "Filter"
+      },
+      "prompt": "Filter",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "filter-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "filter-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "filter-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "filter-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "sort",
+      "label": {
+        "text": "Sort"
+      },
+      "prompt": "Sort",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "sort-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "sort-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "sort-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "sort-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "play",
+      "label": {
+        "text": "Play"
+      },
+      "prompt": "Play",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "play-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "play-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "play-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "play-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "pause",
+      "label": {
+        "text": "Pause"
+      },
+      "prompt": "Pause",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "pause-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "pause-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "pause-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "pause-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "stop",
+      "label": {
+        "text": "Stop"
+      },
+      "prompt": "Stop",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "stop-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "stop-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "stop-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "stop-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "forward",
+      "label": {
+        "text": "Forward"
+      },
+      "prompt": "Forward",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "forward-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "forward-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "forward-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "forward-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "back",
+      "label": {
+        "text": "Back"
+      },
+      "prompt": "Back",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "back-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "back-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "back-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "back-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    },
+    {
+      "id": "expand",
+      "label": {
+        "text": "Expand"
+      },
+      "prompt": "Expand",
+      "children": {
+        "grid": {
+          "columns": 2,
+          "gap": 4,
+          "padding": 4
+        },
+        "defaults": {
+          "aspectRatio": "1:1"
+        },
+        "cells": [
+          {
+            "id": "expand-light",
+            "prompt": "Light variant."
+          },
+          {
+            "id": "expand-dark",
+            "prompt": "Dark variant."
+          },
+          {
+            "id": "expand-active",
+            "prompt": "Active variant."
+          },
+          {
+            "id": "expand-disabled",
+            "prompt": "Disabled variant."
+          }
+        ]
+      }
+    }
+  ]
+}

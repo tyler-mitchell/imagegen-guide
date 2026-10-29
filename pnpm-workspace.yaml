@@ -1,0 +1,27 @@
+packages:
+  - packages/*
+
+catalogMode: prefer
+
+catalog:
+  "@fontsource/inter": ^5.3.0
+  "@techstark/opencv-js": 5.0.0-release.1
+  "@thi.ng/layout": ^4.1.21
+  "@types/node": ^24
+  arktype: ^2.2.8
+  cmd-mesh: ^0.5.0
+  satori: ^0.47.1
+  sharp: ^0.35.5
+  typescript: ^7.0.2
+  vite: npm:@voidzero-dev/vite-plus-core@0.2.9
+  vite-plus: 0.2.9
+overrides:
+  vite: "catalog:"
+  "@effect/platform-node-shared": 4.0.0-rc.112
+allowBuilds:
+  msgpackr-extract: false
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: "*"

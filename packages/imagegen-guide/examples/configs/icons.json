@@ -1,0 +1,732 @@
+{
+  "canvas": {
+    "width": 2048,
+    "aspectRatio": "1:1",
+    "padding": 24
+  },
+  "grid": {
+    "columns": 10,
+    "gap": 12
+  },
+  "appearance": {
+    "image": {
+      "fill": "#ffffff",
+      "backgroundImage": "linear-gradient(45deg, #cbd5e1 25%, transparent 25%), linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #cbd5e1 75%), linear-gradient(-45deg, transparent 75%, #cbd5e1 75%)",
+      "backgroundSize": "16px 16px",
+      "backgroundPosition": "0 0, 0 8px, 8px -8px, -8px 0",
+      "stroke": "#111827",
+      "strokeWidth": 2
+    },
+    "label": {
+      "fontFamily": "Inter",
+      "fontSize": 12,
+      "lineHeight": 16,
+      "gap": 12
+    }
+  },
+  "prompt": "Create the 100 named app icons in the supplied schematic. For generation, supply the schematic first and a style reference second. For editing, supply the existing atlas first and the schematic second; preserve the existing icon artwork and change only its geometry. Use dark rounded tiles, crisp silver symbols, restrained colorful gradients, and internal depth. All 100 tiles must be exact 1:1 squares of the same size, with consistent corner radii and symbol scales. Each tile's bounding box must equal its specified image rectangle, with zero inset and no exterior shadow. Preserve the schematic's canvas margins, gaps, positions, sizes, order, and captions exactly. Match the schematic background outside tiles. Remove guide outlines. Do not recenter or reflow. If output resolution differs, scale both axes of the entire schematic by the same factor. Rounded corners may expose background only inside their rectangle.",
+  "id": "100-app-icons",
+  "crop": { "detect": {} },
+  "cells": [
+    {
+      "id": "settings",
+      "label": {
+        "text": "Settings"
+      },
+      "prompt": "Settings"
+    },
+    {
+      "id": "search",
+      "label": {
+        "text": "Search"
+      },
+      "prompt": "Search"
+    },
+    {
+      "id": "home",
+      "label": {
+        "text": "Home"
+      },
+      "prompt": "Home"
+    },
+    {
+      "id": "files",
+      "label": {
+        "text": "Files"
+      },
+      "prompt": "Files"
+    },
+    {
+      "id": "folder",
+      "label": {
+        "text": "Folder"
+      },
+      "prompt": "Folder"
+    },
+    {
+      "id": "document",
+      "label": {
+        "text": "Document"
+      },
+      "prompt": "Document"
+    },
+    {
+      "id": "calendar",
+      "label": {
+        "text": "Calendar"
+      },
+      "prompt": "Calendar"
+    },
+    {
+      "id": "clock",
+      "label": {
+        "text": "Clock"
+      },
+      "prompt": "Clock"
+    },
+    {
+      "id": "camera",
+      "label": {
+        "text": "Camera"
+      },
+      "prompt": "Camera"
+    },
+    {
+      "id": "photos",
+      "label": {
+        "text": "Photos"
+      },
+      "prompt": "Photos"
+    },
+    {
+      "id": "video",
+      "label": {
+        "text": "Video"
+      },
+      "prompt": "Video"
+    },
+    {
+      "id": "music",
+      "label": {
+        "text": "Music"
+      },
+      "prompt": "Music"
+    },
+    {
+      "id": "microphone",
+      "label": {
+        "text": "Microphone"
+      },
+      "prompt": "Microphone"
+    },
+    {
+      "id": "speaker",
+      "label": {
+        "text": "Speaker"
+      },
+      "prompt": "Speaker"
+    },
+    {
+      "id": "headphones",
+      "label": {
+        "text": "Headphones"
+      },
+      "prompt": "Headphones"
+    },
+    {
+      "id": "phone",
+      "label": {
+        "text": "Phone"
+      },
+      "prompt": "Phone"
+    },
+    {
+      "id": "messages",
+      "label": {
+        "text": "Messages"
+      },
+      "prompt": "Messages"
+    },
+    {
+      "id": "mail",
+      "label": {
+        "text": "Mail"
+      },
+      "prompt": "Mail"
+    },
+    {
+      "id": "contacts",
+      "label": {
+        "text": "Contacts"
+      },
+      "prompt": "Contacts"
+    },
+    {
+      "id": "user",
+      "label": {
+        "text": "User"
+      },
+      "prompt": "User"
+    },
+    {
+      "id": "users",
+      "label": {
+        "text": "Users"
+      },
+      "prompt": "Users"
+    },
+    {
+      "id": "lock",
+      "label": {
+        "text": "Lock"
+      },
+      "prompt": "Lock"
+    },
+    {
+      "id": "key",
+      "label": {
+        "text": "Key"
+      },
+      "prompt": "Key"
+    },
+    {
+      "id": "shield",
+      "label": {
+        "text": "Shield"
+      },
+      "prompt": "Shield"
+    },
+    {
+      "id": "bell",
+      "label": {
+        "text": "Bell"
+      },
+      "prompt": "Bell"
+    },
+    {
+      "id": "bookmark",
+      "label": {
+        "text": "Bookmark"
+      },
+      "prompt": "Bookmark"
+    },
+    {
+      "id": "star",
+      "label": {
+        "text": "Star"
+      },
+      "prompt": "Star"
+    },
+    {
+      "id": "heart",
+      "label": {
+        "text": "Heart"
+      },
+      "prompt": "Heart"
+    },
+    {
+      "id": "flag",
+      "label": {
+        "text": "Flag"
+      },
+      "prompt": "Flag"
+    },
+    {
+      "id": "pin",
+      "label": {
+        "text": "Pin"
+      },
+      "prompt": "Pin"
+    },
+    {
+      "id": "map",
+      "label": {
+        "text": "Map"
+      },
+      "prompt": "Map"
+    },
+    {
+      "id": "compass",
+      "label": {
+        "text": "Compass"
+      },
+      "prompt": "Compass"
+    },
+    {
+      "id": "globe",
+      "label": {
+        "text": "Globe"
+      },
+      "prompt": "Globe"
+    },
+    {
+      "id": "browser",
+      "label": {
+        "text": "Browser"
+      },
+      "prompt": "Browser"
+    },
+    {
+      "id": "cloud",
+      "label": {
+        "text": "Cloud"
+      },
+      "prompt": "Cloud"
+    },
+    {
+      "id": "download",
+      "label": {
+        "text": "Download"
+      },
+      "prompt": "Download"
+    },
+    {
+      "id": "upload",
+      "label": {
+        "text": "Upload"
+      },
+      "prompt": "Upload"
+    },
+    {
+      "id": "sync",
+      "label": {
+        "text": "Sync"
+      },
+      "prompt": "Sync"
+    },
+    {
+      "id": "refresh",
+      "label": {
+        "text": "Refresh"
+      },
+      "prompt": "Refresh"
+    },
+    {
+      "id": "share",
+      "label": {
+        "text": "Share"
+      },
+      "prompt": "Share"
+    },
+    {
+      "id": "link",
+      "label": {
+        "text": "Link"
+      },
+      "prompt": "Link"
+    },
+    {
+      "id": "copy",
+      "label": {
+        "text": "Copy"
+      },
+      "prompt": "Copy"
+    },
+    {
+      "id": "paste",
+      "label": {
+        "text": "Paste"
+      },
+      "prompt": "Paste"
+    },
+    {
+      "id": "cut",
+      "label": {
+        "text": "Cut"
+      },
+      "prompt": "Cut"
+    },
+    {
+      "id": "trash",
+      "label": {
+        "text": "Trash"
+      },
+      "prompt": "Trash"
+    },
+    {
+      "id": "archive",
+      "label": {
+        "text": "Archive"
+      },
+      "prompt": "Archive"
+    },
+    {
+      "id": "save",
+      "label": {
+        "text": "Save"
+      },
+      "prompt": "Save"
+    },
+    {
+      "id": "print",
+      "label": {
+        "text": "Print"
+      },
+      "prompt": "Print"
+    },
+    {
+      "id": "edit",
+      "label": {
+        "text": "Edit"
+      },
+      "prompt": "Edit"
+    },
+    {
+      "id": "draw",
+      "label": {
+        "text": "Draw"
+      },
+      "prompt": "Draw"
+    },
+    {
+      "id": "brush",
+      "label": {
+        "text": "Brush"
+      },
+      "prompt": "Brush"
+    },
+    {
+      "id": "palette",
+      "label": {
+        "text": "Palette"
+      },
+      "prompt": "Palette"
+    },
+    {
+      "id": "layers",
+      "label": {
+        "text": "Layers"
+      },
+      "prompt": "Layers"
+    },
+    {
+      "id": "crop",
+      "label": {
+        "text": "Crop"
+      },
+      "prompt": "Crop"
+    },
+    {
+      "id": "grid",
+      "label": {
+        "text": "Grid"
+      },
+      "prompt": "Grid"
+    },
+    {
+      "id": "layout",
+      "label": {
+        "text": "Layout"
+      },
+      "prompt": "Layout"
+    },
+    {
+      "id": "code",
+      "label": {
+        "text": "Code"
+      },
+      "prompt": "Code"
+    },
+    {
+      "id": "terminal",
+      "label": {
+        "text": "Terminal"
+      },
+      "prompt": "Terminal"
+    },
+    {
+      "id": "database",
+      "label": {
+        "text": "Database"
+      },
+      "prompt": "Database"
+    },
+    {
+      "id": "server",
+      "label": {
+        "text": "Server"
+      },
+      "prompt": "Server"
+    },
+    {
+      "id": "network",
+      "label": {
+        "text": "Network"
+      },
+      "prompt": "Network"
+    },
+    {
+      "id": "wifi",
+      "label": {
+        "text": "Wifi"
+      },
+      "prompt": "Wifi"
+    },
+    {
+      "id": "bluetooth",
+      "label": {
+        "text": "Bluetooth"
+      },
+      "prompt": "Bluetooth"
+    },
+    {
+      "id": "battery",
+      "label": {
+        "text": "Battery"
+      },
+      "prompt": "Battery"
+    },
+    {
+      "id": "power",
+      "label": {
+        "text": "Power"
+      },
+      "prompt": "Power"
+    },
+    {
+      "id": "display",
+      "label": {
+        "text": "Display"
+      },
+      "prompt": "Display"
+    },
+    {
+      "id": "keyboard",
+      "label": {
+        "text": "Keyboard"
+      },
+      "prompt": "Keyboard"
+    },
+    {
+      "id": "mouse",
+      "label": {
+        "text": "Mouse"
+      },
+      "prompt": "Mouse"
+    },
+    {
+      "id": "gamepad",
+      "label": {
+        "text": "Gamepad"
+      },
+      "prompt": "Gamepad"
+    },
+    {
+      "id": "calculator",
+      "label": {
+        "text": "Calculator"
+      },
+      "prompt": "Calculator"
+    },
+    {
+      "id": "wallet",
+      "label": {
+        "text": "Wallet"
+      },
+      "prompt": "Wallet"
+    },
+    {
+      "id": "card",
+      "label": {
+        "text": "Card"
+      },
+      "prompt": "Card"
+    },
+    {
+      "id": "receipt",
+      "label": {
+        "text": "Receipt"
+      },
+      "prompt": "Receipt"
+    },
+    {
+      "id": "cart",
+      "label": {
+        "text": "Cart"
+      },
+      "prompt": "Cart"
+    },
+    {
+      "id": "store",
+      "label": {
+        "text": "Store"
+      },
+      "prompt": "Store"
+    },
+    {
+      "id": "gift",
+      "label": {
+        "text": "Gift"
+      },
+      "prompt": "Gift"
+    },
+    {
+      "id": "tag",
+      "label": {
+        "text": "Tag"
+      },
+      "prompt": "Tag"
+    },
+    {
+      "id": "chart",
+      "label": {
+        "text": "Chart"
+      },
+      "prompt": "Chart"
+    },
+    {
+      "id": "activity",
+      "label": {
+        "text": "Activity"
+      },
+      "prompt": "Activity"
+    },
+    {
+      "id": "dashboard",
+      "label": {
+        "text": "Dashboard"
+      },
+      "prompt": "Dashboard"
+    },
+    {
+      "id": "tasks",
+      "label": {
+        "text": "Tasks"
+      },
+      "prompt": "Tasks"
+    },
+    {
+      "id": "checklist",
+      "label": {
+        "text": "Checklist"
+      },
+      "prompt": "Checklist"
+    },
+    {
+      "id": "notes",
+      "label": {
+        "text": "Notes"
+      },
+      "prompt": "Notes"
+    },
+    {
+      "id": "book",
+      "label": {
+        "text": "Book"
+      },
+      "prompt": "Book"
+    },
+    {
+      "id": "help",
+      "label": {
+        "text": "Help"
+      },
+      "prompt": "Help"
+    },
+    {
+      "id": "info",
+      "label": {
+        "text": "Info"
+      },
+      "prompt": "Info"
+    },
+    {
+      "id": "warning",
+      "label": {
+        "text": "Warning"
+      },
+      "prompt": "Warning"
+    },
+    {
+      "id": "check",
+      "label": {
+        "text": "Check"
+      },
+      "prompt": "Check"
+    },
+    {
+      "id": "plus",
+      "label": {
+        "text": "Plus"
+      },
+      "prompt": "Plus"
+    },
+    {
+      "id": "minus",
+      "label": {
+        "text": "Minus"
+      },
+      "prompt": "Minus"
+    },
+    {
+      "id": "close",
+      "label": {
+        "text": "Close"
+      },
+      "prompt": "Close"
+    },
+    {
+      "id": "menu",
+      "label": {
+        "text": "Menu"
+      },
+      "prompt": "Menu"
+    },
+    {
+      "id": "filter",
+      "label": {
+        "text": "Filter"
+      },
+      "prompt": "Filter"
+    },
+    {
+      "id": "sort",
+      "label": {
+        "text": "Sort"
+      },
+      "prompt": "Sort"
+    },
+    {
+      "id": "play",
+      "label": {
+        "text": "Play"
+      },
+      "prompt": "Play"
+    },
+    {
+      "id": "pause",
+      "label": {
+        "text": "Pause"
+      },
+      "prompt": "Pause"
+    },
+    {
+      "id": "stop",
+      "label": {
+        "text": "Stop"
+      },
+      "prompt": "Stop"
+    },
+    {
+      "id": "forward",
+      "label": {
+        "text": "Forward"
+      },
+      "prompt": "Forward"
+    },
+    {
+      "id": "back",
+      "label": {
+        "text": "Back"
+      },
+      "prompt": "Back"
+    },
+    {
+      "id": "expand",
+      "label": {
+        "text": "Expand"
+      },
+      "prompt": "Expand"
+    }
+  ]
+}

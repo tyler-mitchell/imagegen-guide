@@ -1,0 +1,10 @@
+{
+  "id": "native-type-scale",
+  "canvas": { "width": 1200, "aspectRatio": "4:3", "padding": 32 },
+  "grid": { "columns": 3, "gap": 24 },
+  "cells": [
+    { "id": "caption", "label": { "text": "Caption", "fontSize": 12 } },
+    { "id": "heading", "label": { "text": "Heading", "fontSize": 48 } },
+    { "id": "display", "label": { "text": "Display", "fontSize": 96, "position": "above" } }
+  ]
+}
