@@ -29,6 +29,12 @@ Satori accepts element objects without JSX or React in consumer code. It handles
 layout, font measurement, and SVG output. Text requires font data. The documented
 font formats are TTF, OTF, and WOFF.
 
+Google Fonts' [CSS API](https://developers.google.com/fonts/docs/css2) accepts a
+family, italic axis, weight axis, and a `text` subset. The core requests each
+resolved label face and passes the returned font bytes to Satori. [CSSTree](https://github.com/csstree/csstree/blob/master/docs/parsing.md)
+parses the returned stylesheet so its font URL is read as CSS, rather than text
+matching. Callers can pass font bytes instead when rendering offline.
+
 The public `SatoriOptions` type includes a layout-node callback:
 
 ```ts

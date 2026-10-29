@@ -4,7 +4,6 @@ packages:
 catalogMode: prefer
 
 catalog:
-  "@fontsource/inter": ^5.3.0
   "@techstark/opencv-js": 5.0.0-release.1
   "@thi.ng/layout": ^4.1.21
   "@types/node": ^24

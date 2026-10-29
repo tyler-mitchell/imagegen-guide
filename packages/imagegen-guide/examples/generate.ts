@@ -10,14 +10,12 @@ import {
   type Layout,
   type Config,
   type Catalogue,
-} from "imagegen-guide/core";
-import {
   cropImages,
   createMask,
   detectCatalogue,
   detectRegions,
   overlayImage,
-} from "imagegen-guide/core/image";
+} from "../core/index.ts";
 import mixed from "./configs/mixed.json" with { type: "json" };
 import icons from "./configs/icons.json" with { type: "json" };
 import variants from "./configs/variants.json" with { type: "json" };
@@ -108,9 +106,6 @@ const example = program({
             ? JSON.parse(await readFile(configFile, "utf8"))
             : { mixed, icons, variants, wide, portrait, labels, nested, deep }[example],
         );
-        const data = await readFile(
-          new URL(import.meta.resolve("@fontsource/inter/files/inter-latin-400-normal.woff")),
-        );
         const config = schema.Config.assert({
           ...selected,
           appearance: {
@@ -119,10 +114,7 @@ const example = program({
           },
         });
         const name = `${configFile ? config.id : example}-${config.appearance!.preset}${sourceFile ? "-generated" : ""}`;
-        const atlas = await createAtlas({
-          config,
-          fonts: [{ name: "Inter", data, weight: 400, style: "normal" }],
-        });
+        const atlas = await createAtlas({ config });
         const guide = await sharp(Buffer.from(atlas.schematic)).png().toBuffer();
         const source = sourceFile ? await readFile(sourceFile) : guide;
         await mkdir(out, { recursive: true });

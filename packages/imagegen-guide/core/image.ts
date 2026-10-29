@@ -1,12 +1,13 @@
-import sharp from "sharp";
 import satori from "satori";
-import { schema, type Catalogue, type Crop } from "./schema.ts";
+import { createCatalogue } from "./catalogue.ts";
+import { schema, type Atlas, type Catalogue, type Crop, type Rectangle } from "./schema.ts";
 
 const leaves = (images: Catalogue["images"]): Catalogue["images"] =>
   images.flatMap((image) => (image.children ? leaves(image.children) : [image]));
 
 /** Mark leaf regions as editable through transparent pixels in an otherwise opaque mask. */
-export function createMask({ catalogue }: { catalogue: Catalogue }): Promise<Uint8Array> {
+export async function createMask({ catalogue }: { catalogue: Catalogue }): Promise<Uint8Array> {
+  const { default: sharp } = await import("sharp");
   return sharp({
     create: {
       width: catalogue.source.width,
@@ -44,6 +45,7 @@ export async function overlayImage({
   catalogue: Catalogue;
   style?: Pick<typeof schema.ImageStyle.infer, "stroke" | "strokeWidth">;
 }): Promise<Uint8Array> {
+  const { default: sharp } = await import("sharp");
   const { width, height } = catalogue.source;
   const overlay = await satori(
     {
@@ -85,6 +87,7 @@ export async function detectRegions({
   catalogue: Catalogue;
   options?: typeof schema.DetectionOptions.infer;
 }): Promise<Array<typeof schema.Region.infer>> {
+  const { default: sharp } = await import("sharp");
   const { default: ready } = await import("@techstark/opencv-js");
   // OpenCV's runtime export is asynchronous; its declarations describe the resolved module.
   const cv = await (ready as unknown as PromiseLike<typeof ready>);
@@ -237,15 +240,30 @@ export async function detectCatalogue({
 /** Extract leaf images by default, or select images and groups by ID. */
 export async function cropImages({
   source,
-  catalogue,
   ids,
   format = "png",
+  ...selection
 }: {
   source: Uint8Array;
-  catalogue: Catalogue;
   ids?: readonly string[];
   format?: typeof schema.ImageFormat.infer;
-}): Promise<Crop[]> {
+} & (
+  | { atlas: Atlas; catalogue?: never; sourceId?: string; viewport?: Rectangle }
+  | { catalogue: Catalogue; atlas?: never; sourceId?: never; viewport?: never }
+)): Promise<Crop[]> {
+  const { default: sharp } = await import("sharp");
+  const metadata = selection.catalogue ? undefined : await sharp(source).metadata();
+  const catalogue =
+    selection.catalogue ??
+    createCatalogue({
+      layout: selection.atlas!.layout,
+      source: {
+        id: selection.sourceId ?? selection.atlas!.layout.id,
+        width: metadata!.width!,
+        height: metadata!.height!,
+        ...(selection.viewport ? { viewport: selection.viewport } : {}),
+      },
+    });
   const select = (images: Catalogue["images"]): Catalogue["images"] =>
     images.flatMap((image) => {
       const selected = ids ? ids.includes(image.id) : !image.children;

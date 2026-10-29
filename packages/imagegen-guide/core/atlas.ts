@@ -1,5 +1,6 @@
 import satori, { type SatoriOptions, type SatoriNode } from "satori";
 import { gridLayout, stackedLayout, StackedLayout } from "@thi.ng/layout";
+import { loadGoogleFont } from "./google-fonts.ts";
 import { schema, type Config, type Layout, type Rectangle, type Atlas } from "./schema.ts";
 
 export const aspectRatios = {
@@ -75,13 +76,14 @@ const bounds = (node: SatoriNode): Rectangle => {
 
 /** Render a schematic and resolve crop geometry for cells and nested groups. */
 export async function createAtlas({
-  config,
-  fonts,
+  config: input,
+  fonts: suppliedFonts,
   ...options
-}: { config: Config; fonts: SatoriOptions["fonts"] } & Omit<
+}: { config: Config; fonts?: SatoriOptions["fonts"] } & Omit<
   SatoriOptions,
   "width" | "height" | "fonts" | "onNodeDetected" | "pointScaleFactor"
 >): Promise<Atlas> {
+  const config = schema.Config.assert(input);
   const width = Math.round(
     "width" in config.canvas
       ? config.canvas.width
@@ -126,7 +128,9 @@ export async function createAtlas({
         };
         const label = {
           position: "below" as const,
-          fontFamily: fonts[0]?.name,
+          fontFamily: suppliedFonts?.[0]?.name ?? "Inter",
+          fontWeight: 400 as const,
+          fontStyle: "normal" as const,
           fontSize: 18,
           color: preset.color,
           gap: 12,
@@ -172,6 +176,33 @@ export async function createAtlas({
   const all = (grid: ResolvedGrid): ResolvedCell[] =>
     grid.cells.flatMap((cell) => [cell, ...(cell.children ? all(cell.children) : [])]);
   const cells = all(root);
+  const fonts = [...(suppliedFonts ?? [])];
+  const labels = cells.flatMap((cell) => (cell.label ? [cell.label] : []));
+  const faces = new Map<
+    string,
+    {
+      family: string;
+      weight: NonNullable<(typeof labels)[number]["fontWeight"]>;
+      style: NonNullable<(typeof labels)[number]["fontStyle"]>;
+      text: string;
+    }
+  >();
+  for (const label of labels) {
+    const family = label.fontFamily ?? "Inter";
+    const weight = label.fontWeight ?? 400;
+    const style = label.fontStyle ?? "normal";
+    const key = JSON.stringify([family, weight, style]);
+    faces.set(key, { family, weight, style, text: `${faces.get(key)?.text ?? ""}${label.text}` });
+  }
+  for (const face of faces.values()) {
+    if (
+      !fonts.some(
+        (font) =>
+          font.name === face.family && font.weight === face.weight && font.style === face.style,
+      )
+    )
+      fonts.push(await loadGoogleFont(face));
+  }
   const detected = new Map<string, SatoriNode>();
   const render = (
     fitted: ReadonlyMap<string, Size>,
@@ -205,6 +236,8 @@ export async function createAtlas({
                     flexShrink: 0,
                     width: "100%",
                     fontFamily: label.fontFamily,
+                    fontWeight: label.fontWeight,
+                    fontStyle: label.fontStyle,
                     fontSize: label.fontSize,
                     lineHeight: label.lineHeight ? `${label.lineHeight}px` : undefined,
                     color: label.color,

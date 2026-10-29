@@ -7,12 +7,12 @@ prompt text, catalogues, and image extraction.
 
 ```text
 packages/imagegen-guide/
-  core/                configuration, layout, schematic, prompt, and catalogue
+  core/                configuration, layout, schematic, prompt, catalogue, and crops
   react/               later UI adapter
 ```
 
-The `react` directory is not part of the initial build. A Node-specific crop entry
-point can reside in `core`. Browser consumers must not import its image-processing dependency.
+The `react` directory is not part of the initial build. The package has one public
+entry point. Image operations load Sharp only when called.
 
 ## Configuration
 
@@ -63,8 +63,9 @@ Omit row and column indices to use native grid placement in array order, includi
 column spans. Explicit indices override the resulting logical coordinates.
 Padding and gaps can use uniform values or individual sides and axes.
 `align` and `verticalAlign` position the packed group through native Flexbox alignment.
-Labels can wrap to a configured line count. Font data is supplied by the caller;
-the core does not download fonts.
+Labels can wrap to a configured line count. Set `fontFamily`, `fontWeight`, and
+`fontStyle` to use a Google Font. The core loads the requested face and text.
+Callers can supply Satori font data for offline rendering.
 
 ### Nested groups
 
@@ -123,8 +124,8 @@ export const schema = type.module({
 export type Rectangle = typeof schema.Rectangle.infer;
 ```
 
-ArkType defines the input and output contracts and owns validation. Core
-operations accept valid configurations. Image IDs must be unique, cells must fit
+ArkType defines the input and output contracts and owns validation. `createAtlas`
+validates its configuration. Image IDs must be unique, cells must fit
 within their tracks, and each cell position must refer to a configured track.
 
 ## Geometry
@@ -155,17 +156,12 @@ Image dimensions alone do not establish a viewport or correct local layout drift
 Usage:
 
 ```ts
-import { schema, createAtlas, createCatalogue } from "imagegen-guide/core";
+import { createAtlas, cropImages } from "imagegen-guide";
 
-const config = schema.Config.assert(input);
-const atlas = await createAtlas({ config, fonts });
+const atlas = await createAtlas({ config: input });
 // atlas: resolved layout, SVG schematic, and provider-independent prompt text.
 
-const catalogue = createCatalogue({
-  layout: atlas.layout,
-  source: { id: "generation-01", uri: "atlas.png", width: 1536, height: 1024 },
-});
-const json = JSON.stringify(catalogue, null, 2);
+const crops = await cropImages({ atlas, source: generatedImageBytes });
 ```
 
 Satori measures preferred widths and label bounds. `@thi.ng/layout` packs each image and
@@ -198,8 +194,10 @@ Each catalogue entry records its image ID, row, column, crop bounds, label, prom
 context, and output reference when a crop exists. The catalogue contains JSON data;
 image bytes and font bytes remain separate.
 
-`cropImages` from `imagegen-guide/core/image` takes source bytes, a catalogue,
-optional image IDs, and an output format. It returns cropped image bytes with
+`cropImages` takes an atlas and source bytes, optional image IDs, and an output
+format. It reads the actual source dimensions and maps the atlas geometry to
+them. Advanced callers can pass a catalogue with detected or planned bounds.
+It returns cropped image bytes with
 their IDs and format. Omit IDs to extract all leaf entries. Select a group ID to
 extract its complete image region. Formats are PNG (default),
 JPEG, WebP, and AVIF. The caller saves files or imports bytes into an artifact store.

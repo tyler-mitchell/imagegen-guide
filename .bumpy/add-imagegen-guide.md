@@ -2,4 +2,4 @@
 imagegen-guide: minor
 ---
 
-Added headless image atlas guides, prompt context, catalogues, and ID-based crops as a publishable package.
+Added headless image atlas guides, Google Fonts labels, and ID-based crops through one package entry point.

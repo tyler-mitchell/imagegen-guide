@@ -16,13 +16,9 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./core": {
-      "types": "./dist/core.d.mts",
-      "import": "./dist/core.mjs"
-    },
-    "./core/image": {
-      "types": "./dist/image.d.mts",
-      "import": "./dist/image.mjs"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     },
     "./package.json": "./package.json"
   },
@@ -40,12 +36,14 @@
     "@techstark/opencv-js": "catalog:",
     "@thi.ng/layout": "catalog:",
     "arktype": "catalog:",
+    "css-tree": "^3.2.1",
+    "ofetch": "^1.5.1",
     "satori": "catalog:",
     "sharp": "catalog:"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.1",
-    "@fontsource/inter": "catalog:",
+    "@types/css-tree": "^3.2.0",
     "@types/node": "catalog:",
     "cmd-mesh": "catalog:",
     "publint": "^0.3.8",

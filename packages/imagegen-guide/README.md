@@ -4,30 +4,26 @@ Define an image atlas once. Produce its SVG guide, prompt, crop geometry, and im
 
 ```ts
 import { readFile } from "node:fs/promises";
-import { schema, createAtlas, createCatalogue } from "imagegen-guide/core";
-import { cropImages } from "imagegen-guide/core/image";
+import { createAtlas, cropImages } from "imagegen-guide";
 
-const config = schema.Config.assert({
-  id: "icons",
-  canvas: { width: 1200, aspectRatio: "3:2" },
-  grid: { columns: 2, gap: 24 },
-  cells: [
-    { id: "settings", aspectRatio: "1:1" },
-    { id: "search", aspectRatio: "4:3" },
-  ],
+const atlas = await createAtlas({
+  config: {
+    id: "icons",
+    canvas: { width: 1200, aspectRatio: "3:2" },
+    grid: { columns: 2, gap: 24 },
+    appearance: { label: { fontFamily: "Roboto", fontWeight: 700 } },
+    cells: [
+      { id: "settings", label: { text: "Settings" } },
+      { id: "search", aspectRatio: "4:3", label: { text: "Search" } },
+    ],
+  },
 });
 
-const atlas = await createAtlas({ config, fonts: [] });
 // Send atlas.schematic and atlas.prompt to the generator of your choice.
-const generatedImageBytes = await readFile("generated.png");
-const catalogue = createCatalogue({
-  layout: atlas.layout,
-  source: { id: "generation-01", width: 1200, height: 800 },
-});
-const crops = await cropImages({ source: generatedImageBytes, catalogue });
+const crops = await cropImages({ atlas, source: await readFile("generated.png") });
 // Each crop carries its image ID, bytes, and format.
 ```
 
-`core/image` uses Sharp. The layout entry point does not load it. Supply actual source dimensions; generated content can deviate from the guide. See the repository for complete examples and configuration controls.
+Google Fonts labels load by family, weight, and style. Callers can supply font bytes for offline use. Cropping reads actual source dimensions and loads Sharp only when called. Generated content can deviate from the guide. See the repository for complete examples and configuration controls.
 
 MIT licensed.

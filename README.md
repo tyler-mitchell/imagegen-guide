@@ -4,7 +4,7 @@
 
 # imagegen-guide
 
-**One atlas definition. A precise guide, prompt, catalogue, and crops.**
+**One configuration. A guide for generation and individual images from its output.**
 
 Headless image layout for generation workflows.
 
@@ -18,43 +18,34 @@ This guide comes from [mixed.json](packages/imagegen-guide/examples/configs/mixe
 
 ```ts
 import { readFile, writeFile } from "node:fs/promises";
-import { schema, createAtlas, createCatalogue } from "imagegen-guide/core";
-import { cropImages } from "imagegen-guide/core/image";
+import { createAtlas, cropImages } from "imagegen-guide";
 
-const config = schema.Config.assert({
-  id: "icons",
-  canvas: { width: 1200, aspectRatio: "3:2", padding: 48 },
-  grid: { columns: 2, gap: 32 },
-  appearance: { label: { fontFamily: "Inter" } },
-  cells: [
-    { id: "settings", label: { text: "Settings" } },
-    { id: "search", aspectRatio: "4:3", label: { text: "Search", position: "above" } },
-  ],
-});
-
-// Supply a TTF, OTF, or WOFF font. The core does not download fonts.
-const font = await readFile("Inter-Regular.woff");
 const atlas = await createAtlas({
-  config,
-  fonts: [{ name: "Inter", data: font, weight: 400, style: "normal" }],
+  config: {
+    id: "app-icons",
+    canvas: { width: 1200, aspectRatio: "4:3", padding: 48 },
+    grid: { columns: 2, gap: 24 },
+    appearance: { label: { fontFamily: "Roboto", fontWeight: 700 } },
+    cells: [
+      { id: "settings", label: { text: "Settings" } },
+      { id: "search", label: { text: "Search" } },
+      { id: "files", label: { text: "Files" } },
+      { id: "voice", label: { text: "Voice" } },
+    ],
+  },
 });
 
-await writeFile("guide.svg", atlas.schematic);
-console.log(atlas.prompt); // Provider-independent instructions and per-image context.
-
-// Supply the generated image and its actual pixel dimensions.
-const source = await readFile("generated.png");
-const catalogue = createCatalogue({
-  layout: atlas.layout,
-  source: { id: "generation-01", uri: "generated.png", width: 1200, height: 800 },
+// Give atlas.schematic and atlas.prompt to your image generator.
+// Then extract by ID from the image it returns. Source dimensions are read from the image.
+const [settings] = await cropImages({
+  atlas,
+  source: await readFile("generated.png"),
+  ids: ["settings"],
 });
-await writeFile("catalogue.json", JSON.stringify(catalogue, null, 2));
-
-const [settings] = await cropImages({ source, catalogue, ids: ["settings"] });
 await writeFile("settings.png", settings.bytes);
 ```
 
-`atlas.layout` owns the geometry. The schematic, prompt, and catalogue use that same layout. The catalogue maps its rectangles to the source resolution. The caller owns generation, file storage, and any UI.
+The guide, prompt, and crop geometry come from the same atlas. Google Fonts labels load by family and weight; callers can supply font bytes for offline use. Image generation and storage remain with the caller.
 
 ## See the output
 
@@ -98,16 +89,15 @@ Outputs go to `examples/output/`. The `--source` form reads the generated image'
 
 See the runnable [variant configuration](packages/imagegen-guide/examples/configs/variants.json) for a full atlas. Groups retain their hierarchy in the catalogue and can be cropped by ID. Cells also support mixed ratios, explicit dimensions, weighted columns, spans, scoped descriptions, labels, and appearance overrides.
 
-For separated foreground tiles on a uniform background, `detectCatalogue` from `imagegen-guide/core/image` can locate observed leaf bounds. `compareCatalogues` reports signed differences from planned bounds. Detection does not correct merged tiles or certify image quality.
+For separated foreground tiles on a uniform background, `detectCatalogue` can locate observed leaf bounds. `compareCatalogues` reports signed differences from planned bounds. Detection does not correct merged tiles or certify image quality.
 
 ## Package and development
 
 ```ts
-import { schema, createAtlas, createCatalogue, compareCatalogues } from "imagegen-guide/core";
-import { cropImages, detectCatalogue } from "imagegen-guide/core/image"; // Node image processing
+import { createAtlas, cropImages, createCatalogue, detectCatalogue } from "imagegen-guide";
 ```
 
-The layout entry point is independent of Sharp, UI frameworks, and generation providers. `core/image` uses Sharp for PNG, JPEG, WebP, and AVIF extraction.
+Importing the package for guide creation does not load Sharp. Image operations load it when called and can extract PNG, JPEG, WebP, or AVIF. `createCatalogue` exposes source-specific IDs and rectangles when a consumer needs JSON metadata or saved output references.
 
 ```sh
 pnpm install
