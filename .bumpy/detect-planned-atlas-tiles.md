@@ -2,4 +2,4 @@
 imagegen-guide: minor
 ---
 
-Detect sparse artwork within each planned tile and its surrounding gap, including transparent regions on an opaque atlas background or inside a source viewport.
+Detect separated artwork beyond planned crop bounds, and locate connected artwork within each tile's share of the surrounding gaps.

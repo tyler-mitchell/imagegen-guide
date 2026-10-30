@@ -47,7 +47,9 @@ const loadSelection = async ({
   if (catalogueFile && configFile)
     throw new RangeError("--config applies to --layout; an edited catalogue owns its crop bounds.");
   return {
-    layout: layoutFile ? schema.Layout.assert(JSON.parse(await readFile(layoutFile, "utf8"))) : undefined,
+    layout: layoutFile
+      ? schema.Layout.assert(JSON.parse(await readFile(layoutFile, "utf8")))
+      : undefined,
     catalogue: catalogueFile
       ? schema.Catalogue.assert(JSON.parse(await readFile(catalogueFile, "utf8")))
       : undefined,
@@ -102,6 +104,7 @@ const saveImages = async ({
   source,
   sourceFile,
   options,
+  size,
   ids,
 }: {
   out: string;
@@ -110,11 +113,17 @@ const saveImages = async ({
   source: Uint8Array;
   sourceFile: string;
   options?: Config["crop"];
+  size?: typeof schema.CropSize.infer;
   ids?: readonly string[];
 }) => {
   const name = encodeURIComponent(savedCatalogue?.atlasId ?? layout!.id);
   const format = options?.format ?? "png";
-  const { metadata, planned, catalogue: located } = await sourceCatalogues({
+  const outputSize = size ?? options?.size;
+  const {
+    metadata,
+    planned,
+    catalogue: located,
+  } = await sourceCatalogues({
     layout,
     catalogue: savedCatalogue,
     source,
@@ -129,17 +138,22 @@ const saveImages = async ({
       ...(image.children ? outputPaths(image.children) : []),
     ]);
   const paths = new Map(outputPaths(located.images));
+  const resolvedSize =
+    typeof outputSize === "number" ? { width: outputSize, height: outputSize } : outputSize;
   const withOutputs = (data: Catalogue): Catalogue => {
     const images = (entries: Catalogue["images"]): Catalogue["images"] =>
       entries.map((entry) => ({
         ...entry,
         output: paths.get(entry.id),
+        outputSize: paths.has(entry.id)
+          ? (resolvedSize ?? { width: entry.crop.width, height: entry.crop.height })
+          : undefined,
         ...(entry.children ? { children: images(entry.children) } : {}),
       }));
     return { ...data, source: { ...data.source, uri: sourceFile }, images: images(data.images) };
   };
   const catalogue = withOutputs(located);
-  const crops = await cropImages({ source, catalogue, format, ids });
+  const crops = await cropImages({ source, catalogue, format, size: outputSize, ids });
   await mkdir(`${out}/${name}`, { recursive: true });
   createFile(`${out}/${name}.catalogue.json`, JSON.stringify(catalogue, null, 2));
   if (options?.detect && !savedCatalogue) {
@@ -155,6 +169,7 @@ const saveImages = async ({
   return {
     source: sourceFile,
     dimensions: { width: metadata.width, height: metadata.height },
+    outputSize,
     catalogue: `${out}/${name}.catalogue.json`,
     images: crops.length,
   };
@@ -229,6 +244,7 @@ const example = program({
           cli: "--config",
           description: "Optional crop settings. Omit for planned bounds.",
         },
+        size: { type: "string.integer.parse | undefined", cli: "--size" },
         ids: {
           type: "string | undefined",
           cli: "--ids",
@@ -241,6 +257,7 @@ const example = program({
         catalogue: catalogueFile,
         source: sourceFile,
         config: configFile,
+        size,
         ids,
         out,
       }) => {
@@ -256,6 +273,7 @@ const example = program({
           source: await readFile(sourceFile),
           sourceFile,
           options,
+          size: size === undefined ? undefined : schema.CropSize.assert(size),
           ids: parseIds(ids),
         });
       },
@@ -298,7 +316,11 @@ const example = program({
         loop,
         out,
       }) => {
-        const { layout, catalogue: savedCatalogue, options } = await loadSelection({
+        const {
+          layout,
+          catalogue: savedCatalogue,
+          options,
+        } = await loadSelection({
           layoutFile,
           catalogueFile,
           configFile,
@@ -400,7 +422,13 @@ const example = program({
           `${out}/prompt.txt`,
           [
             ...(prompt ? [await readFile(prompt, "utf8")] : []),
-            `Image 1 is the annotated atlas to correct; image 2 is its original schematic. The guide outlines use ${stroke}. Restore every named image (${leaves(data.images).map((image) => image.id).join(", ")}) at the schematic's position and size. Keep all artwork inside its own rectangle. Correct missing or shifted images and blank strips; do not only erase the guide lines. Keep schematic labels outside image regions and remove the guide outlines from the final image.`,
+            `Image 1 is the annotated atlas to correct; image 2 is its original schematic. The guide outlines use ${stroke}. Restore every named image (${leaves(
+              data.images,
+            )
+              .map((image) => image.id)
+              .join(
+                ", ",
+              )}) at the schematic's position and size. Keep all artwork inside its own rectangle. Correct missing or shifted images and blank strips; do not only erase the guide lines. Keep schematic labels outside image regions and remove the guide outlines from the final image.`,
           ].join("\n"),
         );
         return { image: `${out}/overlay.png`, prompt: `${out}/prompt.txt`, catalogue };

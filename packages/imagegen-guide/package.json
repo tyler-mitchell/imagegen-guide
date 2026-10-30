@@ -8,6 +8,9 @@
     "url": "git+https://github.com/tyler-mitchell/imagegen-guide.git",
     "directory": "packages/imagegen-guide"
   },
+  "bin": {
+    "imagegen-guide": "./dist/cli.mjs"
+  },
   "files": [
     "dist",
     "README.md",
@@ -15,9 +18,6 @@
   ],
   "type": "module",
   "sideEffects": false,
-  "bin": {
-    "imagegen-guide": "./dist/cli.mjs"
-  },
   "exports": {
     ".": {
       "types": "./dist/index.d.mts",
@@ -43,6 +43,7 @@
     "cmd-mesh": "catalog:",
     "css-tree": "^3.2.1",
     "defu": "catalog:",
+    "munkres": "^2.1.1",
     "ofetch": "^1.5.1",
     "package-management": "^0.1.0",
     "satori": "catalog:",

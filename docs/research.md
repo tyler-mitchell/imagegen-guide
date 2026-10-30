@@ -161,10 +161,13 @@ packing. Source: [pixel-grid rounding](https://github.com/vercel/satori#pixel-gr
 
 ## Source-region detection
 
-OpenCV's `inRange` compares the source to an opaque outer background.
-`extractChannel` and `threshold` exclude transparent pixels; a transparent
-outer background uses the alpha mask alone. `connectedComponentsWithStats`
-reports unassigned regions.
+OpenCV's `inRange` compares the source to an opaque outer background. Sharp's
+`extractChannel("alpha")` supplies alpha pixels to OpenCV's `threshold`; a
+transparent outer background uses that alpha mask alone.
+`connectedComponentsWithStats` reports unassigned regions. When the significant
+component count equals the number of leaves, Munkres assigns them one-to-one
+by minimum center distance. Otherwise, planned regions divide the remaining
+foreground.
 
 ```ts
 const tile = mask.roi(new cv.Rect(left, top, right - left, bottom - top));
@@ -182,6 +185,8 @@ Extraction preserves source pixels.
 Sources: [OpenCV shape analysis](https://docs.opencv.org/4.13.0/d3/dc0/group__imgproc__shape.html),
 [OpenCV array operations](https://docs.opencv.org/4.13.0/d2/de8/group__core__array.html),
 [OpenCV thresholding](https://docs.opencv.org/4.13.0/d7/d1b/group__imgproc__misc.html),
+[Sharp channel operations](https://sharp.pixelplumbing.com/api-channel/#extractchannel),
+[Munkres assignment API](https://github.com/havelessbemore/munkres#usage),
 and [Sharp animated joins](https://sharp.pixelplumbing.com/api-constructor/#join).
 
 ## GIF timing and task inputs

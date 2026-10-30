@@ -58,6 +58,7 @@ vp run cli -- crop --layout /tmp/icon-job/icon-atlas-light.layout.json --source 
 ```
 
 The result gives the source dimensions, catalogue path, and crop count. The images are in `/tmp/icon-job/crops/icon-atlas/<id>.png`. The catalogue has each crop size. Do not run a separate image-size command.
+If the consumer needs square 256×256 files, add `--size 256` to the crop command. This fits complete artwork in each output and pads any unequal sides with transparency.
 
 ## Make a GIF when needed
 

@@ -1,4 +1,5 @@
 import satori from "satori";
+import { munkres } from "munkres";
 import { createCatalogue } from "./catalogue.ts";
 import { schema, type Atlas, type Catalogue, type Crop, type Rectangle } from "./schema.ts";
 
@@ -94,6 +95,7 @@ const foregroundMask = async ({
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
+  const alphaData = await sharp(source).ensureAlpha().extractChannel("alpha").raw().toBuffer();
   const backgroundOffset = 4 * ((viewport?.y ?? 0) * info.width + (viewport?.x ?? 0));
   const background = options.background
     ? await sharp({
@@ -125,14 +127,11 @@ const foregroundMask = async ({
         ]),
       ),
     );
-  const rangeBounds = transparent
-    ? undefined
-    : { low: range(-threshold), high: range(threshold) };
-  const alpha = new cv.Mat(),
+  const rangeBounds = transparent ? undefined : { low: range(-threshold), high: range(threshold) };
+  const alpha = cv.matFromArray(info.height, info.width, cv.CV_8UC1, alphaData),
     alphaMask = new cv.Mat(),
     mask = new cv.Mat();
   try {
-    cv.extractChannel(image, alpha, 3);
     cv.threshold(alpha, transparent ? mask : alphaMask, alphaThreshold, 255, cv.THRESH_BINARY);
     if (rangeBounds) {
       cv.inRange(image, rangeBounds.low, rangeBounds.high, mask);
@@ -210,66 +209,90 @@ export async function detectCatalogue({
   catalogue: Catalogue;
   options?: typeof schema.DetectionOptions.infer;
 }): Promise<Catalogue> {
-  const { cv, mask } = await foregroundMask({
-    source,
-    options,
-    viewport: catalogue.source.viewport,
-  });
   const targets = leaves(catalogue.images);
   const minArea = options.minArea ?? 1;
+  const regions = await detectRegions({ source, catalogue, options });
   const viewport = catalogue.source.viewport ?? {
     x: 0,
     y: 0,
     width: catalogue.source.width,
     height: catalogue.source.height,
   };
-  const detected = (() => {
-    try {
-      return new Map(
-        targets.map(({ id, crop }) => {
-          const neighbors = targets.filter((image) => image.id !== id).map((image) => image.crop);
-          const left = Math.max(
-            viewport.x,
-            ...neighbors
-              .filter((neighbor) => neighbor.x + neighbor.width <= crop.x)
-              .map((neighbor) => Math.round((neighbor.x + neighbor.width + crop.x) / 2)),
-          );
-          const top = Math.max(
-            viewport.y,
-            ...neighbors
-              .filter((neighbor) => neighbor.y + neighbor.height <= crop.y)
-              .map((neighbor) => Math.round((neighbor.y + neighbor.height + crop.y) / 2)),
-          );
-          const right = Math.min(
-            viewport.x + viewport.width,
-            ...neighbors
-              .filter((neighbor) => crop.x + crop.width <= neighbor.x)
-              .map((neighbor) => Math.round((crop.x + crop.width + neighbor.x) / 2)),
-          );
-          const bottom = Math.min(
-            viewport.y + viewport.height,
-            ...neighbors
-              .filter((neighbor) => crop.y + crop.height <= neighbor.y)
-              .map((neighbor) => Math.round((crop.y + crop.height + neighbor.y) / 2)),
-          );
-          const tile = mask.roi(new cv.Rect(left, top, right - left, bottom - top));
+  const detected =
+    regions.length === targets.length
+      ? new Map(
+          munkres(
+            targets.map(({ crop }) =>
+              regions.map((region) => {
+                const x = crop.x + crop.width / 2 - region.x - region.width / 2;
+                const y = crop.y + crop.height / 2 - region.y - region.height / 2;
+                return x * x + y * y;
+              }),
+            ),
+          ).map(([target, match]) => {
+            const { x, y, width, height } = regions[match]!;
+            return [targets[target]!.id, { x, y, width, height }] as const;
+          }),
+        )
+      : await (async () => {
+          const { cv, mask } = await foregroundMask({
+            source,
+            options,
+            viewport: catalogue.source.viewport,
+          });
           try {
-            const area = cv.countNonZero(tile);
-            if (area === 0 || area < minArea) return [id, undefined] as const;
-            const bounds = cv.boundingRect(tile);
-            return [
-              id,
-              { x: left + bounds.x, y: top + bounds.y, width: bounds.width, height: bounds.height },
-            ] as const;
+            return new Map(
+              targets.map(({ id, crop }) => {
+                const neighbors = targets
+                  .filter((image) => image.id !== id)
+                  .map((image) => image.crop);
+                const left = Math.max(
+                  viewport.x,
+                  ...neighbors
+                    .filter((neighbor) => neighbor.x + neighbor.width <= crop.x)
+                    .map((neighbor) => Math.round((neighbor.x + neighbor.width + crop.x) / 2)),
+                );
+                const top = Math.max(
+                  viewport.y,
+                  ...neighbors
+                    .filter((neighbor) => neighbor.y + neighbor.height <= crop.y)
+                    .map((neighbor) => Math.round((neighbor.y + neighbor.height + crop.y) / 2)),
+                );
+                const right = Math.min(
+                  viewport.x + viewport.width,
+                  ...neighbors
+                    .filter((neighbor) => crop.x + crop.width <= neighbor.x)
+                    .map((neighbor) => Math.round((crop.x + crop.width + neighbor.x) / 2)),
+                );
+                const bottom = Math.min(
+                  viewport.y + viewport.height,
+                  ...neighbors
+                    .filter((neighbor) => crop.y + crop.height <= neighbor.y)
+                    .map((neighbor) => Math.round((crop.y + crop.height + neighbor.y) / 2)),
+                );
+                const tile = mask.roi(new cv.Rect(left, top, right - left, bottom - top));
+                try {
+                  const area = cv.countNonZero(tile);
+                  if (area === 0 || area < minArea) return [id, undefined] as const;
+                  const bounds = cv.boundingRect(tile);
+                  return [
+                    id,
+                    {
+                      x: left + bounds.x,
+                      y: top + bounds.y,
+                      width: bounds.width,
+                      height: bounds.height,
+                    },
+                  ] as const;
+                } finally {
+                  tile.delete();
+                }
+              }),
+            );
           } finally {
-            tile.delete();
+            mask.delete();
           }
-        }),
-      );
-    } finally {
-      mask.delete();
-    }
-  })();
+        })();
   const missing = targets.filter((image) => !detected.get(image.id)).map((image) => image.id);
   if (missing.length)
     throw new RangeError(
@@ -310,13 +333,16 @@ export async function cropImages<const Id extends string = string>({
   source,
   ids,
   format = "png",
+  size,
   ...selection
 }: {
   source: Uint8Array;
   ids?: readonly NoInfer<Id>[];
   format?: typeof schema.ImageFormat.infer;
+  size?: typeof schema.CropSize.infer;
 } & CropSelection<Id>): Promise<Crop[]> {
   const { default: sharp } = await import("sharp");
+  const outputSize = typeof size === "number" ? { width: size, height: size } : size;
   const metadata = selection.catalogue ? undefined : await sharp(source).metadata();
   const planned =
     selection.catalogue ??
@@ -345,11 +371,24 @@ export async function cropImages<const Id extends string = string>({
   const crops: Crop[] = [];
   for (const image of images) {
     const { x: left, y: top, width, height } = image.crop;
-    const bytes = await sharp(source)
-      .extract({ left, top, width, height })
+    const extracted = sharp(source).extract({ left, top, width, height });
+    const bytes = await (
+      outputSize
+        ? extracted.resize(outputSize.width, outputSize.height, {
+            fit: "contain",
+            background: "#00000000",
+          })
+        : extracted
+    )
       .toFormat(format)
       .toBuffer();
-    crops.push({ id: image.id, bytes, format, crop: image.crop });
+    crops.push({
+      id: image.id,
+      bytes,
+      format,
+      crop: image.crop,
+      size: outputSize ?? { width, height },
+    });
   }
   return crops;
 }

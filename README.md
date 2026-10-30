@@ -41,8 +41,9 @@ const [settings] = await cropImages({
   atlas,
   source: await readFile("generated.png"),
   ids: ["settings"],
+  size: 256,
 });
-// settings.bytes is the PNG; settings.crop is its source rectangle.
+// settings.bytes is 256×256; settings.crop is its source rectangle.
 ```
 
 `atlas.imageIds` lists the configured IDs. With a TypeScript config literal, editors use those IDs for `cropImages.ids` and GIF frame IDs. `cropImages` uses the guide rectangles by default and scales them to the source dimensions. It preserves source alpha; it does not remove backgrounds or fix artwork outside a rectangle.

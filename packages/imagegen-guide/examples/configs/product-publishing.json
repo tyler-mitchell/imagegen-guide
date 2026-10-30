@@ -3,12 +3,13 @@
   "layout": "grid",
   "canvas": { "width": 1024, "height": 1024, "padding": 24 },
   "grid": { "columns": [608, 320], "rows": [366, 584], "gap": 24, "padding": 0 },
+  "crop": { "detect": {} },
   "appearance": {
     "background": "#e9eef4",
     "image": { "fill": "#ffffff", "strokeWidth": 0 },
     "label": { "position": "below", "fontSize": 14, "lineHeight": 20, "gap": 4 }
   },
-  "prompt": "Create four coherent editorial visuals for the imagegen-guide open-source package. Use an elegant restrained technical visual language: warm white surfaces, dark graphite text, precise blue measurement accents. Each image must remain useful when cropped and shown alone. Do not put guide labels, borders, or coordinate text inside the image regions.",
+  "prompt": "Create four coherent product visuals for the imagegen-guide open-source package. Match the supplied cover's midnight navy background, white type, bright blue accents, and precise bordered panels, but compose each region for its own output size. Each image must remain useful when cropped and shown alone. Do not put guide labels, borders, or coordinate text inside the image regions.",
   "cells": [
     {
       "id": "workflow-hero",

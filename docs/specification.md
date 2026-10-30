@@ -234,6 +234,11 @@ JPEG, WebP, and AVIF. The caller saves files or imports bytes into an artifact s
 Unknown IDs raise `RangeError` instead of returning fewer images.
 PNG crops preserve source alpha. They do not remove opaque backgrounds or content
 that crosses the planned crop boundary.
+Set `size: 256` for square 256×256 outputs, or supply `{ width, height }`.
+Sharp contains the complete source crop within that output size. PNG preserves
+transparent padding when the aspect ratios differ. Each `Crop` includes the
+source `crop` rectangle and the final pixel `size`. The crop command accepts
+`--size 256`; its saved catalogue records each exported file's `outputSize`.
 
 `createGif({ atlas, source })` uses every leaf image in layout order. The default
 delay is 100 ms per frame and `loop: 0` repeats indefinitely. Pass `delay` to
@@ -245,9 +250,11 @@ a catalogue instead of an atlas. Frames use a shared transparent canvas sized
 to the largest crop; smaller crops are centered without resizing. The caller
 saves the returned GIF bytes.
 
-`detectCatalogue({ source, catalogue, options })` locates foreground inside each
-planned leaf and the nearest half of its gaps to other leaves. Its search areas
-cannot overlap. OpenCV finds the nonzero bounds inside each search area. The
+`detectCatalogue({ source, catalogue, options })` first matches sufficiently
+large separated foreground components to the planned leaves. When the component
+count differs from the leaf count, it locates foreground inside each planned
+leaf and the nearest half of its gaps to other leaves. Those search areas
+cannot overlap. The
 default background is the first pixel of the source viewport, or the first source
 pixel when no viewport is set; `crop.detect.background` overrides it. For a transparent background, alpha alone defines foreground. For an opaque
 background, foreground must differ from that color and pass the alpha threshold.
