@@ -200,9 +200,7 @@ export async function detectCatalogue({
 }): Promise<Catalogue> {
   const { cv, mask } = await foregroundMask({ source, options });
   const targets = leaves(catalogue.images);
-  const minArea =
-    options.minArea ??
-    Math.min(...targets.map((image) => image.crop.width * image.crop.height)) / 4;
+  const minArea = options.minArea ?? 1;
   const viewport = catalogue.source.viewport ?? {
     x: 0,
     y: 0,

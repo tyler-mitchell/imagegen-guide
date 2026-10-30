@@ -248,9 +248,11 @@ cannot overlap. OpenCV finds the nonzero bounds inside each search area. The
 default background is the first source pixel; `crop.detect.background` overrides
 it. For a transparent background, alpha alone defines foreground. For an opaque
 background, foreground must differ from that color and pass the alpha threshold.
-The default color threshold is 10; `alphaThreshold` is 127. The default minimum
-foreground area is one quarter of the smallest planned leaf area. Set
-`crop.detect.threshold`, `alphaThreshold`, or `minArea` to change these values.
+The default color threshold is 10; `alphaThreshold` is 127. Each tile needs at
+least one foreground pixel by default. Set `crop.detect.threshold`,
+`alphaThreshold`, or `minArea` to change these values. `detectRegions` filters
+unassigned components below one quarter of the smallest planned leaf area by
+default; its `minArea` option changes that threshold.
 
 Detected leaf bounds describe source pixels without padding or resizing. Detected
 group bounds enclose their detected descendants; labels do not enter those
