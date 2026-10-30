@@ -112,8 +112,12 @@ Sharp accepts integer pixel rectangles and supplies image extraction and encodin
 It accepts SVG input for raster output. Its `join.animated` option joins an
 ordered array of images into GIF frames. Sharp loads only when an image operation
 runs; guide creation does not load it.
+Sharp's `resize` accepts `fit: "contain"` and a named kernel. The crop API uses
+transparent containment and exposes Sharp's kernel names; `nearest` preserves
+hard pixel boundaries when reducing an enlarged texture atlas.
 
 Sources: [extraction](https://sharp.pixelplumbing.com/api-resize/#extract),
+[resize](https://sharp.pixelplumbing.com/api-resize/#resize),
 [input](https://sharp.pixelplumbing.com/api-constructor/), and
 [output](https://sharp.pixelplumbing.com/api-output/).
 

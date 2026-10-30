@@ -239,6 +239,8 @@ Sharp contains the complete source crop within that output size. PNG preserves
 transparent padding when the aspect ratios differ. Each `Crop` includes the
 source `crop` rectangle and the final pixel `size`. The crop command accepts
 `--size 256`; its saved catalogue records each exported file's `outputSize`.
+Set `kernel: "nearest"` or `--kernel nearest` when reducing pixel art to an
+exact texture size. The default resize kernel is Sharp's `lanczos3`.
 
 `createGif({ atlas, source })` uses every leaf image in layout order. The default
 delay is 100 ms per frame and `loop: 0` repeats indefinitely. Pass `delay` to

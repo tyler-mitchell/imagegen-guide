@@ -105,6 +105,7 @@ const saveImages = async ({
   sourceFile,
   options,
   size,
+  kernel,
   ids,
 }: {
   out: string;
@@ -114,11 +115,13 @@ const saveImages = async ({
   sourceFile: string;
   options?: Config["crop"];
   size?: typeof schema.CropSize.infer;
+  kernel?: typeof schema.ResizeKernel.infer;
   ids?: readonly string[];
 }) => {
   const name = encodeURIComponent(savedCatalogue?.atlasId ?? layout!.id);
   const format = options?.format ?? "png";
   const outputSize = size ?? options?.size;
+  const outputKernel = kernel ?? options?.kernel;
   const {
     metadata,
     planned,
@@ -153,7 +156,14 @@ const saveImages = async ({
     return { ...data, source: { ...data.source, uri: sourceFile }, images: images(data.images) };
   };
   const catalogue = withOutputs(located);
-  const crops = await cropImages({ source, catalogue, format, size: outputSize, ids });
+  const crops = await cropImages({
+    source,
+    catalogue,
+    format,
+    size: outputSize,
+    kernel: outputKernel,
+    ids,
+  });
   await mkdir(`${out}/${name}`, { recursive: true });
   createFile(`${out}/${name}.catalogue.json`, JSON.stringify(catalogue, null, 2));
   if (options?.detect && !savedCatalogue) {
@@ -245,6 +255,7 @@ const example = program({
           description: "Optional crop settings. Omit for planned bounds.",
         },
         size: { type: "string.integer.parse | undefined", cli: "--size" },
+        kernel: { type: "string | undefined", cli: "--kernel" },
         ids: {
           type: "string | undefined",
           cli: "--ids",
@@ -258,6 +269,7 @@ const example = program({
         source: sourceFile,
         config: configFile,
         size,
+        kernel,
         ids,
         out,
       }) => {
@@ -274,6 +286,7 @@ const example = program({
           sourceFile,
           options,
           size: size === undefined ? undefined : schema.CropSize.assert(size),
+          kernel: kernel === undefined ? undefined : schema.ResizeKernel.assert(kernel),
           ids: parseIds(ids),
         });
       },

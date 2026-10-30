@@ -25,9 +25,12 @@ export const schema = type.module({
     "detect?": "DetectionOptions",
     "viewport?": "Rectangle",
     "size?": "CropSize",
+    "kernel?": "ResizeKernel",
   },
   PixelSize: { width: "number.integer > 0", height: "number.integer > 0" },
   CropSize: "number.integer > 0 | PixelSize",
+  ResizeKernel:
+    "'nearest' | 'linear' | 'cubic' | 'mitchell' | 'lanczos2' | 'lanczos3' | 'mks2013' | 'mks2021'",
   OutputOptions: {
     "background?": "string",
     "transparentCrops?": "boolean",

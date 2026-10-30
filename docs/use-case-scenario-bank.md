@@ -14,7 +14,7 @@ These five jobs exercise different output contracts: app icons, an exact UV text
 - **Consumer and input:** A Minecraft player needs a usable classic-model 64×64 PNG skin, with the base and outer layers mapped to the canonical face positions. The authored input is `packages/imagegen-guide/examples/configs/minecraft-skin.json`; it specifies a 1024×1024 enlarged UV region, external coordinate key, unmapped white texels, and a single brown-haired adventurer design.
 - **Public workflow:** Generate the guide and prompt from that config; give both to `image_gen`; crop only `skin-uv` from the exact returned PNG; reduce its logical 16× UV grid to a 64×64 nearest-neighbor skin in the consuming skin workflow; open that PNG on a classic-model viewer. The external key must never enter the final skin.
 - **Required result:** One 64×64 PNG whose head, torso, arms, legs, and outer layers render in their intended model positions. A visually attractive collage, an unmapped pixel painted as anatomy, a shifted UV face, or a crop that includes the coordinate key fails. The 1024×1024 crop alone is not the deliverable.
-- **Evidence status:** A generated candidate and catalogue are retained under `examples/output/minecraft-canonical-generation/`. They do not establish a valid 64×64 skin or model-viewer outcome.
+- **Evidence status:** A generated 1448×1086 candidate is retained under `examples/output/minecraft-canonical-generation/`. The `skin-uv` crop exported at 64×64 with nearest-neighbor sampling. This does not establish a valid model-viewer outcome.
 
 ## 3. One hundred icon families with four states
 
