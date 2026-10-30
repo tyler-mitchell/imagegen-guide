@@ -1,47 +1,45 @@
 {
   "canvas": {
-    "width": 2048,
-    "aspectRatio": "1:1",
-    "padding": 24
+    "width": 1024,
+    "aspectRatio": "2:3",
+    "padding": 0
   },
   "grid": {
-    "columns": 10,
-    "gap": 12
+    "columns": 2,
+    "gap": 0,
+    "padding": 0
   },
-  "crop": { "detect": {} },
   "appearance": {
+    "background": "#ffffff",
     "image": {
       "fill": "#ffffff",
       "backgroundImage": "linear-gradient(45deg, #cbd5e1 25%, transparent 25%), linear-gradient(-45deg, #cbd5e1 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #cbd5e1 75%), linear-gradient(-45deg, transparent 75%, #cbd5e1 75%)",
       "backgroundSize": "16px 16px",
       "backgroundPosition": "0 0, 0 8px, 8px -8px, -8px 0",
       "stroke": "#111827",
-      "strokeWidth": 2
-    },
-    "label": {
-      "fontFamily": "Inter",
-      "fontSize": 12,
-      "lineHeight": 16,
-      "gap": 4
+      "strokeWidth": 2,
+      "radius": 0
     }
   },
-  "prompt": "Image 1 is the fixed schematic; image 2 supplies icon style only. Fill every square image region on this page. In every family, top-left is Light, top-right is Dark, bottom-left is Active, and bottom-right is Disabled. Repeat the same symbol in all four positions. Light uses a pale tile; Dark uses a dark tile; Active uses a colored accent; Disabled uses subdued gray. Preserve the schematic's family grouping, image order, sizes, positions, gaps, margins, and family captions exactly. Fill each image region edge-to-edge, with no inset or exterior shadow. Use crisp symbols, rounded tiles, and soft internal depth. Remove guide borders and placeholder fills. Add no variant captions. Do not copy the style reference's layout or captions. Scale the whole schematic uniformly if output resolution differs.",
+  "prompt": "Create a four-state icon sprite sheet in the attached 4-column, 6-row lattice. Each square is 256 by 256 pixels at the requested 1024 by 1536 resolution. Each family occupies a 2 by 2 block: Light and Dark above Active and Disabled. Repeat exactly the same symbol in all four states. Fill the families shown by the guide, left to right and top to bottom. Leave unassigned squares plain white. Preserve every square position and boundary. Use solid backgrounds reaching all four edges and sharp corners. No rounded tiles, gutters, padding, margins, captions, or exterior shadows. Replace checkerboards and guide lines with artwork. If output resolution differs, scale the entire lattice uniformly.",
   "id": "100-icon-families",
   "defaults": {
-    "image": { "backgroundImage": "none", "strokeWidth": 0 }
+    "aspectRatio": "1:1",
+    "label": false
   },
   "cells": [
     {
       "id": "settings",
-      "label": {
-        "text": "Settings"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Settings",
+      "prompt": "The settings symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -49,34 +47,35 @@
         "cells": [
           {
             "id": "settings-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "settings-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "settings-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "settings-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "search",
-      "label": {
-        "text": "Search"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Search",
+      "prompt": "The search symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -84,34 +83,35 @@
         "cells": [
           {
             "id": "search-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "search-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "search-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "search-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "home",
-      "label": {
-        "text": "Home"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Home",
+      "prompt": "The home symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -119,34 +119,35 @@
         "cells": [
           {
             "id": "home-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "home-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "home-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "home-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "files",
-      "label": {
-        "text": "Files"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Files",
+      "prompt": "The files symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -154,34 +155,35 @@
         "cells": [
           {
             "id": "files-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "files-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "files-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "files-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "folder",
-      "label": {
-        "text": "Folder"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Folder",
+      "prompt": "The folder symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -189,34 +191,35 @@
         "cells": [
           {
             "id": "folder-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "folder-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "folder-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "folder-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "document",
-      "label": {
-        "text": "Document"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Document",
+      "prompt": "The document symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -224,34 +227,35 @@
         "cells": [
           {
             "id": "document-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "document-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "document-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "document-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "calendar",
-      "label": {
-        "text": "Calendar"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Calendar",
+      "prompt": "The calendar symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -259,34 +263,35 @@
         "cells": [
           {
             "id": "calendar-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "calendar-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "calendar-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "calendar-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "clock",
-      "label": {
-        "text": "Clock"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Clock",
+      "prompt": "The clock symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -294,34 +299,35 @@
         "cells": [
           {
             "id": "clock-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "clock-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "clock-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "clock-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "camera",
-      "label": {
-        "text": "Camera"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Camera",
+      "prompt": "The camera symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -329,34 +335,35 @@
         "cells": [
           {
             "id": "camera-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "camera-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "camera-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "camera-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "photos",
-      "label": {
-        "text": "Photos"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Photos",
+      "prompt": "The photos symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -364,34 +371,35 @@
         "cells": [
           {
             "id": "photos-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "photos-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "photos-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "photos-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "video",
-      "label": {
-        "text": "Video"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Video",
+      "prompt": "The video symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -399,34 +407,35 @@
         "cells": [
           {
             "id": "video-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "video-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "video-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "video-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "music",
-      "label": {
-        "text": "Music"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Music",
+      "prompt": "The music symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -434,34 +443,35 @@
         "cells": [
           {
             "id": "music-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "music-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "music-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "music-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "microphone",
-      "label": {
-        "text": "Microphone"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Microphone",
+      "prompt": "The microphone symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -469,34 +479,35 @@
         "cells": [
           {
             "id": "microphone-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "microphone-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "microphone-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "microphone-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "speaker",
-      "label": {
-        "text": "Speaker"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Speaker",
+      "prompt": "The speaker symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -504,34 +515,35 @@
         "cells": [
           {
             "id": "speaker-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "speaker-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "speaker-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "speaker-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "headphones",
-      "label": {
-        "text": "Headphones"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Headphones",
+      "prompt": "The headphones symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -539,34 +551,35 @@
         "cells": [
           {
             "id": "headphones-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "headphones-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "headphones-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "headphones-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "phone",
-      "label": {
-        "text": "Phone"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Phone",
+      "prompt": "The phone symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -574,34 +587,35 @@
         "cells": [
           {
             "id": "phone-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "phone-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "phone-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "phone-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "messages",
-      "label": {
-        "text": "Messages"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Messages",
+      "prompt": "The messages symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -609,34 +623,35 @@
         "cells": [
           {
             "id": "messages-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "messages-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "messages-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "messages-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "mail",
-      "label": {
-        "text": "Mail"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Mail",
+      "prompt": "The mail symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -644,34 +659,35 @@
         "cells": [
           {
             "id": "mail-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "mail-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "mail-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "mail-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "contacts",
-      "label": {
-        "text": "Contacts"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Contacts",
+      "prompt": "The contacts symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -679,34 +695,35 @@
         "cells": [
           {
             "id": "contacts-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "contacts-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "contacts-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "contacts-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "user",
-      "label": {
-        "text": "User"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "User",
+      "prompt": "The user symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -714,34 +731,35 @@
         "cells": [
           {
             "id": "user-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "user-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "user-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "user-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "users",
-      "label": {
-        "text": "Users"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Users",
+      "prompt": "The users symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -749,34 +767,35 @@
         "cells": [
           {
             "id": "users-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "users-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "users-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "users-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "lock",
-      "label": {
-        "text": "Lock"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Lock",
+      "prompt": "The lock symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -784,34 +803,35 @@
         "cells": [
           {
             "id": "lock-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "lock-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "lock-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "lock-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "key",
-      "label": {
-        "text": "Key"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Key",
+      "prompt": "The key symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -819,34 +839,35 @@
         "cells": [
           {
             "id": "key-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "key-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "key-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "key-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "shield",
-      "label": {
-        "text": "Shield"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Shield",
+      "prompt": "The shield symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -854,34 +875,35 @@
         "cells": [
           {
             "id": "shield-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "shield-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "shield-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "shield-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "bell",
-      "label": {
-        "text": "Bell"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Bell",
+      "prompt": "The bell symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -889,34 +911,35 @@
         "cells": [
           {
             "id": "bell-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "bell-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "bell-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "bell-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "bookmark",
-      "label": {
-        "text": "Bookmark"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Bookmark",
+      "prompt": "The bookmark symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -924,34 +947,35 @@
         "cells": [
           {
             "id": "bookmark-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "bookmark-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "bookmark-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "bookmark-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "star",
-      "label": {
-        "text": "Star"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Star",
+      "prompt": "The star symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -959,34 +983,35 @@
         "cells": [
           {
             "id": "star-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "star-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "star-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "star-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "heart",
-      "label": {
-        "text": "Heart"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Heart",
+      "prompt": "The heart symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -994,34 +1019,35 @@
         "cells": [
           {
             "id": "heart-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "heart-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "heart-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "heart-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "flag",
-      "label": {
-        "text": "Flag"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Flag",
+      "prompt": "The flag symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1029,34 +1055,35 @@
         "cells": [
           {
             "id": "flag-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "flag-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "flag-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "flag-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "pin",
-      "label": {
-        "text": "Pin"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Pin",
+      "prompt": "The pin symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1064,34 +1091,35 @@
         "cells": [
           {
             "id": "pin-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "pin-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "pin-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "pin-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "map",
-      "label": {
-        "text": "Map"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Map",
+      "prompt": "The map symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1099,34 +1127,35 @@
         "cells": [
           {
             "id": "map-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "map-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "map-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "map-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "compass",
-      "label": {
-        "text": "Compass"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Compass",
+      "prompt": "The compass symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1134,34 +1163,35 @@
         "cells": [
           {
             "id": "compass-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "compass-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "compass-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "compass-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "globe",
-      "label": {
-        "text": "Globe"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Globe",
+      "prompt": "The globe symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1169,34 +1199,35 @@
         "cells": [
           {
             "id": "globe-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "globe-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "globe-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "globe-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "browser",
-      "label": {
-        "text": "Browser"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Browser",
+      "prompt": "The browser symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1204,34 +1235,35 @@
         "cells": [
           {
             "id": "browser-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "browser-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "browser-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "browser-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "cloud",
-      "label": {
-        "text": "Cloud"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Cloud",
+      "prompt": "The cloud symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1239,34 +1271,35 @@
         "cells": [
           {
             "id": "cloud-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "cloud-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "cloud-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "cloud-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "download",
-      "label": {
-        "text": "Download"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Download",
+      "prompt": "The download symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1274,34 +1307,35 @@
         "cells": [
           {
             "id": "download-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "download-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "download-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "download-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "upload",
-      "label": {
-        "text": "Upload"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Upload",
+      "prompt": "The upload symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1309,34 +1343,35 @@
         "cells": [
           {
             "id": "upload-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "upload-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "upload-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "upload-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "sync",
-      "label": {
-        "text": "Sync"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Sync",
+      "prompt": "The sync symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1344,34 +1379,35 @@
         "cells": [
           {
             "id": "sync-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "sync-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "sync-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "sync-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "refresh",
-      "label": {
-        "text": "Refresh"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Refresh",
+      "prompt": "The refresh symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1379,34 +1415,35 @@
         "cells": [
           {
             "id": "refresh-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "refresh-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "refresh-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "refresh-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "share",
-      "label": {
-        "text": "Share"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Share",
+      "prompt": "The share symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1414,34 +1451,35 @@
         "cells": [
           {
             "id": "share-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "share-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "share-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "share-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "link",
-      "label": {
-        "text": "Link"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Link",
+      "prompt": "The link symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1449,34 +1487,35 @@
         "cells": [
           {
             "id": "link-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "link-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "link-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "link-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "copy",
-      "label": {
-        "text": "Copy"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Copy",
+      "prompt": "The copy symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1484,34 +1523,35 @@
         "cells": [
           {
             "id": "copy-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "copy-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "copy-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "copy-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "paste",
-      "label": {
-        "text": "Paste"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Paste",
+      "prompt": "The paste symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1519,34 +1559,35 @@
         "cells": [
           {
             "id": "paste-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "paste-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "paste-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "paste-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "cut",
-      "label": {
-        "text": "Cut"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Cut",
+      "prompt": "The cut symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1554,34 +1595,35 @@
         "cells": [
           {
             "id": "cut-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "cut-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "cut-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "cut-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "trash",
-      "label": {
-        "text": "Trash"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Trash",
+      "prompt": "The trash symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1589,34 +1631,35 @@
         "cells": [
           {
             "id": "trash-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "trash-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "trash-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "trash-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "archive",
-      "label": {
-        "text": "Archive"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Archive",
+      "prompt": "The archive symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1624,34 +1667,35 @@
         "cells": [
           {
             "id": "archive-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "archive-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "archive-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "archive-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "save",
-      "label": {
-        "text": "Save"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Save",
+      "prompt": "The save symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1659,34 +1703,35 @@
         "cells": [
           {
             "id": "save-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "save-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "save-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "save-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "print",
-      "label": {
-        "text": "Print"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Print",
+      "prompt": "The print symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1694,34 +1739,35 @@
         "cells": [
           {
             "id": "print-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "print-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "print-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "print-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "edit",
-      "label": {
-        "text": "Edit"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Edit",
+      "prompt": "The edit symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1729,34 +1775,35 @@
         "cells": [
           {
             "id": "edit-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "edit-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "edit-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "edit-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "draw",
-      "label": {
-        "text": "Draw"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Draw",
+      "prompt": "The draw symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1764,34 +1811,35 @@
         "cells": [
           {
             "id": "draw-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "draw-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "draw-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "draw-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "brush",
-      "label": {
-        "text": "Brush"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Brush",
+      "prompt": "The brush symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1799,34 +1847,35 @@
         "cells": [
           {
             "id": "brush-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "brush-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "brush-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "brush-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "palette",
-      "label": {
-        "text": "Palette"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Palette",
+      "prompt": "The palette symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1834,34 +1883,35 @@
         "cells": [
           {
             "id": "palette-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "palette-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "palette-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "palette-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "layers",
-      "label": {
-        "text": "Layers"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Layers",
+      "prompt": "The layers symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1869,34 +1919,35 @@
         "cells": [
           {
             "id": "layers-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "layers-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "layers-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "layers-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "crop",
-      "label": {
-        "text": "Crop"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Crop",
+      "prompt": "The crop symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1904,34 +1955,35 @@
         "cells": [
           {
             "id": "crop-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "crop-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "crop-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "crop-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "grid",
-      "label": {
-        "text": "Grid"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Grid",
+      "prompt": "The grid symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1939,34 +1991,35 @@
         "cells": [
           {
             "id": "grid-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "grid-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "grid-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "grid-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "layout",
-      "label": {
-        "text": "Layout"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Layout",
+      "prompt": "The layout symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -1974,34 +2027,35 @@
         "cells": [
           {
             "id": "layout-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "layout-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "layout-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "layout-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "code",
-      "label": {
-        "text": "Code"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Code",
+      "prompt": "The code symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2009,34 +2063,35 @@
         "cells": [
           {
             "id": "code-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "code-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "code-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "code-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "terminal",
-      "label": {
-        "text": "Terminal"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Terminal",
+      "prompt": "The terminal symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2044,34 +2099,35 @@
         "cells": [
           {
             "id": "terminal-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "terminal-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "terminal-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "terminal-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "database",
-      "label": {
-        "text": "Database"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Database",
+      "prompt": "The database symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2079,34 +2135,35 @@
         "cells": [
           {
             "id": "database-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "database-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "database-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "database-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "server",
-      "label": {
-        "text": "Server"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Server",
+      "prompt": "The server symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2114,34 +2171,35 @@
         "cells": [
           {
             "id": "server-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "server-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "server-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "server-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "network",
-      "label": {
-        "text": "Network"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Network",
+      "prompt": "The network symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2149,34 +2207,35 @@
         "cells": [
           {
             "id": "network-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "network-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "network-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "network-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "wifi",
-      "label": {
-        "text": "Wifi"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Wifi",
+      "prompt": "The wifi symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2184,34 +2243,35 @@
         "cells": [
           {
             "id": "wifi-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "wifi-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "wifi-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "wifi-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "bluetooth",
-      "label": {
-        "text": "Bluetooth"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Bluetooth",
+      "prompt": "The bluetooth symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2219,34 +2279,35 @@
         "cells": [
           {
             "id": "bluetooth-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "bluetooth-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "bluetooth-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "bluetooth-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "battery",
-      "label": {
-        "text": "Battery"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Battery",
+      "prompt": "The battery symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2254,34 +2315,35 @@
         "cells": [
           {
             "id": "battery-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "battery-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "battery-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "battery-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "power",
-      "label": {
-        "text": "Power"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Power",
+      "prompt": "The power symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2289,34 +2351,35 @@
         "cells": [
           {
             "id": "power-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "power-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "power-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "power-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "display",
-      "label": {
-        "text": "Display"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Display",
+      "prompt": "The display symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2324,34 +2387,35 @@
         "cells": [
           {
             "id": "display-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "display-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "display-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "display-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "keyboard",
-      "label": {
-        "text": "Keyboard"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Keyboard",
+      "prompt": "The keyboard symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2359,34 +2423,35 @@
         "cells": [
           {
             "id": "keyboard-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "keyboard-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "keyboard-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "keyboard-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "mouse",
-      "label": {
-        "text": "Mouse"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Mouse",
+      "prompt": "The mouse symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2394,34 +2459,35 @@
         "cells": [
           {
             "id": "mouse-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "mouse-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "mouse-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "mouse-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "gamepad",
-      "label": {
-        "text": "Gamepad"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Gamepad",
+      "prompt": "The gamepad symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2429,34 +2495,35 @@
         "cells": [
           {
             "id": "gamepad-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "gamepad-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "gamepad-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "gamepad-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "calculator",
-      "label": {
-        "text": "Calculator"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Calculator",
+      "prompt": "The calculator symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2464,34 +2531,35 @@
         "cells": [
           {
             "id": "calculator-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "calculator-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "calculator-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "calculator-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "wallet",
-      "label": {
-        "text": "Wallet"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Wallet",
+      "prompt": "The wallet symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2499,34 +2567,35 @@
         "cells": [
           {
             "id": "wallet-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "wallet-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "wallet-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "wallet-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "card",
-      "label": {
-        "text": "Card"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Card",
+      "prompt": "The card symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2534,34 +2603,35 @@
         "cells": [
           {
             "id": "card-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "card-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "card-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "card-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "receipt",
-      "label": {
-        "text": "Receipt"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Receipt",
+      "prompt": "The receipt symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2569,34 +2639,35 @@
         "cells": [
           {
             "id": "receipt-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "receipt-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "receipt-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "receipt-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "cart",
-      "label": {
-        "text": "Cart"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Cart",
+      "prompt": "The cart symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2604,34 +2675,35 @@
         "cells": [
           {
             "id": "cart-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "cart-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "cart-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "cart-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "store",
-      "label": {
-        "text": "Store"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Store",
+      "prompt": "The store symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2639,34 +2711,35 @@
         "cells": [
           {
             "id": "store-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "store-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "store-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "store-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "gift",
-      "label": {
-        "text": "Gift"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Gift",
+      "prompt": "The gift symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2674,34 +2747,35 @@
         "cells": [
           {
             "id": "gift-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "gift-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "gift-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "gift-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "tag",
-      "label": {
-        "text": "Tag"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Tag",
+      "prompt": "The tag symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2709,34 +2783,35 @@
         "cells": [
           {
             "id": "tag-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "tag-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "tag-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "tag-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "chart",
-      "label": {
-        "text": "Chart"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Chart",
+      "prompt": "The chart symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2744,34 +2819,35 @@
         "cells": [
           {
             "id": "chart-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "chart-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "chart-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "chart-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "activity",
-      "label": {
-        "text": "Activity"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Activity",
+      "prompt": "The activity symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2779,34 +2855,35 @@
         "cells": [
           {
             "id": "activity-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "activity-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "activity-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "activity-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "dashboard",
-      "label": {
-        "text": "Dashboard"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Dashboard",
+      "prompt": "The dashboard symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2814,34 +2891,35 @@
         "cells": [
           {
             "id": "dashboard-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "dashboard-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "dashboard-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "dashboard-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "tasks",
-      "label": {
-        "text": "Tasks"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Tasks",
+      "prompt": "The tasks symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2849,34 +2927,35 @@
         "cells": [
           {
             "id": "tasks-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "tasks-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "tasks-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "tasks-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "checklist",
-      "label": {
-        "text": "Checklist"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Checklist",
+      "prompt": "The checklist symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2884,34 +2963,35 @@
         "cells": [
           {
             "id": "checklist-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "checklist-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "checklist-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "checklist-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "notes",
-      "label": {
-        "text": "Notes"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Notes",
+      "prompt": "The notes symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2919,34 +2999,35 @@
         "cells": [
           {
             "id": "notes-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "notes-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "notes-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "notes-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "book",
-      "label": {
-        "text": "Book"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Book",
+      "prompt": "The book symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2954,34 +3035,35 @@
         "cells": [
           {
             "id": "book-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "book-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "book-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "book-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "help",
-      "label": {
-        "text": "Help"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Help",
+      "prompt": "The help symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -2989,34 +3071,35 @@
         "cells": [
           {
             "id": "help-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "help-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "help-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "help-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "info",
-      "label": {
-        "text": "Info"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Info",
+      "prompt": "The info symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3024,34 +3107,35 @@
         "cells": [
           {
             "id": "info-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "info-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "info-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "info-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "warning",
-      "label": {
-        "text": "Warning"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Warning",
+      "prompt": "The warning symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3059,34 +3143,35 @@
         "cells": [
           {
             "id": "warning-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "warning-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "warning-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "warning-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "check",
-      "label": {
-        "text": "Check"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Check",
+      "prompt": "The check symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3094,34 +3179,35 @@
         "cells": [
           {
             "id": "check-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "check-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "check-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "check-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "plus",
-      "label": {
-        "text": "Plus"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Plus",
+      "prompt": "The plus symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3129,34 +3215,35 @@
         "cells": [
           {
             "id": "plus-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "plus-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "plus-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "plus-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "minus",
-      "label": {
-        "text": "Minus"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Minus",
+      "prompt": "The minus symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3164,34 +3251,35 @@
         "cells": [
           {
             "id": "minus-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "minus-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "minus-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "minus-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "close",
-      "label": {
-        "text": "Close"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Close",
+      "prompt": "The close symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3199,34 +3287,35 @@
         "cells": [
           {
             "id": "close-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "close-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "close-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "close-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "menu",
-      "label": {
-        "text": "Menu"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Menu",
+      "prompt": "The menu symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3234,34 +3323,35 @@
         "cells": [
           {
             "id": "menu-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "menu-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "menu-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "menu-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "filter",
-      "label": {
-        "text": "Filter"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Filter",
+      "prompt": "The filter symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3269,34 +3359,35 @@
         "cells": [
           {
             "id": "filter-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "filter-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "filter-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "filter-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "sort",
-      "label": {
-        "text": "Sort"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Sort",
+      "prompt": "The sort symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3304,34 +3395,35 @@
         "cells": [
           {
             "id": "sort-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "sort-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "sort-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "sort-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "play",
-      "label": {
-        "text": "Play"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Play",
+      "prompt": "The play symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3339,34 +3431,35 @@
         "cells": [
           {
             "id": "play-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "play-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "play-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "play-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "pause",
-      "label": {
-        "text": "Pause"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Pause",
+      "prompt": "The pause symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3374,34 +3467,35 @@
         "cells": [
           {
             "id": "pause-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "pause-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "pause-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "pause-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "stop",
-      "label": {
-        "text": "Stop"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Stop",
+      "prompt": "The stop symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3409,34 +3503,35 @@
         "cells": [
           {
             "id": "stop-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "stop-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "stop-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "stop-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "forward",
-      "label": {
-        "text": "Forward"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Forward",
+      "prompt": "The forward symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3444,34 +3539,35 @@
         "cells": [
           {
             "id": "forward-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "forward-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "forward-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "forward-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "back",
-      "label": {
-        "text": "Back"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Back",
+      "prompt": "The back symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3479,34 +3575,35 @@
         "cells": [
           {
             "id": "back-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "back-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "back-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "back-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     },
     {
       "id": "expand",
-      "label": {
-        "text": "Expand"
+      "image": {
+        "backgroundImage": "none",
+        "strokeWidth": 0
       },
-      "prompt": "Expand",
+      "prompt": "The expand symbol, repeated in four states.",
       "children": {
         "grid": {
           "columns": 2,
-          "gap": 4,
-          "padding": 4
+          "gap": 0,
+          "padding": 0
         },
         "defaults": {
           "aspectRatio": "1:1"
@@ -3514,22 +3611,23 @@
         "cells": [
           {
             "id": "expand-light",
-            "prompt": "Light variant."
+            "prompt": "A dark navy symbol on a solid pale blue square background."
           },
           {
             "id": "expand-dark",
-            "prompt": "Dark variant."
+            "prompt": "A white symbol on a solid charcoal square background."
           },
           {
             "id": "expand-active",
-            "prompt": "Active variant."
+            "prompt": "A white symbol on a solid bright blue square background."
           },
           {
             "id": "expand-disabled",
-            "prompt": "Disabled variant."
+            "prompt": "A light gray symbol on a solid medium gray square background."
           }
         ]
       }
     }
-  ]
+  ],
+  "layout": "grid"
 }
