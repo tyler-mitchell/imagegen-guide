@@ -1,0 +1,38 @@
+# Imagegen guide scenario bank
+
+These five jobs exercise different output contracts: app icons, an exact UV texture, a large variant hierarchy, animation frames, and mixed-format publishing art. Each run must retain its config, guide, prompt, exact `image_gen` source, catalogue, and final consumer files together. A target below is not a proven result. Do not count a guide, a crop count, or a passing check as finished artwork.
+
+## 1. Twelve settings icons for a macOS app
+
+- **Consumer and input:** An agent filling twelve settings slots in a macOS app. Start from `skills/imagegen-guide/examples/icon-atlas.json`; replace its generic names, prompts, and styling with the twelve real slots and every user-supplied style reference. The prior ZoomIt request is the concrete failure source: a promised 256×256 icon became a 260×260 guide region, and the generator returned 1374×1145 instead of the requested 1536×1280.
+- **Public workflow:** `guide --config <authored-config> --out <job>` → send the returned guide, prompt, and all user references to `image_gen` → `crop --layout <returned-layout> --source <exact-generated-PNG> --out <job>/crops` → place the twelve PNGs in the app's actual icon slots. Use the saved catalogue when a source-specific correction is required.
+- **Required result:** Twelve named PNGs, each with an alpha channel, complete artwork inside its crop, coherent style, and at least 256×256 usable pixels if the consumer requires 256×256. Inspect each at its actual display size and inspect the installed app. A smaller generator source, a clipped icon, a guide label in a crop, or a missing slot fails the job. The framework must report actual source and crop dimensions; it cannot silently treat target dimensions as achieved.
+- **Evidence status:** Historical real-source failure. The starter config is authored, but no corrected twelve-icon installation is proven.
+
+## 2. Canonical Minecraft classic skin
+
+- **Consumer and input:** A Minecraft player needs a usable classic-model 64×64 PNG skin, with the base and outer layers mapped to the canonical face positions. The authored input is `packages/imagegen-guide/examples/configs/minecraft-skin.json`; it specifies a 1024×1024 enlarged UV region, external coordinate key, unmapped white texels, and a single brown-haired adventurer design.
+- **Public workflow:** Generate the guide and prompt from that config; give both to `image_gen`; crop only `skin-uv` from the exact returned PNG; reduce its logical 16× UV grid to a 64×64 nearest-neighbor skin in the consuming skin workflow; open that PNG on a classic-model viewer. The external key must never enter the final skin.
+- **Required result:** One 64×64 PNG whose head, torso, arms, legs, and outer layers render in their intended model positions. A visually attractive collage, an unmapped pixel painted as anatomy, a shifted UV face, or a crop that includes the coordinate key fails. The 1024×1024 crop alone is not the deliverable.
+- **Evidence status:** A generated candidate and catalogue are retained under `examples/output/minecraft-canonical-generation/`. They do not establish a valid 64×64 skin or model-viewer outcome.
+
+## 3. One hundred icon families with four states
+
+- **Consumer and input:** A design-system author needs 100 named symbols, each in Light, Dark, Active, and Disabled states. `packages/imagegen-guide/examples/configs/variants.json` authors 100 families and 400 leaf IDs. One supplied style reference controls motifs and finish, not the atlas geometry.
+- **Public workflow:** Generate the fixed guide and one image atlas from its prompt and style reference; crop all 400 leaves; select a family by ID for inspection; export the four named states to the design-system asset directory. Compare siblings as a family, not as unrelated crops.
+- **Required result:** Exactly four correctly named outputs per family. The symbol identity must stay constant across its states, while contrast and active/disabled treatment change. No family may shift position, merge with a neighbor, lose a state, or contain guide captions. If the generator cannot maintain 400 regions, the workflow must expose that failure rather than present a complete catalogue as proof.
+- **Evidence status:** A candidate atlas and 400-file output directory are retained under `examples/output/generated-variants/`. Visual family consistency and downstream design-system use remain unproven.
+
+## 4. Mixed-ratio character action sheet
+
+- **Consumer and input:** A 2D game artist needs four run poses and two sword-attack poses for one character. `packages/imagegen-guide/examples/configs/adventurer-animations.json` fixes the pose IDs, shared character, four 320×360 run regions, and two wider 720×360 sword regions.
+- **Public workflow:** Generate a single source from the returned guide and prompt; crop the six named frames; make a run GIF in `run-contact, run-passing, run-flight, run-recovery` order and a separate two-frame slash GIF; review both animations and the individual transparent PNGs at game scale.
+- **Required result:** The same character, facing, baseline, and scale in all six frames; no sword arc crosses its region; transparent space remains transparent; order and delays match the action. Six files or a GIF that merely plays is insufficient if frames jump, clip, or contain the guide. This historical fox sheet is a framework incubation input, not evidence that a game has accepted it.
+- **Evidence status:** Candidate generated source, guide, crops, and GIF are retained under `examples/output/adventurer-final-check/`. A usable animation outcome is unproven.
+
+## 5. Imagegen-guide publishing image set
+
+- **Consumer and input:** This repository needs one visual family for its README and package listing. `packages/imagegen-guide/examples/configs/product-publishing.json` specifies `workflow-hero` (608×342), `package-thumbnail` (320×320), `crop-comparison` (608×342), and `example-panel` (315×560). The current `docs/assets/cover.png` supplies product context, not the atlas layout.
+- **Public workflow:** Generate the guide and prompt from that config; give both plus the existing cover to `image_gen`; crop all four IDs from the exact returned PNG; place the hero and comparison in the README, the square crop in the package listing, and the tall panel in the documentation column. Inspect each in its final slot.
+- **Required result:** The four crops share one visual language but work independently at 16:9, 1:1, and 9:16. The hero must show config → guide → generated atlas → individual images. No crop may contain guide labels, clipped diagrams, or text that becomes illegible in its destination. A generated atlas that looks good only as one sheet fails.
+- **Evidence status:** Authored config. Generated source, crops, and downstream placement are still required.

@@ -1,0 +1,50 @@
+{
+  "id": "imagegen-guide-publishing",
+  "layout": "grid",
+  "canvas": { "width": 1024, "height": 1024, "padding": 24 },
+  "grid": { "columns": [608, 320], "rows": [366, 584], "gap": 24, "padding": 0 },
+  "appearance": {
+    "background": "#e9eef4",
+    "image": { "fill": "#ffffff", "strokeWidth": 0 },
+    "label": { "position": "below", "fontSize": 14, "lineHeight": 20, "gap": 4 }
+  },
+  "prompt": "Create four coherent editorial visuals for the imagegen-guide open-source package. Use an elegant restrained technical visual language: warm white surfaces, dark graphite text, precise blue measurement accents. Each image must remain useful when cropped and shown alone. Do not put guide labels, borders, or coordinate text inside the image regions.",
+  "cells": [
+    {
+      "id": "workflow-hero",
+      "row": 0,
+      "column": 0,
+      "width": 608,
+      "height": 342,
+      "label": { "text": "Workflow hero" },
+      "prompt": "Show the four actual steps: authored configuration, dimensioned image guide, generated multi-image atlas, and separated final images. Make the arrows and content readable in a wide README image."
+    },
+    {
+      "id": "package-thumbnail",
+      "row": 0,
+      "column": 1,
+      "width": 320,
+      "height": 320,
+      "label": { "text": "Package thumbnail" },
+      "prompt": "Show one compact guide-to-crops motif that remains clear at thumbnail size. Avoid tiny labels."
+    },
+    {
+      "id": "crop-comparison",
+      "row": 1,
+      "column": 0,
+      "width": 608,
+      "height": 342,
+      "label": { "text": "Crop comparison" },
+      "prompt": "Show one planned rectangle on an atlas next to its correctly extracted image, with the same artwork and no stray guide pixels."
+    },
+    {
+      "id": "example-panel",
+      "row": 1,
+      "column": 1,
+      "width": 315,
+      "height": 560,
+      "label": { "text": "Tall example panel" },
+      "prompt": "Show a vertical sequence of a mixed-ratio atlas guide, generated artwork, and individual crops. Keep the sequence readable in a narrow documentation column."
+    }
+  ]
+}
