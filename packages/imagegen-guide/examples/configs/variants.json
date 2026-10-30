@@ -10,6 +10,7 @@
     "padding": 0
   },
   "maxImages": 24,
+  "verticalAlign": "start",
   "appearance": {
     "background": "#ffffff",
     "image": {
