@@ -235,10 +235,12 @@ that crosses the planned crop boundary.
 `createGif({ atlas, source })` uses every leaf image in layout order. The default
 delay is 100 ms per frame and `loop: 0` repeats indefinitely. Pass `delay` to
 change all frame delays. Pass `frames` as ordered IDs or `{ id, delay }` entries
-to select, repeat, and override frames. An empty sequence or unknown ID raises
-`RangeError`. Advanced callers can pass a catalogue instead of an atlas. Frames
-use a shared transparent canvas sized to the largest crop; smaller crops are
-centered without resizing. The caller saves the returned GIF bytes.
+to select, repeat, and override frames. A group ID expands to its descendant
+leaves in layout order; its delay override applies to every expanded frame.
+An empty sequence or unknown ID raises `RangeError`. Advanced callers can pass
+a catalogue instead of an atlas. Frames use a shared transparent canvas sized
+to the largest crop; smaller crops are centered without resizing. The caller
+saves the returned GIF bytes.
 
 `detectCatalogue({ source, catalogue, options })` locates foreground inside each
 planned leaf and the nearest half of its gaps to other leaves. Its search areas

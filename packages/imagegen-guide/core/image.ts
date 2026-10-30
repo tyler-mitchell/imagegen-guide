@@ -340,7 +340,7 @@ export async function cropImages<const Id extends string = string>({
   return crops;
 }
 
-/** Animate all leaf images, or use an explicit frame order and timing overrides. */
+/** Animate leaf images in layout order, or expand selected groups into ordered frames. */
 export async function createGif<const Id extends string = string>({
   source,
   frames,
@@ -358,13 +358,33 @@ export async function createGif<const Id extends string = string>({
 } & CropSelection<Id>): Promise<Uint8Array> {
   if (frames?.length === 0) throw new RangeError("A GIF needs at least one frame.");
   const { default: sharp } = await import("sharp");
+  type ImageNode = { id: string; children?: readonly ImageNode[] };
+  const entries = (images: readonly ImageNode[]): ImageNode[] =>
+    images.flatMap((image) => [image, ...(image.children ? entries(image.children) : [])]);
+  const leafIds = (images: readonly ImageNode[]): string[] =>
+    images.flatMap((image) => (image.children ? leafIds(image.children) : [image.id]));
+  const byId = new Map(
+    entries(selection.catalogue?.images ?? selection.atlas!.layout.cells).map((image) => [
+      image.id,
+      image,
+    ]),
+  );
+  const sequence = frames?.flatMap((frame) => {
+    const id = typeof frame === "string" ? frame : frame.id;
+    const children = byId.get(id)?.children;
+    return children
+      ? leafIds(children).map((id) =>
+          typeof frame === "string" ? (id as Id) : { ...frame, id: id as Id },
+        )
+      : [frame];
+  });
   const crops = await cropImages({
     source,
-    ids: frames?.map((frame) => (typeof frame === "string" ? frame : frame.id)),
+    ids: sequence?.map((frame) => (typeof frame === "string" ? frame : frame.id)),
     ...selection,
   });
-  const sequence = frames ?? crops.map((crop) => crop.id);
-  if (sequence.length === 0) throw new RangeError("A GIF needs at least one frame.");
+  const orderedFrames = sequence ?? crops.map((crop) => crop.id);
+  if (orderedFrames.length === 0) throw new RangeError("A GIF needs at least one frame.");
   const ordered = crops.map((crop) => crop.bytes);
   const sizes = [];
   for (const bytes of ordered) sizes.push(await sharp(bytes).metadata());
@@ -389,7 +409,9 @@ export async function createGif<const Id extends string = string>({
   }
   return sharp(images, { join: { animated: true } })
     .gif({
-      delay: sequence.map((frame) => (typeof frame === "string" ? delay : (frame.delay ?? delay))),
+      delay: orderedFrames.map((frame) =>
+        typeof frame === "string" ? delay : (frame.delay ?? delay),
+      ),
       loop,
       keepDuplicateFrames: true,
     })

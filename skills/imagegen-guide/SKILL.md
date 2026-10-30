@@ -67,7 +67,7 @@ Use the same layout and generated source. All leaf images play in layout order a
 vp run cli -- gif --layout /tmp/icon-job/icon-atlas-light.layout.json --source /path/to/generated.png --out /tmp/icon-job
 ```
 
-Use `--ids first,second,third` to set frame order. Use `--delay 120` to set one delay for all frames. In TypeScript, `{ id: "first", delay: 180 }` overrides one frame.
+Use `--ids first,second,third` to set frame order. A group ID plays its leaf images in layout order. Use `--delay 120` to set one delay for all frames. In TypeScript, `{ id: "first", delay: 180 }` overrides one frame.
 
 ## Check before delivery
 

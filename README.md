@@ -141,7 +141,7 @@ const selected = await createGif({
 await writeFile("selected.gif", selected);
 ```
 
-Without `frames`, the GIF uses all leaf images in layout order, a 100 ms delay, and an infinite loop. `frames` sets order and may repeat an ID. The output centers frames of different sizes on a transparent canvas.
+Without `frames`, the GIF uses all leaf images in layout order, a 100 ms delay, and an infinite loop. `frames` sets order and may repeat an ID. A group ID expands to its leaf images in layout order; a delay on that group applies to each child frame. The output centers frames of different sizes on a transparent canvas.
 
 The CLI uses the same defaults:
 
