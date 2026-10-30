@@ -32,25 +32,56 @@ import manifest from "./package.json" with { type: "json" };
 
 const parseIds = (ids?: string) => ids?.split(",").map((id) => id.trim());
 
+const loadSelection = async ({
+  layoutFile,
+  catalogueFile,
+  configFile,
+}: {
+  layoutFile?: string;
+  catalogueFile?: string;
+  configFile?: string;
+}) => {
+  if (Boolean(layoutFile) === Boolean(catalogueFile))
+    throw new RangeError("Pass exactly one of --layout or --catalogue.");
+  if (catalogueFile && configFile)
+    throw new RangeError("--config applies to --layout; an edited catalogue owns its crop bounds.");
+  return {
+    layout: layoutFile ? schema.Layout.assert(JSON.parse(await readFile(layoutFile, "utf8"))) : undefined,
+    catalogue: catalogueFile
+      ? schema.Catalogue.assert(JSON.parse(await readFile(catalogueFile, "utf8")))
+      : undefined,
+    options: configFile
+      ? schema.Config.assert(JSON.parse(await readFile(configFile, "utf8"))).crop
+      : undefined,
+  };
+};
+
 const sourceCatalogues = async ({
   layout,
+  catalogue: savedCatalogue,
   source,
   sourceFile,
   options,
-  outputs,
 }: {
-  layout: Layout;
+  layout?: Layout;
+  catalogue?: Catalogue;
   source: Uint8Array;
   sourceFile: string;
   options?: Config["crop"];
-  outputs?: Readonly<Record<string, string>>;
 }) => {
   const metadata = await sharp(source).metadata();
+  if (savedCatalogue) {
+    if (
+      metadata.width !== savedCatalogue.source.width ||
+      metadata.height !== savedCatalogue.source.height
+    )
+      throw new RangeError("The source dimensions do not match the saved catalogue.");
+    return { metadata, planned: savedCatalogue, catalogue: savedCatalogue };
+  }
   const planned = createCatalogue({
-    layout,
-    outputs,
+    layout: layout!,
     source: {
-      id: layout.id,
+      id: layout!.id,
       uri: sourceFile,
       width: metadata.width!,
       height: metadata.height!,
@@ -66,42 +97,56 @@ const sourceCatalogues = async ({
 const saveImages = async ({
   out,
   layout,
+  savedCatalogue,
   source,
   sourceFile,
   options,
   ids,
 }: {
   out: string;
-  layout: Layout;
+  layout?: Layout;
+  savedCatalogue?: Catalogue;
   source: Uint8Array;
   sourceFile: string;
   options?: Config["crop"];
   ids?: readonly string[];
 }) => {
-  const name = encodeURIComponent(layout.id);
+  const name = encodeURIComponent(savedCatalogue?.atlasId ?? layout!.id);
   const format = options?.format ?? "png";
-  const outputs = (cells: Layout["cells"]): [string, string][] =>
-    cells.flatMap((cell) => [
-      ...((ids ? ids.includes(cell.id) : !cell.children)
-        ? [[cell.id, `${name}/${encodeURIComponent(cell.id)}.${format}`] as [string, string]]
-        : []),
-      ...(cell.children ? outputs(cell.children) : []),
-    ]);
-  const { metadata, planned, catalogue } = await sourceCatalogues({
+  const { metadata, planned, catalogue: located } = await sourceCatalogues({
     layout,
-    outputs: Object.fromEntries(outputs(layout.cells)),
+    catalogue: savedCatalogue,
     source,
     sourceFile,
     options,
   });
+  const outputPaths = (images: Catalogue["images"]): [string, string][] =>
+    images.flatMap((image) => [
+      ...((ids ? ids.includes(image.id) : !image.children)
+        ? [[image.id, `${name}/${encodeURIComponent(image.id)}.${format}`] as [string, string]]
+        : []),
+      ...(image.children ? outputPaths(image.children) : []),
+    ]);
+  const paths = new Map(outputPaths(located.images));
+  const withOutputs = (data: Catalogue): Catalogue => {
+    const images = (entries: Catalogue["images"]): Catalogue["images"] =>
+      entries.map((entry) => ({
+        ...entry,
+        output: paths.get(entry.id),
+        ...(entry.children ? { children: images(entry.children) } : {}),
+      }));
+    return { ...data, source: { ...data.source, uri: sourceFile }, images: images(data.images) };
+  };
+  const catalogue = withOutputs(located);
   const crops = await cropImages({ source, catalogue, format, ids });
   await mkdir(`${out}/${name}`, { recursive: true });
   createFile(`${out}/${name}.catalogue.json`, JSON.stringify(catalogue, null, 2));
-  if (options?.detect) {
-    createFile(`${out}/${name}.planned.catalogue.json`, JSON.stringify(planned, null, 2));
+  if (options?.detect && !savedCatalogue) {
+    const expected = withOutputs(planned);
+    createFile(`${out}/${name}.planned.catalogue.json`, JSON.stringify(expected, null, 2));
     createFile(
       `${out}/${name}.comparison.json`,
-      JSON.stringify(compareCatalogues({ expected: planned, actual: catalogue }), null, 2),
+      JSON.stringify(compareCatalogues({ expected, actual: catalogue }), null, 2),
     );
   }
   for (const crop of crops)
@@ -172,9 +217,10 @@ const example = program({
       },
     },
     crop: {
-      description: "Crop an unchanged source from saved layout geometry.",
+      description: "Crop from a saved layout or an edited source catalogue.",
       input: {
-        layout: { type: "string", required: true, cli: "--layout" },
+        layout: { type: "string | undefined", cli: "--layout" },
+        catalogue: { type: "string | undefined", cli: "--catalogue" },
         source: { type: "string", required: true, cli: "--source" },
         config: {
           type: "string | undefined",
@@ -188,25 +234,35 @@ const example = program({
         },
         out: { type: "string = 'imagegen-guide-output/crops'", cli: "--out" },
       },
-      run: async ({ layout: layoutFile, source: sourceFile, config: configFile, ids, out }) => {
-        const layout = schema.Layout.assert(JSON.parse(await readFile(layoutFile, "utf8")));
-        const config = configFile
-          ? schema.Config.assert(JSON.parse(await readFile(configFile, "utf8")))
-          : undefined;
+      run: async ({
+        layout: layoutFile,
+        catalogue: catalogueFile,
+        source: sourceFile,
+        config: configFile,
+        ids,
+        out,
+      }) => {
+        const { layout, catalogue, options } = await loadSelection({
+          layoutFile,
+          catalogueFile,
+          configFile,
+        });
         return saveImages({
           out,
           layout,
+          savedCatalogue: catalogue,
           source: await readFile(sourceFile),
           sourceFile,
-          options: config?.crop,
+          options,
           ids: parseIds(ids),
         });
       },
     },
     gif: {
-      description: "Animate a generated atlas in layout order.",
+      description: "Animate a generated atlas from a layout or edited catalogue.",
       input: {
-        layout: { type: "string", required: true, cli: "--layout" },
+        layout: { type: "string | undefined", cli: "--layout" },
+        catalogue: { type: "string | undefined", cli: "--catalogue" },
         source: { type: "string", required: true, cli: "--source" },
         config: {
           type: "string | undefined",
@@ -232,6 +288,7 @@ const example = program({
       },
       run: async ({
         layout: layoutFile,
+        catalogue: catalogueFile,
         source: sourceFile,
         config: configFile,
         ids,
@@ -239,16 +296,18 @@ const example = program({
         loop,
         out,
       }) => {
-        const layout = schema.Layout.assert(JSON.parse(await readFile(layoutFile, "utf8")));
-        const config = configFile
-          ? schema.Config.assert(JSON.parse(await readFile(configFile, "utf8")))
-          : undefined;
+        const { layout, catalogue: savedCatalogue, options } = await loadSelection({
+          layoutFile,
+          catalogueFile,
+          configFile,
+        });
         const source = await readFile(sourceFile);
         const { catalogue } = await sourceCatalogues({
           layout,
+          catalogue: savedCatalogue,
           source,
           sourceFile,
-          options: config?.crop,
+          options,
         });
         const animation = await createGif({
           catalogue,
@@ -258,7 +317,7 @@ const example = program({
           loop: schema.Index.assert(loop),
         });
         await mkdir(out, { recursive: true });
-        const gif = `${out}/${encodeURIComponent(layout.id)}.gif`;
+        const gif = `${out}/${encodeURIComponent(catalogue.atlasId)}.gif`;
         await writeFile(gif, animation);
         const metadata = await sharp(animation, { animated: true }).metadata();
         return { gif, frames: metadata.pages, delay: metadata.delay, loop: metadata.loop };

@@ -88,6 +88,8 @@ If a crop cuts off art, show the planned boxes on the source:
 vp run cli -- overlay --source /path/to/generated.png --catalogue /tmp/icon-job/crops/icon-atlas.catalogue.json --out /tmp/icon-job/overlay
 ```
 
-Use an existing good source when one exists. Otherwise, correct the request or guide before another generation. Do not cover the defect with resizing or custom crop coordinates.
+Use an existing good source when one exists. Otherwise, correct the request or guide before another generation. Do not cover defective artwork with resizing or custom crop coordinates.
+
+If the artwork is correct but one crop rectangle needs a source-specific adjustment, edit that image's `crop` in the saved catalogue. Keep the same source file and dimensions, then run `crop --catalogue /path/to/edited.catalogue.json --source /path/to/generated.png --out /tmp/icon-job/corrected`. Use `gif --catalogue` with the same file to animate the corrected bounds.
 
 For mixed image ratios, groups, viewports, or detected bounds, read [README.md](../../README.md) and [docs/specification.md](../../docs/specification.md). Add only the options that the task needs.
