@@ -15,6 +15,9 @@
   ],
   "type": "module",
   "sideEffects": false,
+  "bin": {
+    "imagegen-guide": "./dist/cli.mjs"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.mts",
@@ -37,9 +40,11 @@
     "@techstark/opencv-js": "catalog:",
     "@thi.ng/layout": "catalog:",
     "arktype": "catalog:",
+    "cmd-mesh": "catalog:",
     "css-tree": "^3.2.1",
     "defu": "catalog:",
     "ofetch": "^1.5.1",
+    "package-management": "^0.1.0",
     "satori": "catalog:",
     "sharp": "catalog:"
   },
@@ -47,8 +52,6 @@
     "@arethetypeswrong/core": "^0.18.1",
     "@types/css-tree": "^3.2.0",
     "@types/node": "catalog:",
-    "cmd-mesh": "catalog:",
-    "package-management": "^0.1.0",
     "publint": "^0.3.8",
     "typescript": "catalog:",
     "vite": "catalog:",

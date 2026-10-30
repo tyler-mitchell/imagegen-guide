@@ -1,4 +1,5 @@
-// Node file I/O is confined to this example's input and output boundary.
+#!/usr/bin/env node
+// Node file I/O is confined to the command boundary.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { program } from "cmd-mesh";
 import { createFile } from "package-management";
@@ -17,15 +18,17 @@ import {
   detectCatalogue,
   detectRegions,
   overlayImage,
-} from "../core/index.ts";
-import mixed from "./configs/mixed.json" with { type: "json" };
-import icons from "./configs/icons.json" with { type: "json" };
-import variants from "./configs/variants.json" with { type: "json" };
-import wide from "./configs/wide.json" with { type: "json" };
-import portrait from "./configs/portrait.json" with { type: "json" };
-import labels from "./configs/labels.json" with { type: "json" };
-import nested from "./configs/nested.json" with { type: "json" };
-import deep from "./configs/deep.json" with { type: "json" };
+} from "./core/index.ts";
+import mixed from "./examples/configs/mixed.json" with { type: "json" };
+import icons from "./examples/configs/icons.json" with { type: "json" };
+import variants from "./examples/configs/variants.json" with { type: "json" };
+import wide from "./examples/configs/wide.json" with { type: "json" };
+import portrait from "./examples/configs/portrait.json" with { type: "json" };
+import labels from "./examples/configs/labels.json" with { type: "json" };
+import nested from "./examples/configs/nested.json" with { type: "json" };
+import deep from "./examples/configs/deep.json" with { type: "json" };
+import adventurerAnimations from "./examples/configs/adventurer-animations.json" with { type: "json" };
+import manifest from "./package.json" with { type: "json" };
 
 const parseIds = (ids?: string) => ids?.split(",").map((id) => id.trim());
 
@@ -113,17 +116,17 @@ const saveImages = async ({
 
 const example = program({
   name: "imagegen-guide",
-  version: "0.0.0",
+  version: manifest.version,
   cli: { default: "guide" },
   commands: {
     guide: {
       description: "Save a schematic, layout, and prompt for image generation.",
       input: {
-        out: { type: "string = 'examples/output'", cli: "--out" },
+        out: { type: "string = 'imagegen-guide-output'", cli: "--out" },
         preset: { type: "'light' | 'dark' | undefined", cli: "--preset" },
         config: { type: "string | undefined", cli: "--config" },
         example: {
-          type: "'mixed' | 'icons' | 'variants' | 'wide' | 'portrait' | 'labels' | 'nested' | 'deep' = 'mixed'",
+          type: "'mixed' | 'icons' | 'variants' | 'wide' | 'portrait' | 'labels' | 'nested' | 'deep' | 'adventurer-animations' = 'mixed'",
           cli: "--example",
         },
       },
@@ -131,7 +134,17 @@ const example = program({
         const selected = schema.Config.assert(
           configFile
             ? JSON.parse(await readFile(configFile, "utf8"))
-            : { mixed, icons, variants, wide, portrait, labels, nested, deep }[example],
+            : {
+                mixed,
+                icons,
+                variants,
+                wide,
+                portrait,
+                labels,
+                nested,
+                deep,
+                "adventurer-animations": adventurerAnimations,
+              }[example],
         );
         const config = schema.Config.assert({
           ...selected,
@@ -173,7 +186,7 @@ const example = program({
           cli: "--ids",
           description: "Comma-separated image IDs. Default: all leaf images.",
         },
-        out: { type: "string = 'examples/output/crops'", cli: "--out" },
+        out: { type: "string = 'imagegen-guide-output/crops'", cli: "--out" },
       },
       run: async ({ layout: layoutFile, source: sourceFile, config: configFile, ids, out }) => {
         const layout = schema.Layout.assert(JSON.parse(await readFile(layoutFile, "utf8")));
@@ -215,7 +228,7 @@ const example = program({
           cli: "--loop",
           description: "Repeat count. Zero means forever.",
         },
-        out: { type: "string = 'examples/output/gifs'", cli: "--out" },
+        out: { type: "string = 'imagegen-guide-output/gifs'", cli: "--out" },
       },
       run: async ({
         layout: layoutFile,
@@ -257,7 +270,7 @@ const example = program({
         layout: { type: "string", required: true, cli: "--layout" },
         source: { type: "string", required: true, cli: "--source" },
         config: { type: "string | undefined", cli: "--config" },
-        out: { type: "string = 'examples/output/regions'", cli: "--out" },
+        out: { type: "string = 'imagegen-guide-output/regions'", cli: "--out" },
       },
       run: async ({ layout: layoutFile, source: sourceFile, config: configFile, out }) => {
         const layout = schema.Layout.assert(JSON.parse(await readFile(layoutFile, "utf8")));
@@ -291,7 +304,7 @@ const example = program({
       description: "Save an edit mask with transparent crop regions and opaque surroundings.",
       input: {
         catalogue: { type: "string", required: true, cli: "--catalogue" },
-        out: { type: "string = 'examples/output/mask'", cli: "--out" },
+        out: { type: "string = 'imagegen-guide-output/mask'", cli: "--out" },
       },
       run: async ({ catalogue, out }) => {
         const data = schema.Catalogue.assert(JSON.parse(await readFile(catalogue, "utf8")));
@@ -309,12 +322,12 @@ const example = program({
         stroke: { type: "string = '#ff00ff'", cli: "--stroke" },
         strokeWidth: { type: "string.numeric.parse = '2'", cli: "--stroke-width" },
         prompt: { type: "string | undefined", cli: "--prompt" },
-        out: { type: "string = 'examples/output/overlay'", cli: "--out" },
+        out: { type: "string = 'imagegen-guide-output/overlay'", cli: "--out" },
       },
       run: async ({ source, catalogue, stroke, strokeWidth, prompt, out }) => {
         const data = schema.Catalogue.assert(JSON.parse(await readFile(catalogue, "utf8")));
-        const count = (images: Catalogue["images"]): number =>
-          images.reduce((total, image) => total + (image.children ? count(image.children) : 1), 0);
+        const leaves = (images: Catalogue["images"]): Catalogue["images"] =>
+          images.flatMap((image) => (image.children ? leaves(image.children) : [image]));
         const image = await overlayImage({
           source: await readFile(source),
           catalogue: data,
@@ -325,8 +338,8 @@ const example = program({
         createFile(
           `${out}/prompt.txt`,
           [
-            `Image 1 is the annotated atlas to edit; image 2 is its original schematic. The guide outlines use ${stroke}. Produce all ${data.images.length} families and ${count(data.images)} icons, restoring any missing ones. The schematic owns the geometry: rebuild any incorrect row heights, image boundaries, and unintended blank strips in image 1. Regenerate cells at their required sizes and positions; do not only erase the guide lines. Fit each icon exactly inside its outlined rectangle, edge-to-edge, without inset or exterior shadow. Preserve the configured symbols, variants, and family order. Do not merge, omit, or reorder families. Keep any schematic labels outside image regions. Preserve the outlined box positions relative to the canvas; scale the entire schematic uniformly to the requested resolution. Remove all guide outlines from the final image.`,
             ...(prompt ? [await readFile(prompt, "utf8")] : []),
+            `Image 1 is the annotated atlas to correct; image 2 is its original schematic. The guide outlines use ${stroke}. Restore every named image (${leaves(data.images).map((image) => image.id).join(", ")}) at the schematic's position and size. Keep all artwork inside its own rectangle. Correct missing or shifted images and blank strips; do not only erase the guide lines. Keep schematic labels outside image regions and remove the guide outlines from the final image.`,
           ].join("\n"),
         );
         return { image: `${out}/overlay.png`, prompt: `${out}/prompt.txt`, catalogue };
@@ -337,7 +350,7 @@ const example = program({
       input: {
         expected: { type: "string", required: true, cli: "--expected" },
         actual: { type: "string", required: true, cli: "--actual" },
-        out: { type: "string = 'examples/output/comparison.json'", cli: "--out" },
+        out: { type: "string = 'imagegen-guide-output/comparison.json'", cli: "--out" },
       },
       run: async ({ expected, actual, out }) => {
         const comparison = compareCatalogues({

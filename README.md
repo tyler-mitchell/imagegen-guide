@@ -17,7 +17,7 @@ This guide comes from [mixed.json](packages/imagegen-guide/examples/configs/mixe
 ## From layout to images
 
 ```ts
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { createAtlas, cropImages } from "imagegen-guide";
 
 const atlas = await createAtlas({
@@ -42,7 +42,7 @@ const [settings] = await cropImages({
   source: await readFile("generated.png"),
   ids: ["settings"],
 });
-await writeFile("settings.png", settings.bytes);
+// settings.bytes is the PNG; settings.crop is its source rectangle.
 ```
 
 `atlas.imageIds` lists the configured IDs. With a TypeScript config literal, editors use those IDs for `cropImages.ids` and GIF frame IDs. `cropImages` uses the guide rectangles by default and scales them to the source dimensions. It preserves source alpha; it does not remove backgrounds or fix artwork outside a rectangle.
@@ -53,15 +53,16 @@ The [generated 100-icon atlas](docs/assets/generated-icons.png) is a separate vi
 
 ![A generated atlas of 100 labeled application icons](docs/assets/generated-icons.png)
 
-Make a guide, generate `atlas.png` from it, then crop the saved layout:
+Install `imagegen-guide` in a consumer project. Its `imagegen-guide` command makes a guide, crops a generated source, and makes a GIF as separate actions. Generate `atlas.png` from the guide before cropping:
 
 ```sh
-vp run cli -- --example mixed --out examples/output
-# Send examples/output/mixed-light.guide.png and examples/output/mixed-light.prompt.txt to the generator.
-vp run cli -- crop --layout examples/output/mixed-light.layout.json --source atlas.png --out examples/output/crops
+vp add imagegen-guide
+vp exec imagegen-guide guide --example mixed --out atlas-job
+# Send atlas-job/mixed-light.guide.png and atlas-job/mixed-light.prompt.txt to the generator.
+vp exec imagegen-guide crop --layout atlas-job/mixed-light.layout.json --source atlas.png --out atlas-job/crops
 ```
 
-The guide command saves no artwork. The crop command saves `examples/output/crops/app-icons/settings.png` and the other leaf images. Its result shows the source dimensions and crop count. Use `--ids settings,search` to select images. Use `--config path/to/config.json` for your own guide. Omit it from the crop command to use planned bounds.
+The guide command saves no artwork. The crop command saves `atlas-job/crops/app-icons/settings.png` and the other leaf images. Its result shows the source dimensions and crop count. Use `--ids settings,search` to select images. Use `--config path/to/config.json` for your own guide. Omit it from the crop command to use planned bounds. In this repository, `vp run cli --` calls the same command source.
 
 ## Layout controls
 
@@ -145,9 +146,9 @@ Without `frames`, the GIF uses all leaf images in layout order, a 100 ms delay, 
 The CLI uses the same defaults:
 
 ```sh
-vp run cli -- --config packages/imagegen-guide/examples/configs/adventurer-animations.json --out examples/output
+vp exec imagegen-guide guide --example adventurer-animations --out atlas-job
 # Generate run-sheet.png from the returned guide and prompt.
-vp run cli -- gif --layout examples/output/adventurer-animations-light.layout.json --source run-sheet.png --out examples/output
+vp exec imagegen-guide gif --layout atlas-job/adventurer-animations-light.layout.json --source run-sheet.png --out atlas-job
 ```
 
 ## Package and development

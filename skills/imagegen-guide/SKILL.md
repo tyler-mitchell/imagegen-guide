@@ -17,7 +17,7 @@ For TypeScript callers, pass a literal config to `createAtlas`. `atlas.imageIds`
 
 ## Make the guide
 
-Save the task config outside the consumer app. Run the root script:
+Save the task config outside the consumer app. From this repository, run the root script:
 
 ```sh
 vp run cli -- --config /tmp/icon-job/config.json --out /tmp/icon-job
@@ -32,6 +32,7 @@ icon-atlas-light.layout.json
 ```
 
 This command makes no artwork or crops. It returns only guide, prompt, layout, and config paths.
+In another project with `imagegen-guide` installed, run `pnpm exec imagegen-guide guide` with the same flags. Use `pnpm exec imagegen-guide crop` and `pnpm exec imagegen-guide gif` for the later actions.
 
 ## Generate the artwork
 

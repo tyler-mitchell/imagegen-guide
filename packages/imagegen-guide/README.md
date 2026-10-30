@@ -3,7 +3,7 @@
 Define an image atlas once. Produce its SVG guide, prompt, crop geometry, and image catalogue without a UI or image-generation provider.
 
 ```ts
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { createAtlas, cropImages, createGif } from "imagegen-guide";
 
 const atlas = await createAtlas({
@@ -23,9 +23,8 @@ const atlas = await createAtlas({
 // Inspect the result: each image must fit its guide rectangle.
 const source = await readFile("generated.png");
 const crops = await cropImages({ atlas, source });
-for (const crop of crops) await writeFile(`${crop.id}.png`, crop.bytes);
 const gif = await createGif({ atlas, source });
-await writeFile("icons.gif", gif);
+// Use crops[*].bytes and gif in your app, or save them with the CLI below.
 ```
 
 `atlas.imageIds` lists the configured IDs. TypeScript suggests them for crop IDs and GIF frame IDs. Crops include their source rectangles, scale to the source size, and keep source alpha. They do not fix misaligned art.
@@ -33,5 +32,7 @@ await writeFile("icons.gif", gif);
 The GIF uses all leaf images in layout order at 100 ms per frame. Optional detection measures artwork inside each planned tile and its share of the gaps. See the [CLI workflow](https://github.com/tyler-mitchell/imagegen-guide#see-the-output).
 
 Pass `frames` to change GIF order or timing. The [run-cycle example](https://github.com/tyler-mitchell/imagegen-guide#animate-named-frames) shows both forms. The [six-region guide](https://github.com/tyler-mitchell/imagegen-guide/blob/main/packages/imagegen-guide/examples/configs/adventurer-animations.json) shows labels, dimension lines, and wider regions for sword poses.
+
+The installed package also provides the `imagegen-guide` command. Run `imagegen-guide guide --example mixed --out atlas-job`, then `imagegen-guide crop --layout atlas-job/mixed-light.layout.json --source generated.png --out atlas-job/crops`. `imagegen-guide gif` uses the same layout and source.
 
 MIT licensed.

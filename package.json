@@ -11,7 +11,7 @@
     "permissions": "publish"
   },
   "scripts": {
-    "cli": "node packages/imagegen-guide/examples/cli.ts",
+    "cli": "node packages/imagegen-guide/cli.ts",
     "check": "pnpm --filter imagegen-guide run check",
     "test": "vp run -r test",
     "build": "vp run -r build",

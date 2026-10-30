@@ -72,6 +72,9 @@ importers:
       arktype:
         specifier: 'catalog:'
         version: 2.2.8
+      cmd-mesh:
+        specifier: 'catalog:'
+        version: 0.5.0(redis@6.3.0)(zod@4.6.5)
       css-tree:
         specifier: ^3.2.1
         version: 3.2.1
@@ -81,6 +84,9 @@ importers:
       ofetch:
         specifier: ^1.5.1
         version: 1.5.1
+      package-management:
+        specifier: ^0.1.0
+        version: 0.1.0
       satori:
         specifier: 'catalog:'
         version: 0.47.1
@@ -97,12 +103,6 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 24.19.2
-      cmd-mesh:
-        specifier: 'catalog:'
-        version: 0.5.0(redis@6.3.0)(zod@4.6.5)
-      package-management:
-        specifier: ^0.1.0
-        version: 0.1.0
       publint:
         specifier: ^0.3.8
         version: 0.3.25

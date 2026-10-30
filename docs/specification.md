@@ -12,7 +12,9 @@ packages/imagegen-guide/
 ```
 
 The `react` directory is not part of the initial build. The package has one public
-entry point. Image operations load Sharp only when called.
+library entry point and an `imagegen-guide` command. Its `guide`, `crop`, and `gif`
+actions run independently from the consumer working directory. Image operations
+load Sharp only when called.
 
 ## Configuration
 

@@ -209,3 +209,8 @@ a separate Vitest dependency. Source: [Vite+ tests](https://viteplus.dev/guide/t
 `cmd-mesh@0.5.0` accepts ArkType token parsers in `ParameterDescriptor.type`.
 Its public `dist/types.d.ts` uses `string.integer.parse` for a numeric flag.
 Use that parser for numeric CLI values; a plain `number` rejects text tokens.
+Vite+ `vp pack` uses tsdown for library packages and accepts multiple entries.
+The package's `bin` field names the built CLI entry. A source shebang is retained
+for the Node command. Sources: [Vite+ pack](https://viteplus.dev/guide/pack),
+[tsdown entries](https://tsdown.dev/options/entry), and
+[tsdown package bins](https://tsdown.dev/reference/api/Interface.ExportsOptions).
