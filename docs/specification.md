@@ -245,8 +245,8 @@ saves the returned GIF bytes.
 `detectCatalogue({ source, catalogue, options })` locates foreground inside each
 planned leaf and the nearest half of its gaps to other leaves. Its search areas
 cannot overlap. OpenCV finds the nonzero bounds inside each search area. The
-default background is the first source pixel; `crop.detect.background` overrides
-it. For a transparent background, alpha alone defines foreground. For an opaque
+default background is the first pixel of the source viewport, or the first source
+pixel when no viewport is set; `crop.detect.background` overrides it. For a transparent background, alpha alone defines foreground. For an opaque
 background, foreground must differ from that color and pass the alpha threshold.
 The default color threshold is 10; `alphaThreshold` is 127. Each tile needs at
 least one foreground pixel by default. Set `crop.detect.threshold`,
@@ -261,7 +261,7 @@ cannot reconstruct artwork that crosses a search-area boundary. Shadows and
 guide markings can affect bounds. If a tile has too little foreground,
 `detectCatalogue` raises `RangeError` with its ID. It does not return a catalogue
 with missing crops. `detectRegions` still reports unassigned connected components
-from the same foreground mask.
+from the same foreground mask, with source coordinates restricted to the viewport.
 
 `compareCatalogues({ expected, actual })` returns each leaf ID, both rectangles,
 and signed differences for x, y, width, and height. Both catalogues use the same

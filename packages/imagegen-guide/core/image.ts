@@ -80,9 +80,11 @@ export async function overlayImage({
 const foregroundMask = async ({
   source,
   options,
+  viewport,
 }: {
   source: Uint8Array;
   options: typeof schema.DetectionOptions.infer;
+  viewport?: Rectangle;
 }) => {
   const { default: sharp } = await import("sharp");
   const { default: ready } = await import("@techstark/opencv-js");
@@ -92,6 +94,7 @@ const foregroundMask = async ({
     .ensureAlpha()
     .raw()
     .toBuffer({ resolveWithObject: true });
+  const backgroundOffset = 4 * ((viewport?.y ?? 0) * info.width + (viewport?.x ?? 0));
   const background = options.background
     ? await sharp({
         create: {
@@ -103,7 +106,7 @@ const foregroundMask = async ({
       })
         .raw()
         .toBuffer()
-    : data.subarray(0, 4);
+    : data.subarray(backgroundOffset, backgroundOffset + 4);
   const transparent = background[3] === 0;
   const threshold = options.threshold ?? 10;
   const alphaThreshold = options.alphaThreshold ?? 127;
@@ -161,7 +164,15 @@ export async function detectRegions({
   catalogue: Catalogue;
   options?: typeof schema.DetectionOptions.infer;
 }): Promise<Array<typeof schema.Region.infer>> {
-  const { cv, mask } = await foregroundMask({ source, options });
+  const { cv, mask } = await foregroundMask({
+    source,
+    options,
+    viewport: catalogue.source.viewport,
+  });
+  const viewport = catalogue.source.viewport;
+  const view = viewport
+    ? mask.roi(new cv.Rect(viewport.x, viewport.y, viewport.width, viewport.height))
+    : mask;
   const targets = leaves(catalogue.images);
   const minArea =
     options.minArea ??
@@ -170,13 +181,13 @@ export async function detectRegions({
     stats = new cv.Mat(),
     centroids = new cv.Mat();
   try {
-    cv.connectedComponentsWithStats(mask, labels, stats, centroids, 8, cv.CV_32S);
+    cv.connectedComponentsWithStats(view, labels, stats, centroids, 8, cv.CV_32S);
     return schema.Region.array().assert(
       Array.from({ length: stats.rows - 1 }, (_, index) => {
         const row = (index + 1) * stats.cols;
         return {
-          x: stats.data32S[row + cv.CC_STAT_LEFT]!,
-          y: stats.data32S[row + cv.CC_STAT_TOP]!,
+          x: (viewport?.x ?? 0) + stats.data32S[row + cv.CC_STAT_LEFT]!,
+          y: (viewport?.y ?? 0) + stats.data32S[row + cv.CC_STAT_TOP]!,
           width: stats.data32S[row + cv.CC_STAT_WIDTH]!,
           height: stats.data32S[row + cv.CC_STAT_HEIGHT]!,
           area: stats.data32S[row + cv.CC_STAT_AREA]!,
@@ -184,6 +195,7 @@ export async function detectRegions({
       }).filter((region) => region.area >= minArea),
     );
   } finally {
+    if (viewport) view.delete();
     for (const resource of [mask, labels, stats, centroids]) resource.delete();
   }
 }
@@ -198,7 +210,11 @@ export async function detectCatalogue({
   catalogue: Catalogue;
   options?: typeof schema.DetectionOptions.infer;
 }): Promise<Catalogue> {
-  const { cv, mask } = await foregroundMask({ source, options });
+  const { cv, mask } = await foregroundMask({
+    source,
+    options,
+    viewport: catalogue.source.viewport,
+  });
   const targets = leaves(catalogue.images);
   const minArea = options.minArea ?? 1;
   const viewport = catalogue.source.viewport ?? {
