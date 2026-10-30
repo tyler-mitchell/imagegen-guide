@@ -96,6 +96,7 @@ export const schema = type.module({
     id: "string",
     canvas: "Canvas",
     "layout?": "'grid' | 'masonry'",
+    "maxImages?": "number.integer > 0",
     "align?": "Alignment",
     "verticalAlign?": "Alignment",
     "crop?": "CropOptions",

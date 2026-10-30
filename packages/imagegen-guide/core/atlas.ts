@@ -724,9 +724,10 @@ export async function createAtlasPages<const C extends Config>({
     [] as { cells: Config["cells"]; count: number }[],
   );
   const output: { config: Config; atlas: Atlas<ImageId<C>> }[] = [];
+  const { maxImages: _pageSize, ...singlePageConfig } = config;
   for (const [index, page] of pages.entries()) {
     const pageConfig: Config = {
-      ...config,
+      ...singlePageConfig,
       id: `${config.id}-page-${index + 1}`,
       grid: {
         ...config.grid,

@@ -228,15 +228,16 @@ const example = program({
             preset: preset ?? selected.appearance?.preset ?? "light",
           },
         });
+        const pageSize = maxImages ?? config.maxImages;
         const pages =
-          maxImages === undefined
+          pageSize === undefined
             ? [{ config, atlas: await createAtlas({ config }) }]
-            : await createAtlasPages({ config, maxImages });
+            : await createAtlasPages({ config, maxImages: pageSize });
         await mkdir(out, { recursive: true });
         const outputs = [];
         for (const page of pages) {
           const name = `${encodeURIComponent(
-            maxImages === undefined ? (configFile ? config.id : example) : page.config.id,
+            pageSize === undefined ? (configFile ? config.id : example) : page.config.id,
           )}-${config.appearance!.preset}`;
           const guide = await sharp(Buffer.from(page.atlas.schematic)).png().toBuffer();
           createFile(`${out}/${name}.svg`, page.atlas.schematic);
@@ -252,7 +253,7 @@ const example = program({
             prompt: `${out}/${name}.prompt.txt`,
           });
         }
-        if (maxImages === undefined) return outputs[0];
+        if (pageSize === undefined) return outputs[0];
         const manifest = resolve(out, `${encodeURIComponent(config.id)}.pages.json`);
         createFile(
           manifest,

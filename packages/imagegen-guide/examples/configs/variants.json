@@ -9,6 +9,7 @@
     "gap": 0,
     "padding": 0
   },
+  "maxImages": 24,
   "appearance": {
     "background": "#ffffff",
     "image": {
