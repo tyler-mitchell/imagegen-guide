@@ -69,6 +69,7 @@ export const schema = type.module({
     id: "string",
     "row?": "Index",
     "column?": "Index",
+    "rowSpan?": "number.integer > 0",
     "columnSpan?": "number.integer > 0",
     "children?": "Grid",
   },
@@ -77,7 +78,7 @@ export const schema = type.module({
   WidthCanvas: { width: "Positive", aspectRatio: "AspectRatio", "padding?": "Padding" },
   HeightCanvas: { height: "Positive", aspectRatio: "AspectRatio", "padding?": "Padding" },
   Grid: {
-    grid: { columns: "Tracks", "gap?": "Gap", "padding?": "Padding" },
+    grid: { columns: "Tracks", "rows?": "Tracks", "gap?": "Gap", "padding?": "Padding" },
     "defaults?": "CellOptions",
     "rows?": { "[string]": "CellOptions" },
     "columns?": { "[string]": "CellOptions" },

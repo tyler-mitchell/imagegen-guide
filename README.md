@@ -90,6 +90,8 @@ The guide command saves no artwork. The crop command saves `atlas-job/crops/app-
 
 See the runnable [variant configuration](packages/imagegen-guide/examples/configs/variants.json) for a full atlas. Groups retain their hierarchy in the catalogue and can be cropped by ID. Cells also support mixed ratios, explicit dimensions, weighted columns, spans, scoped descriptions, labels, and appearance overrides. Set `image.backgroundImage` on a cell to show a reference image in its guide region; `backgroundSize` and `backgroundPosition` control its placement, and it does not repeat by default.
 
+For a fixed texture map, use `layout: "grid"` with pixel sized row and column tracks. The [character texture configuration](packages/imagegen-guide/examples/configs/character-texture.json) places square head faces above taller torso and limb faces with `rowSpan`.
+
 To locate observed artwork bounds, set `"crop": { "detect": {} }` in the configuration and pass it to `crop --config`. Detection searches each planned tile and its share of the surrounding gaps. It accepts transparent tiles on an opaque outer background. Set `crop.detect.background` when the first source pixel does not represent that outer background. Set `alphaThreshold` to change which partly transparent pixels count as artwork. Artwork that crosses into another tile's search area can still be cut; detection does not repair the image. Use the crop command above for planned bounds. `compareCatalogues` reports differences; neither path certifies image quality.
 
 ## Measured guides

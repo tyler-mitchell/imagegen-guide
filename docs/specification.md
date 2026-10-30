@@ -65,11 +65,14 @@ A ratio can also use explicit width and height values. Canvas size can use width
 and ratio, height and ratio, or explicit width and height.
 
 Columns define preferred image widths through pixel dimensions or relative weights.
-Row and column indices identify groups for styles and descriptions; they do not
-reserve fixed positions. Column spans adjust preferred widths. Row or column
+In masonry mode, row and column indices identify groups for styles and descriptions;
+they do not reserve fixed positions. Column spans adjust preferred widths. Row or column
 overrides can supply exact image dimensions.
+For exact texture maps, set `layout: "grid"` and give `grid.columns` and `grid.rows`
+pixel tracks. Set each cell's `row`, `column`, `rowSpan`, and `columnSpan` to place
+it on those tracks. The schematic and crop bounds retain the resolved positions.
 Omit row and column indices to use native grid placement in array order, including
-column spans. Explicit indices override the resulting logical coordinates.
+row and column spans. Explicit indices override the resulting logical coordinates.
 Padding and gaps can use uniform values or individual sides and axes.
 `align` and `verticalAlign` position the packed group through native Flexbox alignment.
 Labels can wrap to a configured line count. Set `fontFamily`, `fontWeight`, and

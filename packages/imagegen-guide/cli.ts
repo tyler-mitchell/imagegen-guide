@@ -28,6 +28,7 @@ import labels from "./examples/configs/labels.json" with { type: "json" };
 import nested from "./examples/configs/nested.json" with { type: "json" };
 import deep from "./examples/configs/deep.json" with { type: "json" };
 import adventurerAnimations from "./examples/configs/adventurer-animations.json" with { type: "json" };
+import characterTexture from "./examples/configs/character-texture.json" with { type: "json" };
 import manifest from "./package.json" with { type: "json" };
 
 const parseIds = (ids?: string) => ids?.split(",").map((id) => id.trim());
@@ -171,7 +172,7 @@ const example = program({
         preset: { type: "'light' | 'dark' | undefined", cli: "--preset" },
         config: { type: "string | undefined", cli: "--config" },
         example: {
-          type: "'mixed' | 'icons' | 'variants' | 'wide' | 'portrait' | 'labels' | 'nested' | 'deep' | 'adventurer-animations' = 'mixed'",
+          type: "'mixed' | 'icons' | 'variants' | 'wide' | 'portrait' | 'labels' | 'nested' | 'deep' | 'adventurer-animations' | 'character-texture' = 'mixed'",
           cli: "--example",
         },
       },
@@ -189,6 +190,7 @@ const example = program({
                 nested,
                 deep,
                 "adventurer-animations": adventurerAnimations,
+                "character-texture": characterTexture,
               }[example],
         );
         const config = schema.Config.assert({

@@ -143,7 +143,7 @@ export async function createAtlas<const C extends Config>({
         },
       ),
       cells: grid.cells.map((cell) => {
-        const position = placement.next([cell.columnSpan ?? 1, 1]);
+        const position = placement.next([cell.columnSpan ?? 1, cell.rowSpan ?? 1]);
         const rowIndex = cell.row ?? position.y;
         const columnIndex = cell.column ?? position.x;
         const row = grid.rows?.[rowIndex],
@@ -249,7 +249,12 @@ export async function createAtlas<const C extends Config>({
           width: "100%",
           ...(fitted.size && config.layout !== "grid"
             ? { flexWrap: "wrap", alignItems: "flex-start" }
-            : { gridTemplateColumns: tracks(grid.source.grid.columns, scale) }),
+            : {
+                gridTemplateColumns: tracks(grid.source.grid.columns, scale),
+                gridTemplateRows: grid.source.grid.rows
+                  ? tracks(grid.source.grid.rows, scale)
+                  : undefined,
+              }),
           rowGap: gaps(grid.source).row,
           columnGap: gaps(grid.source).column,
         },
@@ -352,12 +357,12 @@ export async function createAtlas<const C extends Config>({
                 ...(size
                   ? { width: size.width + cell.inset * 2 }
                   : {
-                      gridRow: `${cell.row + 1}`,
+                      gridRow: `${cell.row + 1} / span ${cell.rowSpan ?? 1}`,
                       gridColumn: `${cell.column + 1} / span ${cell.columnSpan ?? 1}`,
                     }),
                 ...(config.layout === "grid"
                   ? {
-                      gridRow: `${cell.row + 1}`,
+                      gridRow: `${cell.row + 1} / span ${cell.rowSpan ?? 1}`,
                       gridColumn: `${cell.column + 1} / span ${cell.columnSpan ?? 1}`,
                     }
                   : {}),
