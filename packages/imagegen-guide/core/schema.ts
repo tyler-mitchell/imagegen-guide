@@ -126,6 +126,15 @@ export const schema = type.module({
     height: "number.integer > 0",
     cells: "ResolvedCell[]",
   },
+  GuidePage: {
+    id: "string",
+    schematic: "string",
+    guide: "string",
+    layout: "string",
+    config: "string",
+    prompt: "string",
+  },
+  GuideManifest: { id: "string", pages: "GuidePage[]" },
   Atlas: { layout: "Layout", schematic: "string", prompt: "string", imageIds: "string[]" },
   ImageFormat: "'png' | 'jpeg' | 'webp' | 'avif'",
   Crop: {
@@ -175,6 +184,7 @@ export const schema = type.module({
 
 export type Config = typeof schema.Config.infer;
 export type Layout = typeof schema.Layout.infer;
+export type GuideManifest = typeof schema.GuideManifest.infer;
 export type Rectangle = typeof schema.Rectangle.infer;
 export type Catalogue = typeof schema.Catalogue.infer;
 type CellId<Cell> = Cell extends { id: infer Id extends string }

@@ -698,3 +698,53 @@ export async function createAtlas<const C extends Config>({
     imageIds: orderedImages.map((cell) => cell.id) as ImageId<C>[],
   };
 }
+
+/** Create generation-sized guides without splitting a nested image family. */
+export async function createAtlasPages<const C extends Config>({
+  config,
+  maxImages,
+  fonts,
+}: {
+  config: C;
+  maxImages: number;
+  fonts?: SatoriOptions["fonts"];
+}): Promise<{ config: Config; atlas: Atlas<ImageId<C>> }[]> {
+  const leafCount = (cell: Config["cells"][number]): number =>
+    cell.children ? cell.children.cells.reduce((count, child) => count + leafCount(child), 0) : 1;
+  const pages = config.cells.reduce(
+    (result, cell) => {
+      const count = leafCount(cell);
+      if (count > maxImages)
+        throw new RangeError(`Image group ${cell.id} has ${count} leaves; limit is ${maxImages}.`);
+      const last = result.at(-1);
+      return last && last.count + count <= maxImages
+        ? [...result.slice(0, -1), { cells: [...last.cells, cell], count: last.count + count }]
+        : [...result, { cells: [cell], count }];
+    },
+    [] as { cells: Config["cells"]; count: number }[],
+  );
+  const output: { config: Config; atlas: Atlas<ImageId<C>> }[] = [];
+  for (const [index, page] of pages.entries()) {
+    const pageConfig: Config = {
+      ...config,
+      id: `${config.id}-page-${index + 1}`,
+      grid: {
+        ...config.grid,
+        columns:
+          typeof config.grid.columns === "number"
+            ? Math.min(config.grid.columns, Math.ceil(Math.sqrt(page.cells.length)))
+            : config.grid.columns,
+      },
+      cells: page.cells,
+    };
+    const atlas = await createAtlas({ config: pageConfig, fonts });
+    output.push({
+      config: pageConfig,
+      atlas: {
+        ...atlas,
+        prompt: `Page ${index + 1} of ${pages.length} for ${config.id}.\n${atlas.prompt}`,
+      } as Atlas<ImageId<C>>,
+    });
+  }
+  return output;
+}

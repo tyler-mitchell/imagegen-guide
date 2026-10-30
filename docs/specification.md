@@ -213,6 +213,12 @@ prompt context for individual regeneration. The output has no provider-specific
 parameters or API request format.
 `atlas.imageIds` lists group and leaf IDs in layout order. A TypeScript config
 literal preserves these IDs for `cropImages.ids` and `createGif.frames`.
+For a large grouped job, `createAtlasPages({ config, maxImages: 48 })` returns
+page configs and atlases. It keeps each root image family together, assigns a
+stable page ID, and names the page in its prompt. The CLI guide action accepts
+`--max-images 48` and saves a page manifest with the guide, prompt, config, and
+layout paths. The crop action accepts that manifest and ordered generated
+sources through `--sources` to export all page catalogues in one action.
 When `output.transparentCrops` is true, the prompt requests transparent
 background pixels inside each image rectangle and `output.background` outside
 the rectangles. The schematic can use its own background and image fills.

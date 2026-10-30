@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // Node file I/O is confined to the command boundary.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import { program } from "cmd-mesh";
 import { createFile } from "package-management";
 import sharp from "sharp";
 import {
   schema,
   createAtlas,
+  createAtlasPages,
   createCatalogue,
   compareCatalogues,
   type Layout,
@@ -179,7 +181,7 @@ const saveImages = async ({
   return {
     source: sourceFile,
     dimensions: { width: metadata.width, height: metadata.height },
-    outputSize,
+    ...(outputSize === undefined ? {} : { outputSize }),
     catalogue: `${out}/${name}.catalogue.json`,
     images: crops.length,
   };
@@ -196,12 +198,13 @@ const example = program({
         out: { type: "string = 'imagegen-guide-output'", cli: "--out" },
         preset: { type: "'light' | 'dark' | undefined", cli: "--preset" },
         config: { type: "string | undefined", cli: "--config" },
+        maxImages: { type: "string.integer.parse | undefined", cli: "--max-images" },
         example: {
           type: "'mixed' | 'icons' | 'variants' | 'wide' | 'portrait' | 'labels' | 'nested' | 'deep' | 'adventurer-animations' | 'character-texture' = 'mixed'",
           cli: "--example",
         },
       },
-      run: async ({ out, preset, example, config: configFile }) => {
+      run: async ({ out, preset, example, config: configFile, maxImages }) => {
         const selected = schema.Config.assert(
           configFile
             ? JSON.parse(await readFile(configFile, "utf8"))
@@ -225,30 +228,61 @@ const example = program({
             preset: preset ?? selected.appearance?.preset ?? "light",
           },
         });
-        const name = `${encodeURIComponent(configFile ? config.id : example)}-${config.appearance!.preset}`;
-        const atlas = await createAtlas({ config });
-        const guide = await sharp(Buffer.from(atlas.schematic)).png().toBuffer();
+        const pages =
+          maxImages === undefined
+            ? [{ config, atlas: await createAtlas({ config }) }]
+            : await createAtlasPages({ config, maxImages });
         await mkdir(out, { recursive: true });
-        createFile(`${out}/${name}.svg`, atlas.schematic);
-        await writeFile(`${out}/${name}.guide.png`, guide);
-        createFile(`${out}/${name}.layout.json`, JSON.stringify(atlas.layout, null, 2));
-        createFile(`${out}/${name}.config.json`, JSON.stringify(config, null, 2));
-        createFile(`${out}/${name}.prompt.txt`, atlas.prompt);
-        return {
-          schematic: `${out}/${name}.svg`,
-          guide: `${out}/${name}.guide.png`,
-          layout: `${out}/${name}.layout.json`,
-          config: `${out}/${name}.config.json`,
-          prompt: `${out}/${name}.prompt.txt`,
-        };
+        const outputs = [];
+        for (const page of pages) {
+          const name = `${encodeURIComponent(
+            maxImages === undefined ? (configFile ? config.id : example) : page.config.id,
+          )}-${config.appearance!.preset}`;
+          const guide = await sharp(Buffer.from(page.atlas.schematic)).png().toBuffer();
+          createFile(`${out}/${name}.svg`, page.atlas.schematic);
+          await writeFile(`${out}/${name}.guide.png`, guide);
+          createFile(`${out}/${name}.layout.json`, JSON.stringify(page.atlas.layout, null, 2));
+          createFile(`${out}/${name}.config.json`, JSON.stringify(page.config, null, 2));
+          createFile(`${out}/${name}.prompt.txt`, page.atlas.prompt);
+          outputs.push({
+            schematic: `${out}/${name}.svg`,
+            guide: `${out}/${name}.guide.png`,
+            layout: `${out}/${name}.layout.json`,
+            config: `${out}/${name}.config.json`,
+            prompt: `${out}/${name}.prompt.txt`,
+          });
+        }
+        if (maxImages === undefined) return outputs[0];
+        const manifest = resolve(out, `${encodeURIComponent(config.id)}.pages.json`);
+        createFile(
+          manifest,
+          JSON.stringify(
+            schema.GuideManifest.assert({
+              id: config.id,
+              pages: outputs.map((output, index) => ({
+                id: pages[index]!.config.id,
+                schematic: resolve(output.schematic),
+                guide: resolve(output.guide),
+                layout: resolve(output.layout),
+                config: resolve(output.config),
+                prompt: resolve(output.prompt),
+              })),
+            }),
+            null,
+            2,
+          ),
+        );
+        return { manifest, pages: outputs.length };
       },
     },
     crop: {
-      description: "Crop from a saved layout or an edited source catalogue.",
+      description: "Crop one source or a paged atlas from its saved guide manifest.",
       input: {
         layout: { type: "string | undefined", cli: "--layout" },
         catalogue: { type: "string | undefined", cli: "--catalogue" },
-        source: { type: "string", required: true, cli: "--source" },
+        manifest: { type: "string | undefined", cli: "--manifest" },
+        sources: { type: "string | undefined", cli: "--sources" },
+        source: { type: "string | undefined", cli: "--source" },
         config: {
           type: "string | undefined",
           cli: "--config",
@@ -266,6 +300,8 @@ const example = program({
       run: async ({
         layout: layoutFile,
         catalogue: catalogueFile,
+        manifest: manifestFile,
+        sources: sourceFiles,
         source: sourceFile,
         config: configFile,
         size,
@@ -273,6 +309,47 @@ const example = program({
         ids,
         out,
       }) => {
+        if (manifestFile) {
+          if (layoutFile || catalogueFile || configFile || sourceFile || ids)
+            throw new RangeError("--manifest uses --sources and the saved page configurations.");
+          const manifest = schema.GuideManifest.assert(
+            JSON.parse(await readFile(manifestFile, "utf8")),
+          );
+          const sources = parseIds(sourceFiles) ?? [];
+          if (sources.length === 0 || sources.length > manifest.pages.length)
+            throw new RangeError(
+              `Pass 1 to ${manifest.pages.length} source images in page order; found ${sources.length}.`,
+            );
+          const results = [];
+          for (const [index, page] of manifest.pages.slice(0, sources.length).entries()) {
+            const layout = schema.Layout.assert(JSON.parse(await readFile(page.layout, "utf8")));
+            const config = schema.Config.assert(JSON.parse(await readFile(page.config, "utf8")));
+            results.push(
+              await saveImages({
+                out,
+                layout,
+                source: await readFile(sources[index]!),
+                sourceFile: sources[index]!,
+                options: config.crop,
+                size: size === undefined ? undefined : schema.CropSize.assert(size),
+                kernel: kernel === undefined ? undefined : schema.ResizeKernel.assert(kernel),
+              }),
+            );
+          }
+          return {
+            pages: results.length,
+            totalPages: manifest.pages.length,
+            images: results.reduce((count, result) => count + result.images, 0),
+            catalogues: results.map((result) => result.catalogue),
+            ...(manifest.pages[sources.length]
+              ? { nextPage: manifest.pages[sources.length]!.id }
+              : {}),
+          };
+        }
+        if (!sourceFile || sourceFiles)
+          throw new RangeError(
+            "Pass --source with --layout or --catalogue; use --sources with --manifest.",
+          );
         const { layout, catalogue, options } = await loadSelection({
           layoutFile,
           catalogueFile,
