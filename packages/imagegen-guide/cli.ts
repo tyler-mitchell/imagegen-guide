@@ -151,7 +151,8 @@ const saveImages = async ({
         ...entry,
         output: paths.get(entry.id),
         outputSize: paths.has(entry.id)
-          ? (resolvedSize ?? { width: entry.crop.width, height: entry.crop.height })
+          ? (resolvedSize ??
+            options?.sizes?.[entry.id] ?? { width: entry.crop.width, height: entry.crop.height })
           : undefined,
         ...(entry.children ? { children: images(entry.children) } : {}),
       }));
@@ -163,6 +164,7 @@ const saveImages = async ({
     catalogue,
     format,
     size: outputSize,
+    sizes: options?.sizes,
     kernel: outputKernel,
     ids,
   });

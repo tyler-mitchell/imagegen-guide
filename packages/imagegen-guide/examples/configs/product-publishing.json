@@ -3,7 +3,15 @@
   "layout": "grid",
   "canvas": { "width": 1024, "height": 1024, "padding": 24 },
   "grid": { "columns": [608, 320], "rows": [366, 584], "gap": 24, "padding": 0 },
-  "crop": { "detect": {} },
+  "crop": {
+    "detect": {},
+    "sizes": {
+      "workflow-hero": { "width": 608, "height": 342 },
+      "package-thumbnail": { "width": 320, "height": 320 },
+      "crop-comparison": { "width": 608, "height": 342 },
+      "example-panel": { "width": 315, "height": 560 }
+    }
+  },
   "appearance": {
     "background": "#e9eef4",
     "image": { "fill": "#ffffff", "strokeWidth": 0 },

@@ -28,6 +28,7 @@ const gif = await createGif({ atlas, source });
 ```
 
 `atlas.imageIds` lists the configured IDs. TypeScript suggests them for crop IDs and GIF frame IDs. Crops include their source rectangles, scale to the source size, and keep source alpha. They do not fix misaligned art.
+Pass `sizes` to `cropImages`, or set `crop.sizes` by image ID in a CLI config, to export different pixel sizes from one source.
 
 The GIF uses all leaf images in layout order at 100 ms per frame. Optional detection measures artwork inside each planned tile and its share of the gaps. See the [CLI workflow](https://github.com/tyler-mitchell/imagegen-guide#see-the-output).
 

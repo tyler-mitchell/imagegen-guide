@@ -334,6 +334,7 @@ export async function cropImages<const Id extends string = string>({
   ids,
   format = "png",
   size,
+  sizes,
   kernel = "lanczos3",
   ...selection
 }: {
@@ -341,6 +342,7 @@ export async function cropImages<const Id extends string = string>({
   ids?: readonly NoInfer<Id>[];
   format?: typeof schema.ImageFormat.infer;
   size?: typeof schema.CropSize.infer;
+  sizes?: typeof schema.CropSizes.infer;
   kernel?: typeof schema.ResizeKernel.infer;
 } & CropSelection<Id>): Promise<Crop[]> {
   const { default: sharp } = await import("sharp");
@@ -373,10 +375,11 @@ export async function cropImages<const Id extends string = string>({
   const crops: Crop[] = [];
   for (const image of images) {
     const { x: left, y: top, width, height } = image.crop;
+    const target = outputSize ?? sizes?.[image.id];
     const extracted = sharp(source).extract({ left, top, width, height });
     const bytes = await (
-      outputSize
-        ? extracted.resize(outputSize.width, outputSize.height, {
+      target
+        ? extracted.resize(target.width, target.height, {
             fit: "contain",
             background: "#00000000",
             kernel,
@@ -390,7 +393,7 @@ export async function cropImages<const Id extends string = string>({
       bytes,
       format,
       crop: image.crop,
-      size: outputSize ?? { width, height },
+      size: target ?? { width, height },
     });
   }
   return crops;

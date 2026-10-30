@@ -243,6 +243,9 @@ Unknown IDs raise `RangeError` instead of returning fewer images.
 PNG crops preserve source alpha. They do not remove opaque backgrounds or content
 that crosses the planned crop boundary.
 Set `size: 256` for square 256×256 outputs, or supply `{ width, height }`.
+Set `sizes` to a map of image IDs and `{ width, height }` values when one atlas
+needs different output sizes. A call-level `size` overrides that map. The CLI
+reads `crop.sizes` from the saved config and writes each size to the catalogue.
 Sharp contains the complete source crop within that output size. PNG preserves
 transparent padding when the aspect ratios differ. Each `Crop` includes the
 source `crop` rectangle and the final pixel `size`. The crop command accepts
