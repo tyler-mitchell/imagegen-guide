@@ -30,7 +30,7 @@ await writeFile("icons.gif", gif);
 
 `atlas.imageIds` lists the configured IDs. TypeScript suggests them for crop IDs and GIF frame IDs. Crops include their source rectangles, scale to the source size, and keep source alpha. They do not fix misaligned art.
 
-The GIF uses all leaf images in layout order at 100 ms per frame. Detection needs separate tiles on a uniform background. See the [CLI workflow](https://github.com/tyler-mitchell/imagegen-guide#see-the-output).
+The GIF uses all leaf images in layout order at 100 ms per frame. Optional detection measures artwork inside each planned tile and its share of the gaps. See the [CLI workflow](https://github.com/tyler-mitchell/imagegen-guide#see-the-output).
 
 Pass `frames` to change GIF order or timing. The [run-cycle example](https://github.com/tyler-mitchell/imagegen-guide#animate-named-frames) shows both forms. The [six-region guide](https://github.com/tyler-mitchell/imagegen-guide/blob/main/packages/imagegen-guide/examples/configs/adventurer-animations.json) shows labels, dimension lines, and wider regions for sword poses.
 

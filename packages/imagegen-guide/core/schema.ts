@@ -17,6 +17,7 @@ export const schema = type.module({
   DetectionOptions: {
     "background?": "string",
     "threshold?": "Nonnegative",
+    "alphaThreshold?": "Nonnegative",
     "minArea?": "Nonnegative",
   },
   CropOptions: {

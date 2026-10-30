@@ -39,7 +39,6 @@
     "arktype": "catalog:",
     "css-tree": "^3.2.1",
     "defu": "catalog:",
-    "munkres": "^2.1.1",
     "ofetch": "^1.5.1",
     "satori": "catalog:",
     "sharp": "catalog:"

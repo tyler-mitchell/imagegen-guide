@@ -161,28 +161,27 @@ packing. Source: [pixel-grid rounding](https://github.com/vercel/satori#pixel-gr
 
 ## Source-region detection
 
-OpenCV's `inRange` and `connectedComponentsWithStats` segment foreground regions
-on a uniform background. [Munkres](https://github.com/havelessbemore/munkres#usage)
-assigns detected regions to planned IDs one-to-one by minimum center distance.
+OpenCV's `inRange` compares the source to an opaque outer background.
+`extractChannel` and `threshold` exclude transparent pixels; a transparent
+outer background uses the alpha mask alone. `connectedComponentsWithStats`
+reports unassigned regions.
 
 ```ts
-const assignments = munkres(
-  targets.map(({ crop }) =>
-    regions.map((region) => {
-      const x = crop.x + crop.width / 2 - region.x - region.width / 2;
-      const y = crop.y + crop.height / 2 - region.y - region.height / 2;
-      return x * x + y * y;
-    }),
-  ),
-);
+const tile = mask.roi(new cv.Rect(left, top, right - left, bottom - top));
+const area = cv.countNonZero(tile);
+const bounds = cv.boundingRect(tile);
 ```
 
-Connected-component statistics supply actual integer bounds. They do not
-distinguish a tile from its shadow or reconstruct group labels. Extraction
-preserves source pixels.
+The planned rectangles divide each gap at its midpoint. A tile's `Mat.roi`
+isolates its search area. `countNonZero` measures foreground area, and
+`boundingRect` returns its integer bounds. This keeps image IDs from the
+planned catalogue even when neighboring foreground pixels connect. The
+search areas cannot infer which tile owns pixels beyond their boundary.
+Extraction preserves source pixels.
 
 Sources: [OpenCV shape analysis](https://docs.opencv.org/4.13.0/d3/dc0/group__imgproc__shape.html),
-[Munkres assignment API](https://github.com/havelessbemore/munkres#usage),
+[OpenCV array operations](https://docs.opencv.org/4.13.0/d2/de8/group__core__array.html),
+[OpenCV thresholding](https://docs.opencv.org/4.13.0/d7/d1b/group__imgproc__misc.html),
 and [Sharp animated joins](https://sharp.pixelplumbing.com/api-constructor/#join).
 
 ## GIF timing and task inputs

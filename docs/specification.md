@@ -238,20 +238,24 @@ to select, repeat, and override frames. An empty sequence or unknown ID raises
 use a shared transparent canvas sized to the largest crop; smaller crops are
 centered without resizing. The caller saves the returned GIF bytes.
 
-`detectCatalogue({ source, catalogue, options })` locates separated foreground
-tiles on a uniform background. OpenCV segments connected components and matches
-their normalized positions to planned leaf positions. The default background is
-the first source pixel, the threshold is 10, and the minimum component area is
-one quarter of the smallest planned leaf area. Configuration can override these
-values through `crop.detect`.
+`detectCatalogue({ source, catalogue, options })` locates foreground inside each
+planned leaf and the nearest half of its gaps to other leaves. Its search areas
+cannot overlap. OpenCV finds the nonzero bounds inside each search area. The
+default background is the first source pixel; `crop.detect.background` overrides
+it. For a transparent background, alpha alone defines foreground. For an opaque
+background, foreground must differ from that color and pass the alpha threshold.
+The default color threshold is 10; `alphaThreshold` is 127. The default minimum
+foreground area is one quarter of the smallest planned leaf area. Set
+`crop.detect.threshold`, `alphaThreshold`, or `minArea` to change these values.
 
-Detected leaf bounds describe the source pixels. They do not enforce the planned
-ratio through padding or resizing. Shadows can affect these bounds. Group bounds
-remain planned; detection does not locate their labels or certify their crops.
-Merged tiles, retained guide outlines, and nonuniform backgrounds do not meet this
-segmentation contract. If fewer regions than leaf images remain after filtering,
-`detectCatalogue` raises `RangeError` with both counts. It does not return a
-catalogue with missing crops.
+Detected leaf bounds describe source pixels without padding or resizing. Detected
+group bounds enclose their detected descendants; labels do not enter those
+bounds. Detection can divide connected artwork between neighboring tiles but
+cannot reconstruct artwork that crosses a search-area boundary. Shadows and
+guide markings can affect bounds. If a tile has too little foreground,
+`detectCatalogue` raises `RangeError` with its ID. It does not return a catalogue
+with missing crops. `detectRegions` still reports unassigned connected components
+from the same foreground mask.
 
 `compareCatalogues({ expected, actual })` returns each leaf ID, both rectangles,
 and signed differences for x, y, width, and height. Both catalogues use the same

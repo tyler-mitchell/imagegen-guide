@@ -89,7 +89,7 @@ The guide command saves no artwork. The crop command saves `examples/output/crop
 
 See the runnable [variant configuration](packages/imagegen-guide/examples/configs/variants.json) for a full atlas. Groups retain their hierarchy in the catalogue and can be cropped by ID. Cells also support mixed ratios, explicit dimensions, weighted columns, spans, scoped descriptions, labels, and appearance overrides. Set `image.backgroundImage` on a cell to show a reference image in its guide region; `backgroundSize` and `backgroundPosition` control its placement, and it does not repeat by default.
 
-To locate observed bounds, set `"crop": { "detect": {} }` in the configuration and pass it to `crop --config`. Detection requires one separate foreground region per leaf image on a uniform background. Connected tiles, shadows across gaps, and missing tiles make detection fail. Use the crop command above for planned bounds. `compareCatalogues` reports differences; neither path certifies image quality.
+To locate observed artwork bounds, set `"crop": { "detect": {} }` in the configuration and pass it to `crop --config`. Detection searches each planned tile and its share of the surrounding gaps. It accepts transparent tiles on an opaque outer background. Set `crop.detect.background` when the first source pixel does not represent that outer background. Set `alphaThreshold` to change which partly transparent pixels count as artwork. Artwork that crosses into another tile's search area can still be cut; detection does not repair the image. Use the crop command above for planned bounds. `compareCatalogues` reports differences; neither path certifies image quality.
 
 ## Measured guides
 

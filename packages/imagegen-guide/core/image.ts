@@ -1,5 +1,4 @@
 import satori from "satori";
-import { munkres } from "munkres";
 import { createCatalogue } from "./catalogue.ts";
 import { schema, type Atlas, type Catalogue, type Crop, type Rectangle } from "./schema.ts";
 
@@ -78,16 +77,13 @@ export async function overlayImage({
     .toBuffer();
 }
 
-/** Locate foreground components in source pixels without assigning image IDs. */
-export async function detectRegions({
+const foregroundMask = async ({
   source,
-  catalogue,
-  options = {},
+  options,
 }: {
   source: Uint8Array;
-  catalogue: Catalogue;
-  options?: typeof schema.DetectionOptions.infer;
-}): Promise<Array<typeof schema.Region.infer>> {
+  options: typeof schema.DetectionOptions.infer;
+}) => {
   const { default: sharp } = await import("sharp");
   const { default: ready } = await import("@techstark/opencv-js");
   // OpenCV's runtime export is asynchronous; its declarations describe the resolved module.
@@ -108,11 +104,9 @@ export async function detectRegions({
         .raw()
         .toBuffer()
     : data.subarray(0, 4);
-  const targets = leaves(catalogue.images);
+  const transparent = background[3] === 0;
   const threshold = options.threshold ?? 10;
-  const minArea =
-    options.minArea ??
-    Math.min(...targets.map((image) => image.crop.width * image.crop.height)) / 4;
+  const alphaThreshold = options.alphaThreshold ?? 127;
   const image = cv.matFromArray(info.height, info.width, cv.CV_8UC4, data);
   const range = (offset: number) =>
     new cv.Mat(
@@ -128,15 +122,54 @@ export async function detectRegions({
         ]),
       ),
     );
-  const low = range(-threshold),
-    high = range(threshold);
-  const mask = new cv.Mat(),
-    labels = new cv.Mat(),
+  const rangeBounds = transparent
+    ? undefined
+    : { low: range(-threshold), high: range(threshold) };
+  const alpha = new cv.Mat(),
+    alphaMask = new cv.Mat(),
+    mask = new cv.Mat();
+  try {
+    cv.extractChannel(image, alpha, 3);
+    cv.threshold(alpha, transparent ? mask : alphaMask, alphaThreshold, 255, cv.THRESH_BINARY);
+    if (rangeBounds) {
+      cv.inRange(image, rangeBounds.low, rangeBounds.high, mask);
+      cv.bitwise_not(mask, mask);
+      cv.bitwise_and(mask, alphaMask, mask);
+    }
+    return { cv, mask };
+  } catch (error) {
+    mask.delete();
+    throw error;
+  } finally {
+    for (const resource of [
+      image,
+      alpha,
+      alphaMask,
+      ...(rangeBounds ? [rangeBounds.low, rangeBounds.high] : []),
+    ])
+      resource.delete();
+  }
+};
+
+/** Locate foreground components in source pixels without assigning image IDs. */
+export async function detectRegions({
+  source,
+  catalogue,
+  options = {},
+}: {
+  source: Uint8Array;
+  catalogue: Catalogue;
+  options?: typeof schema.DetectionOptions.infer;
+}): Promise<Array<typeof schema.Region.infer>> {
+  const { cv, mask } = await foregroundMask({ source, options });
+  const targets = leaves(catalogue.images);
+  const minArea =
+    options.minArea ??
+    Math.min(...targets.map((image) => image.crop.width * image.crop.height)) / 4;
+  const labels = new cv.Mat(),
     stats = new cv.Mat(),
     centroids = new cv.Mat();
   try {
-    cv.inRange(image, low, high, mask);
-    cv.bitwise_not(mask, mask);
     cv.connectedComponentsWithStats(mask, labels, stats, centroids, 8, cv.CV_32S);
     return schema.Region.array().assert(
       Array.from({ length: stats.rows - 1 }, (_, index) => {
@@ -151,11 +184,11 @@ export async function detectRegions({
       }).filter((region) => region.area >= minArea),
     );
   } finally {
-    for (const resource of [image, low, high, mask, labels, stats, centroids]) resource.delete();
+    for (const resource of [mask, labels, stats, centroids]) resource.delete();
   }
 }
 
-/** Match source regions to planned leaf positions, without padding or resizing pixels. */
+/** Locate each leaf in the space between its planned bounds and neighboring leaves. */
 export async function detectCatalogue({
   source,
   catalogue,
@@ -165,26 +198,69 @@ export async function detectCatalogue({
   catalogue: Catalogue;
   options?: typeof schema.DetectionOptions.infer;
 }): Promise<Catalogue> {
-  const regions = await detectRegions({ source, catalogue, options });
+  const { cv, mask } = await foregroundMask({ source, options });
   const targets = leaves(catalogue.images);
-  if (regions.length < targets.length)
-    throw new RangeError(
-      `Expected ${targets.length} separate foreground regions, found ${regions.length}. Check tile separation, background, threshold, and minArea; omit detection to use planned crop bounds.`,
-    );
-  const detected = new Map(
-    munkres(
-      targets.map(({ crop }) =>
-        regions.map((region) => {
-          const x = crop.x + crop.width / 2 - region.x - region.width / 2;
-          const y = crop.y + crop.height / 2 - region.y - region.height / 2;
-          return x * x + y * y;
+  const minArea =
+    options.minArea ??
+    Math.min(...targets.map((image) => image.crop.width * image.crop.height)) / 4;
+  const viewport = catalogue.source.viewport ?? {
+    x: 0,
+    y: 0,
+    width: catalogue.source.width,
+    height: catalogue.source.height,
+  };
+  const detected = (() => {
+    try {
+      return new Map(
+        targets.map(({ id, crop }) => {
+          const neighbors = targets.filter((image) => image.id !== id).map((image) => image.crop);
+          const left = Math.max(
+            viewport.x,
+            ...neighbors
+              .filter((neighbor) => neighbor.x + neighbor.width <= crop.x)
+              .map((neighbor) => Math.round((neighbor.x + neighbor.width + crop.x) / 2)),
+          );
+          const top = Math.max(
+            viewport.y,
+            ...neighbors
+              .filter((neighbor) => neighbor.y + neighbor.height <= crop.y)
+              .map((neighbor) => Math.round((neighbor.y + neighbor.height + crop.y) / 2)),
+          );
+          const right = Math.min(
+            viewport.x + viewport.width,
+            ...neighbors
+              .filter((neighbor) => crop.x + crop.width <= neighbor.x)
+              .map((neighbor) => Math.round((crop.x + crop.width + neighbor.x) / 2)),
+          );
+          const bottom = Math.min(
+            viewport.y + viewport.height,
+            ...neighbors
+              .filter((neighbor) => crop.y + crop.height <= neighbor.y)
+              .map((neighbor) => Math.round((crop.y + crop.height + neighbor.y) / 2)),
+          );
+          const tile = mask.roi(new cv.Rect(left, top, right - left, bottom - top));
+          try {
+            const area = cv.countNonZero(tile);
+            if (area === 0 || area < minArea) return [id, undefined] as const;
+            const bounds = cv.boundingRect(tile);
+            return [
+              id,
+              { x: left + bounds.x, y: top + bounds.y, width: bounds.width, height: bounds.height },
+            ] as const;
+          } finally {
+            tile.delete();
+          }
         }),
-      ),
-    ).map(([target, match]) => {
-      const { x, y, width, height } = regions[match]!;
-      return [targets[target]!.id, { x, y, width, height }] as const;
-    }),
-  );
+      );
+    } finally {
+      mask.delete();
+    }
+  })();
+  const missing = targets.filter((image) => !detected.get(image.id)).map((image) => image.id);
+  if (missing.length)
+    throw new RangeError(
+      `No foreground found for ${missing.join(", ")}. Check background, threshold, and minArea; omit detection to use planned crop bounds.`,
+    );
   const images = (entries: Catalogue["images"]): Catalogue["images"] =>
     entries.map((entry) => {
       if (!entry.children) return { ...entry, crop: detected.get(entry.id)! };

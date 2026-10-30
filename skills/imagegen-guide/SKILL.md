@@ -79,7 +79,7 @@ Keep a source with a different size when its full layout still matches the guide
 
 ## When cropping fails
 
-`Expected 12 separate foreground regions, found 5` means that optional detection was on. Detection needs separate tiles on one uniform background. Use planned crops when the artwork fits the guide.
+`No foreground found for settings` means that optional detection did not find enough artwork in that tile's search area. Check the source background, `crop.detect.alphaThreshold`, and `crop.detect.minArea`. Use planned crops when the artwork fits the guide. Detection cannot separate artwork that crosses into another tile's search area.
 
 If a crop cuts off art, show the planned boxes on the source:
 
