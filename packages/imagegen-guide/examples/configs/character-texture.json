@@ -1,0 +1,29 @@
+{
+  "id": "character-texture",
+  "layout": "grid",
+  "canvas": { "width": 204, "height": 100, "padding": 0 },
+  "grid": {
+    "columns": [34, 34, 34, 34, 34, 34],
+    "rows": [34, 33, 33],
+    "gap": 0,
+    "padding": 0
+  },
+  "appearance": {
+    "image": { "fill": "#f8fafc", "stroke": "#334155", "strokeWidth": 1 }
+  },
+  "prompt": "Create one coordinated low-poly character texture. Keep one material palette and consistent surface details across all views. Fill each image rectangle fully and align details at shared edges.",
+  "cells": [
+    { "id": "head-front", "row": 0, "column": 0, "width": 32, "height": 32 },
+    { "id": "head-back", "row": 0, "column": 1, "width": 32, "height": 32 },
+    { "id": "head-left", "row": 0, "column": 2, "width": 32, "height": 32 },
+    { "id": "head-right", "row": 0, "column": 3, "width": 32, "height": 32 },
+    { "id": "head-top", "row": 0, "column": 4, "width": 32, "height": 32 },
+    { "id": "head-bottom", "row": 0, "column": 5, "width": 32, "height": 32 },
+    { "id": "torso-front", "row": 1, "column": 0, "rowSpan": 2, "width": 32, "height": 64 },
+    { "id": "torso-back", "row": 1, "column": 1, "rowSpan": 2, "width": 32, "height": 64 },
+    { "id": "arm-left", "row": 1, "column": 2, "rowSpan": 2, "width": 32, "height": 64 },
+    { "id": "arm-right", "row": 1, "column": 3, "rowSpan": 2, "width": 32, "height": 64 },
+    { "id": "leg-left", "row": 1, "column": 4, "rowSpan": 2, "width": 32, "height": 64 },
+    { "id": "leg-right", "row": 1, "column": 5, "rowSpan": 2, "width": 32, "height": 64 }
+  ]
+}

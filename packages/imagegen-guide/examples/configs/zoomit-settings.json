@@ -1,0 +1,76 @@
+{
+  "id": "zoomit-settings",
+  "canvas": { "width": 1536, "aspectRatio": "4:3", "padding": 48 },
+  "grid": { "columns": 4, "gap": 48, "padding": 0 },
+  "defaults": { "aspectRatio": "1:1" },
+  "crop": { "detect": {}, "size": 256 },
+  "appearance": {
+    "background": "#e7eff4",
+    "image": { "fill": "#ffffff", "stroke": "#334155", "strokeWidth": 1 },
+    "label": { "position": "below", "fontSize": 18, "gap": 8 }
+  },
+  "output": { "background": "#e7eff4", "transparentCrops": true },
+  "prompt": "Create twelve ZoomIt settings icons for the supplied twelve named slots. Use the existing ZoomIt SettingsIcons PNGs as style and motif references. Keep their rounded-square tile silhouette, transparent outside corners, metallic light symbols, blue and charcoal color family, and soft internal depth. Make every symbol complete inside its square. Keep the background outside the image regions uniform. Omit guide borders and captions from the final atlas.",
+  "cells": [
+    {
+      "id": "general",
+      "label": { "text": "General" },
+      "prompt": "A settings gear in the style of general.png."
+    },
+    {
+      "id": "shortcuts",
+      "label": { "text": "Shortcuts" },
+      "prompt": "Keyboard shortcuts in the style of shortcuts.png."
+    },
+    {
+      "id": "zoom",
+      "label": { "text": "Zoom" },
+      "prompt": "Screen magnification in the style of zoom.png."
+    },
+    {
+      "id": "live-zoom",
+      "label": { "text": "Live Zoom" },
+      "prompt": "Live screen magnification in the style of live-zoom.png."
+    },
+    {
+      "id": "draw",
+      "label": { "text": "Draw" },
+      "prompt": "Screen annotation in the style of draw.png."
+    },
+    {
+      "id": "type",
+      "label": { "text": "Type" },
+      "prompt": "On-screen typing in the style of type.png."
+    },
+    {
+      "id": "break",
+      "label": { "text": "Break" },
+      "prompt": "Presentation break in the style of break.png."
+    },
+    {
+      "id": "snip",
+      "label": { "text": "Snip" },
+      "prompt": "Screen capture in the style of snip.png."
+    },
+    {
+      "id": "record",
+      "label": { "text": "Record" },
+      "prompt": "Screen recording in the style of record.png."
+    },
+    {
+      "id": "webcam",
+      "label": { "text": "Webcam" },
+      "prompt": "Webcam capture in the style of webcam.png."
+    },
+    {
+      "id": "panorama",
+      "label": { "text": "Panorama" },
+      "prompt": "Scrolling panorama capture in the style of panorama.png."
+    },
+    {
+      "id": "demo-mirror",
+      "label": { "text": "DemoMirror" },
+      "prompt": "Screen mirroring in the style of demo-mirror.png."
+    }
+  ]
+}

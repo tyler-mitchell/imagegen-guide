@@ -31,10 +31,10 @@ catalogue. Confirm that prompt sections preserve image order and scoped descript
 ## 3. Image extraction
 
 Use an existing image-processing library to crop one entry, selected entries, or
-all entries. Keep this operation in a separate import path if its runtime requires Node.js.
+all entries. Load the Node.js image dependency only when an image operation runs.
 
 Verification: crop a known atlas with distinct cell colors. Check crop dimensions,
-pixel boundaries, and image IDs. Confirm that the layout entry point does not load
+pixel boundaries, and image IDs. Confirm that guide creation does not load
 the Node-specific image dependency.
 
 ## 4. React adapter

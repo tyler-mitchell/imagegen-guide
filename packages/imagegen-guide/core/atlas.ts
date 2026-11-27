@@ -1,6 +1,15 @@
 import satori, { type SatoriOptions, type SatoriNode } from "satori";
 import { gridLayout, stackedLayout, StackedLayout } from "@thi.ng/layout";
-import { schema, type Config, type Layout, type Rectangle, type Atlas } from "./schema.ts";
+import { defu } from "defu";
+import { loadGoogleFont } from "./google-fonts.ts";
+import {
+  schema,
+  type Config,
+  type Layout,
+  type Rectangle,
+  type Atlas,
+  type ImageId,
+} from "./schema.ts";
 
 export const aspectRatios = {
   "1:1": 1,
@@ -13,7 +22,7 @@ export const aspectRatios = {
 } as const;
 /** Append or prepend these instructions to a consumer's image-generation prompt. */
 export const defaultPrompt =
-  "Use the schematic as a fixed template. Preserve its canvas, image bounds, gaps, and labels. Fill image regions edge-to-edge; add no margins or exterior shadows. Keep labels outside image regions. Replace checkerboard placeholders with artwork; omit checkerboards and guide borders from the result.";
+  "Use the schematic as a fixed template. Preserve its canvas, image bounds, and gaps. IMPORTANT: All content for each image MUST remain inside its containing image rectangle. No part may cross its boundary, including effects, shadows, or details. Use labels to identify regions, then omit labels, dimension lines, and guide borders from the result.";
 
 type Grid = typeof schema.Grid.infer;
 type Size = { width: number; height: number };
@@ -28,6 +37,7 @@ type ResolvedCell = Omit<
     stroke: string;
     strokeWidth: number;
     radius: number;
+    dimensionLineColor: string;
   };
   inset: number;
   label?: typeof schema.Label.infer;
@@ -72,16 +82,38 @@ const bounds = (node: SatoriNode): Rectangle => {
     height: Math.round(node.top + node.height) - y,
   };
 };
+const dimensionLines = ({
+  width,
+  height,
+  color,
+  background,
+}: Size & { color: string; background: string }) => {
+  const offset = 22;
+  const arrowLength = 9;
+  const arrowHalfWidth = 4;
+  const dimension = (length: number) => `
+    <path fill="none" stroke="${color}" stroke-width="1.5" d="M0 ${offset}H${length}"/>
+    <path fill="${color}" d="M0 ${offset}l${arrowLength}-${arrowHalfWidth}v${arrowHalfWidth * 2}z M${length} ${offset}l-${arrowLength}-${arrowHalfWidth}v${arrowHalfWidth * 2}z"/>
+    <text x="${length / 2}" y="${offset + 5}" fill="${color}" stroke="${background}" stroke-width="10" stroke-linejoin="round" paint-order="stroke" font-family="sans-serif" font-size="14" font-weight="600" text-anchor="middle">${length}px</text>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  ${dimension(width)}
+  <g transform="translate(${width} 0) rotate(90)">${dimension(height)}</g>
+</svg>`;
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+};
 
-/** Render a schematic and resolve crop geometry for cells and nested groups. */
-export async function createAtlas({
-  config,
-  fonts,
+/** Render a schematic and resolve crop geometry for cells and nested groups.
+ * @throws {RangeError} When the configured content cannot fit the canvas.
+ */
+export async function createAtlas<const C extends Config>({
+  config: input,
+  fonts: suppliedFonts,
   ...options
-}: { config: Config; fonts: SatoriOptions["fonts"] } & Omit<
+}: { config: C; fonts?: SatoriOptions["fonts"] } & Omit<
   SatoriOptions,
   "width" | "height" | "fonts" | "onNodeDetected" | "pointScaleFactor"
->): Promise<Atlas> {
+>): Promise<Atlas<ImageId<C>>> {
+  const config = schema.Config.assert(input);
   const width = Math.round(
     "width" in config.canvas
       ? config.canvas.width
@@ -91,6 +123,10 @@ export async function createAtlas({
     "height" in config.canvas ? config.canvas.height : width / ratio(config.canvas.aspectRatio),
   );
   const preset = presets[config.appearance?.preset ?? "light"];
+  const output = defu(config.output, {
+    background: config.appearance?.background ?? preset.background,
+    transparentCrops: false,
+  });
   const insets = paddingInsets(config.canvas.padding ?? 32);
   const resolve = (grid: Grid, ancestors: string[] = []): ResolvedGrid => {
     const columns =
@@ -107,37 +143,34 @@ export async function createAtlas({
         },
       ),
       cells: grid.cells.map((cell) => {
-        const position = placement.next([cell.columnSpan ?? 1, 1]);
+        const position = placement.next([cell.columnSpan ?? 1, cell.rowSpan ?? 1]);
         const rowIndex = cell.row ?? position.y;
         const columnIndex = cell.column ?? position.x;
         const row = grid.rows?.[rowIndex],
           column = grid.columns?.[columnIndex];
-        const resolved = { ...grid.defaults, ...row, ...column, ...cell };
-        const image = {
+        const resolved = defu(cell, column, row, grid.defaults);
+        const image = defu(resolved.image, config.appearance?.image, {
           fill: preset.fill,
           stroke: preset.stroke,
           strokeWidth: 1,
           radius: 0,
-          ...config.appearance?.image,
-          ...grid.defaults?.image,
-          ...row?.image,
-          ...column?.image,
-          ...cell.image,
-        };
-        const label = {
-          position: "below" as const,
-          fontFamily: fonts[0]?.name,
-          fontSize: 18,
-          color: preset.color,
-          gap: 12,
-          align: "center" as const,
-          wrap: true,
-          ...config.appearance?.label,
-          ...grid.defaults?.label,
-          ...row?.label,
-          ...column?.label,
-          ...cell.label,
-        };
+          dimensionLineColor: "#6AB0DE",
+        });
+        const label = defu(
+          typeof resolved.label === "object" ? resolved.label : undefined,
+          config.appearance?.label,
+          {
+            position: "below" as const,
+            fontFamily: suppliedFonts?.[0]?.name ?? "Inter",
+            fontWeight: 400 as const,
+            fontStyle: "normal" as const,
+            fontSize: 18,
+            color: preset.color,
+            gap: 12,
+            align: "center" as const,
+            wrap: true,
+          },
+        );
         const context = [
           ...ancestors,
           grid.prompt,
@@ -168,10 +201,37 @@ export async function createAtlas({
       }),
     };
   };
-  const root = resolve({ ...config, grid: { ...config.grid, padding: config.grid.padding ?? 0 } });
+  const root = resolve({ ...config, grid: defu(config.grid, { padding: 0 }) });
   const all = (grid: ResolvedGrid): ResolvedCell[] =>
     grid.cells.flatMap((cell) => [cell, ...(cell.children ? all(cell.children) : [])]);
   const cells = all(root);
+  const fonts = [...(suppliedFonts ?? [])];
+  const labels = cells.flatMap((cell) => (cell.label ? [cell.label] : []));
+  const faces = new Map<
+    string,
+    {
+      family: string;
+      weight: NonNullable<(typeof labels)[number]["fontWeight"]>;
+      style: NonNullable<(typeof labels)[number]["fontStyle"]>;
+      text: string;
+    }
+  >();
+  for (const label of labels) {
+    const family = label.fontFamily ?? "Inter";
+    const weight = label.fontWeight ?? 400;
+    const style = label.fontStyle ?? "normal";
+    const key = JSON.stringify([family, weight, style]);
+    faces.set(key, { family, weight, style, text: `${faces.get(key)?.text ?? ""}${label.text}` });
+  }
+  for (const face of faces.values()) {
+    if (
+      !fonts.some(
+        (font) =>
+          font.name === face.family && font.weight === face.weight && font.style === face.style,
+      )
+    )
+      fonts.push(await loadGoogleFont(face));
+  }
   const detected = new Map<string, SatoriNode>();
   const render = (
     fitted: ReadonlyMap<string, Size>,
@@ -189,7 +249,12 @@ export async function createAtlas({
           width: "100%",
           ...(fitted.size && config.layout !== "grid"
             ? { flexWrap: "wrap", alignItems: "flex-start" }
-            : { gridTemplateColumns: tracks(grid.source.grid.columns, scale) }),
+            : {
+                gridTemplateColumns: tracks(grid.source.grid.columns, scale),
+                gridTemplateRows: grid.source.grid.rows
+                  ? tracks(grid.source.grid.rows, scale)
+                  : undefined,
+              }),
           rowGap: gaps(grid.source).row,
           columnGap: gaps(grid.source).column,
         },
@@ -205,6 +270,8 @@ export async function createAtlas({
                     flexShrink: 0,
                     width: "100%",
                     fontFamily: label.fontFamily,
+                    fontWeight: label.fontWeight,
+                    fontStyle: label.fontStyle,
                     fontSize: label.fontSize,
                     lineHeight: label.lineHeight ? `${label.lineHeight}px` : undefined,
                     color: label.color,
@@ -235,8 +302,28 @@ export async function createAtlas({
                 backgroundImage: cell.image.backgroundImage,
                 backgroundSize: cell.image.backgroundSize,
                 backgroundPosition: cell.image.backgroundPosition,
+                backgroundRepeat: cell.image.backgroundRepeat ?? "no-repeat",
               },
-              children: cell.children ? tree(cell.children) : undefined,
+              children: [
+                ...(cell.children ? [tree(cell.children)] : []),
+                ...(size && cell.image.dimensionLines
+                  ? [
+                      {
+                        type: "img",
+                        props: {
+                          src: dimensionLines({
+                            ...size,
+                            color: cell.image.dimensionLineColor,
+                            background: preset.fill,
+                          }),
+                          width: size.width,
+                          height: size.height,
+                          style: { position: "absolute", left: 0, top: 0 },
+                        },
+                      },
+                    ]
+                  : []),
+              ],
             },
           };
           const frame = {
@@ -270,12 +357,12 @@ export async function createAtlas({
                 ...(size
                   ? { width: size.width + cell.inset * 2 }
                   : {
-                      gridRow: `${cell.row + 1}`,
+                      gridRow: `${cell.row + 1} / span ${cell.rowSpan ?? 1}`,
                       gridColumn: `${cell.column + 1} / span ${cell.columnSpan ?? 1}`,
                     }),
                 ...(config.layout === "grid"
                   ? {
-                      gridRow: `${cell.row + 1}`,
+                      gridRow: `${cell.row + 1} / span ${cell.rowSpan ?? 1}`,
                       gridColumn: `${cell.column + 1} / span ${cell.columnSpan ?? 1}`,
                     }
                   : {}),
@@ -537,8 +624,9 @@ export async function createAtlas({
       upper = scale;
     }
   }
+  if (!best.fits) throw new RangeError("Atlas images do not fit the configured canvas.");
   const schematic = await render(best.fitted, best.positions, best.extent, 1, 1);
-  const output = (grid: ResolvedGrid): Layout["cells"] =>
+  const layoutCells = (grid: ResolvedGrid): Layout["cells"] =>
     grid.cells.map((cell) => ({
       id: cell.id,
       row: cell.row,
@@ -549,14 +637,16 @@ export async function createAtlas({
         ? { label: { ...cell.label, bounds: bounds(detected.get(`label:${cell.id}`)!) } }
         : {}),
       context: cell.context,
-      ...(cell.children ? { children: output(cell.children) } : {}),
+      ...(cell.children ? { children: layoutCells(cell.children) } : {}),
     }));
-  const layout = { id: config.id, width, height, cells: output(root) };
-  const imageInstructions = (cells: Layout["cells"]): string[] =>
-    cells.flatMap((cell) => [
+  const layout = { id: config.id, width, height, cells: layoutCells(root) };
+  const images = (cells: Layout["cells"]): Layout["cells"] =>
+    cells.flatMap((cell) => [cell, ...(cell.children ? images(cell.children) : [])]);
+  const orderedImages = images(layout.cells);
+  const imageInstructions = orderedImages.map(
+    (cell) =>
       `${cell.id}: image at (${cell.image.x}, ${cell.image.y}), ${cell.image.width}×${cell.image.height} pixels.`,
-      ...(cell.children ? imageInstructions(cell.children) : []),
-    ]);
+  );
   const instructions = (grid: ResolvedGrid): string[] => [
     ...(grid.source.prompt ? [grid.source.prompt] : []),
     ...(grid.source.defaults?.prompt ? [grid.source.defaults.prompt] : []),
@@ -590,8 +680,72 @@ export async function createAtlas({
   const prompt = [
     `Create one ${width}×${height} image.`,
     defaultPrompt,
-    ...imageInstructions(layout.cells),
+    ...(config.output?.background || output.transparentCrops
+      ? [`Fill the canvas outside image rectangles with ${output.background}.`]
+      : []),
+    ...(output.transparentCrops
+      ? [
+          "Inside each image rectangle, every background pixel MUST be transparent; only the intended artwork may be opaque.",
+        ]
+      : []),
+    ...imageInstructions,
     ...instructions(root),
   ].join("\n");
-  return { layout, schematic, prompt };
+  return {
+    layout,
+    schematic,
+    prompt,
+    imageIds: orderedImages.map((cell) => cell.id) as ImageId<C>[],
+  };
+}
+
+/** Create generation-sized guides without splitting a nested image family. */
+export async function createAtlasPages<const C extends Config>({
+  config,
+  maxImages,
+  fonts,
+}: {
+  config: C;
+  maxImages: number;
+  fonts?: SatoriOptions["fonts"];
+}): Promise<{ config: Config; atlas: Atlas<ImageId<C>> }[]> {
+  const leafCount = (cell: Config["cells"][number]): number =>
+    cell.children ? cell.children.cells.reduce((count, child) => count + leafCount(child), 0) : 1;
+  const pages = config.cells.reduce(
+    (result, cell) => {
+      const count = leafCount(cell);
+      if (count > maxImages)
+        throw new RangeError(`Image group ${cell.id} has ${count} leaves; limit is ${maxImages}.`);
+      const last = result.at(-1);
+      return last && last.count + count <= maxImages
+        ? [...result.slice(0, -1), { cells: [...last.cells, cell], count: last.count + count }]
+        : [...result, { cells: [cell], count }];
+    },
+    [] as { cells: Config["cells"]; count: number }[],
+  );
+  const output: { config: Config; atlas: Atlas<ImageId<C>> }[] = [];
+  const { maxImages: _pageSize, ...singlePageConfig } = config;
+  for (const [index, page] of pages.entries()) {
+    const pageConfig: Config = {
+      ...singlePageConfig,
+      id: `${config.id}-page-${index + 1}`,
+      grid: {
+        ...config.grid,
+        columns:
+          typeof config.grid.columns === "number"
+            ? Math.min(config.grid.columns, Math.ceil(Math.sqrt(page.cells.length)))
+            : config.grid.columns,
+      },
+      cells: page.cells,
+    };
+    const atlas = await createAtlas({ config: pageConfig, fonts });
+    output.push({
+      config: pageConfig,
+      atlas: {
+        ...atlas,
+        prompt: `Page ${index + 1} of ${pages.length} for ${config.id}.\n${atlas.prompt}`,
+      } as Atlas<ImageId<C>>,
+    });
+  }
+  return output;
 }

@@ -4,7 +4,7 @@
 
 # imagegen-guide
 
-**One atlas definition. A precise guide, prompt, catalogue, and crops.**
+**One configuration. A guide for generation and individual images from its output.**
 
 Headless image layout for generation workflows.
 
@@ -17,44 +17,37 @@ This guide comes from [mixed.json](packages/imagegen-guide/examples/configs/mixe
 ## From layout to images
 
 ```ts
-import { readFile, writeFile } from "node:fs/promises";
-import { schema, createAtlas, createCatalogue } from "imagegen-guide/core";
-import { cropImages } from "imagegen-guide/core/image";
+import { readFile } from "node:fs/promises";
+import { createAtlas, cropImages } from "imagegen-guide";
 
-const config = schema.Config.assert({
-  id: "icons",
-  canvas: { width: 1200, aspectRatio: "3:2", padding: 48 },
-  grid: { columns: 2, gap: 32 },
-  appearance: { label: { fontFamily: "Inter" } },
-  cells: [
-    { id: "settings", label: { text: "Settings" } },
-    { id: "search", aspectRatio: "4:3", label: { text: "Search", position: "above" } },
-  ],
-});
-
-// Supply a TTF, OTF, or WOFF font. The core does not download fonts.
-const font = await readFile("Inter-Regular.woff");
 const atlas = await createAtlas({
-  config,
-  fonts: [{ name: "Inter", data: font, weight: 400, style: "normal" }],
+  config: {
+    id: "app-icons",
+    canvas: { width: 1200, aspectRatio: "4:3", padding: 48 },
+    grid: { columns: 2, gap: 24 },
+    appearance: { label: { fontFamily: "Roboto", fontWeight: 700 } },
+    cells: [
+      { id: "settings", label: { text: "Settings" } },
+      { id: "search", label: { text: "Search" } },
+      { id: "files", label: { text: "Files" } },
+      { id: "voice", label: { text: "Voice" } },
+    ],
+  },
 });
 
-await writeFile("guide.svg", atlas.schematic);
-console.log(atlas.prompt); // Provider-independent instructions and per-image context.
-
-// Supply the generated image and its actual pixel dimensions.
-const source = await readFile("generated.png");
-const catalogue = createCatalogue({
-  layout: atlas.layout,
-  source: { id: "generation-01", uri: "generated.png", width: 1200, height: 800 },
+// Give atlas.schematic and atlas.prompt to your image generator.
+// Inspect the result: each image must fit its guide rectangle.
+const [settings] = await cropImages({
+  atlas,
+  source: await readFile("generated.png"),
+  ids: ["settings"],
+  size: 256,
 });
-await writeFile("catalogue.json", JSON.stringify(catalogue, null, 2));
-
-const [settings] = await cropImages({ source, catalogue, ids: ["settings"] });
-await writeFile("settings.png", settings.bytes);
+// settings.bytes is 256×256; settings.crop is its source rectangle.
 ```
 
-`atlas.layout` owns the geometry. The schematic, prompt, and catalogue use that same layout. The catalogue maps its rectangles to the source resolution. The caller owns generation, file storage, and any UI.
+`atlas.imageIds` lists the configured IDs. With a TypeScript config literal, editors use those IDs for `cropImages.ids` and GIF frame IDs. `cropImages` uses the guide rectangles by default and scales them to the source dimensions. It preserves source alpha; it does not remove backgrounds or fix artwork outside a rectangle.
+For mixed output sizes, set `crop.sizes` by image ID in the config or pass `sizes` to `cropImages`. The [publishing image config](packages/imagegen-guide/examples/configs/product-publishing.json) requests wide, square, and tall exports from one source.
 
 ## See the output
 
@@ -62,15 +55,16 @@ The [generated 100-icon atlas](docs/assets/generated-icons.png) is a separate vi
 
 ![A generated atlas of 100 labeled application icons](docs/assets/generated-icons.png)
 
-Run the example program to save a guide, prompt, layout JSON, and catalogue:
+Install `imagegen-guide` in a consumer project. Its `imagegen-guide` command makes a guide, crops a generated source, and makes a GIF as separate actions. Generate `atlas.png` from the guide before cropping:
 
 ```sh
-pnpm run cli -- --example mixed
-pnpm run cli -- --example variants
-pnpm run cli -- --example icons --source atlas.png
+vp add imagegen-guide
+vp exec imagegen-guide guide --example mixed --out atlas-job
+# Send atlas-job/mixed-light.guide.png and atlas-job/mixed-light.prompt.txt to the generator.
+vp exec imagegen-guide crop --layout atlas-job/mixed-light.layout.json --source atlas.png --out atlas-job/crops
 ```
 
-Outputs go to `examples/output/`. The `--source` form reads the generated image's dimensions and saves leaf crops. Use `--ids settings,search` to select IDs or `--config path/to/config.json` for your own atlas.
+The guide command saves no artwork. The crop command saves `atlas-job/crops/app-icons/settings.png` and the other leaf images. Its result shows the source dimensions and crop count. Use `--ids settings,search` to select images. Use `--config path/to/config.json` for your own guide. Omit it from the crop command to use planned bounds. In this repository, `vp run cli --` calls the same command source.
 
 ## Layout controls
 
@@ -96,21 +90,81 @@ Outputs go to `examples/output/`. The `--source` form reads the generated image'
 }
 ```
 
-See the runnable [variant configuration](packages/imagegen-guide/examples/configs/variants.json) for a full atlas. Groups retain their hierarchy in the catalogue and can be cropped by ID. Cells also support mixed ratios, explicit dimensions, weighted columns, spans, scoped descriptions, labels, and appearance overrides.
+The [100-family variant configuration](packages/imagegen-guide/examples/configs/variants.json) uses the 23-icon example's 4-column, 6-row lattice and sets `maxImages: 24`. Run `guide --config packages/imagegen-guide/examples/configs/variants.json --out atlas-job` to make one guide per six families. Use `--max-images` to override the config limit. Groups retain their hierarchy in the catalogue and can be cropped by ID. Cells also support mixed ratios, explicit dimensions, weighted columns, spans, scoped descriptions, labels, and appearance overrides. Set `image.backgroundImage` on a cell to show a reference image in its guide region; `backgroundSize` and `backgroundPosition` control its placement, and it does not repeat by default.
 
-For separated foreground tiles on a uniform background, `detectCatalogue` from `imagegen-guide/core/image` can locate observed leaf bounds. `compareCatalogues` reports signed differences from planned bounds. Detection does not correct merged tiles or certify image quality.
+For a fixed texture map, use `layout: "grid"` with pixel sized row and column tracks. The [character texture configuration](packages/imagegen-guide/examples/configs/character-texture.json) places square head faces above taller torso and limb faces with `rowSpan`.
+
+To locate observed artwork bounds, set `"crop": { "detect": {} }` in the configuration and pass it to `crop --config`. Detection searches each planned tile and its share of the surrounding gaps. It accepts transparent tiles on an opaque outer background. Set `crop.detect.background` when the first source pixel does not represent that outer background. Set `alphaThreshold` to change which partly transparent pixels count as artwork. Artwork that crosses into another tile's search area can still be cut; detection does not repair the image. Use the crop command above for planned bounds. `compareCatalogues` reports differences; neither path certifies image quality.
+
+## Measured guides
+
+![A six-region guide with width and height dimension lines and labels for each frame](docs/assets/dimension-lines.png)
+
+The [animation guide configuration](packages/imagegen-guide/examples/configs/adventurer-animations.json) enables `appearance.image.dimensionLines`. The schematic shows each resolved width and height in canvas pixels. Dimension lines do not change crop bounds. When a generated source uses another resolution, crop bounds scale to that source.
+
+The same configuration requests filled space outside the image rectangles and transparent backgrounds within them:
+
+```json
+"output": { "background": "#e7eff4", "transparentCrops": true }
+```
+
+`cropImages` preserves the alpha in the generated source. It does not remove an opaque background or correct artwork that crosses a crop boundary.
+
+## Animate named frames
+
+```ts
+import { readFile, writeFile } from "node:fs/promises";
+import { createAtlas, createGif } from "imagegen-guide";
+
+const atlas = await createAtlas({
+  config: {
+    id: "run-cycle",
+    canvas: { width: 1600, aspectRatio: "16:9" },
+    grid: { columns: 4, gap: 80 },
+    cells: [
+      { id: "contact" },
+      { id: "passing" },
+      { id: "flight" },
+      { id: "recovery" },
+    ],
+  },
+});
+
+// Generate run-sheet.png from atlas.schematic and atlas.prompt first.
+const source = await readFile("run-sheet.png");
+const gif = await createGif({ atlas, source });
+await writeFile("run.gif", gif);
+
+// Select a different order and override one frame's default delay.
+const selected = await createGif({
+  atlas,
+  source,
+  delay: 100,
+  frames: ["contact", "passing", { id: "flight", delay: 180 }, "recovery"],
+});
+await writeFile("selected.gif", selected);
+```
+
+Without `frames`, the GIF uses all leaf images in layout order, a 100 ms delay, and an infinite loop. `frames` sets order and may repeat an ID. A group ID expands to its leaf images in layout order; a delay on that group applies to each child frame. The output centers frames of different sizes on a transparent canvas.
+
+The CLI uses the same defaults:
+
+```sh
+vp exec imagegen-guide guide --example adventurer-animations --out atlas-job
+# Generate run-sheet.png from the returned guide and prompt.
+vp exec imagegen-guide gif --layout atlas-job/adventurer-animations-light.layout.json --source run-sheet.png --out atlas-job
+```
 
 ## Package and development
 
 ```ts
-import { schema, createAtlas, createCatalogue, compareCatalogues } from "imagegen-guide/core";
-import { cropImages, detectCatalogue } from "imagegen-guide/core/image"; // Node image processing
+import { createAtlas, cropImages, createGif, createCatalogue, detectCatalogue } from "imagegen-guide";
 ```
 
-The layout entry point is independent of Sharp, UI frameworks, and generation providers. `core/image` uses Sharp for PNG, JPEG, WebP, and AVIF extraction.
+Importing the package for guide creation does not load Sharp. Image operations load it when called and can extract PNG, JPEG, WebP, or AVIF. `createCatalogue` exposes source-specific IDs and rectangles when a consumer needs JSON metadata or saved output references.
 
 ```sh
-pnpm install
+pnpm run setup:install
 pnpm run check
 pnpm run build
 ```

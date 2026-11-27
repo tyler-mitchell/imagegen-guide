@@ -7,12 +7,14 @@ prompt text, catalogues, and image extraction.
 
 ```text
 packages/imagegen-guide/
-  core/                configuration, layout, schematic, prompt, and catalogue
+  core/                configuration, layout, schematic, prompt, catalogue, and crops
   react/               later UI adapter
 ```
 
-The `react` directory is not part of the initial build. A Node-specific crop entry
-point can reside in `core`. Browser consumers must not import its image-processing dependency.
+The `react` directory is not part of the initial build. The package has one public
+library entry point and an `imagegen-guide` command. Its `guide`, `crop`, and `gif`
+actions run independently from the consumer working directory. Image operations
+load Sharp only when called.
 
 ## Configuration
 
@@ -26,7 +28,13 @@ const config = {
   appearance: {
     preset: "light",
     background: "#ffffff",
-    image: { fill: "none", stroke: "#333333", strokeWidth: 1, radius: 0 },
+    image: {
+      fill: "none",
+      stroke: "#333333",
+      strokeWidth: 1,
+      radius: 0,
+      dimensionLines: true,
+    },
     label: {
       position: "below",
       fontFamily: "Inter",
@@ -37,6 +45,7 @@ const config = {
       align: "center",
     },
   },
+  output: { transparentCrops: true, background: "#ffffff" },
   align: "center",
   defaults: { aspectRatio: "1:1" },
   prompt: "Create a consistent set of app icons.",
@@ -56,15 +65,29 @@ A ratio can also use explicit width and height values. Canvas size can use width
 and ratio, height and ratio, or explicit width and height.
 
 Columns define preferred image widths through pixel dimensions or relative weights.
-Row and column indices identify groups for styles and descriptions; they do not
-reserve fixed positions. Column spans adjust preferred widths. Row or column
+In masonry mode, row and column indices identify groups for styles and descriptions;
+they do not reserve fixed positions. Column spans adjust preferred widths. Row or column
 overrides can supply exact image dimensions.
+For exact texture maps, set `layout: "grid"` and give `grid.columns` and `grid.rows`
+pixel tracks. Set each cell's `row`, `column`, `rowSpan`, and `columnSpan` to place
+it on those tracks. The schematic and crop bounds retain the resolved positions.
 Omit row and column indices to use native grid placement in array order, including
-column spans. Explicit indices override the resulting logical coordinates.
+row and column spans. Explicit indices override the resulting logical coordinates.
 Padding and gaps can use uniform values or individual sides and axes.
 `align` and `verticalAlign` position the packed group through native Flexbox alignment.
-Labels can wrap to a configured line count. Font data is supplied by the caller;
-the core does not download fonts.
+Labels can wrap to a configured line count. Set `fontFamily`, `fontWeight`, and
+`fontStyle` to use a Google Font. The core loads the requested face and text.
+Callers can supply Satori font data for offline rendering.
+Set `image.dimensionLines: true` at the atlas, row, column, or cell level to draw
+width and height dimension lines on the schematic. The lines use the resolved image
+size in canvas pixels. They do not change the image rectangle. The prompt tells
+the image generator to omit them from the generated source. The default annotation
+color is `#6AB0DE`; set `image.dimensionLineColor` to override it without changing
+the image border color.
+Set `image.backgroundImage` to a CSS `url(...)` value to show a reference image
+in a schematic region. Use `backgroundSize` and `backgroundPosition` to place it.
+The image does not repeat by default; set `backgroundRepeat` to allow repetition.
+The reference does not alter crop geometry or appear in crops of a generated source.
 
 ### Nested groups
 
@@ -123,8 +146,8 @@ export const schema = type.module({
 export type Rectangle = typeof schema.Rectangle.infer;
 ```
 
-ArkType defines the input and output contracts and owns validation. Core
-operations accept valid configurations. Image IDs must be unique, cells must fit
+ArkType defines the input and output contracts and owns validation. `createAtlas`
+validates its configuration. Image IDs must be unique, cells must fit
 within their tracks, and each cell position must refer to a configured track.
 
 ## Geometry
@@ -155,17 +178,12 @@ Image dimensions alone do not establish a viewport or correct local layout drift
 Usage:
 
 ```ts
-import { schema, createAtlas, createCatalogue } from "imagegen-guide/core";
+import { createAtlas, cropImages } from "imagegen-guide";
 
-const config = schema.Config.assert(input);
-const atlas = await createAtlas({ config, fonts });
+const atlas = await createAtlas({ config: input });
 // atlas: resolved layout, SVG schematic, and provider-independent prompt text.
 
-const catalogue = createCatalogue({
-  layout: atlas.layout,
-  source: { id: "generation-01", uri: "atlas.png", width: 1536, height: 1024 },
-});
-const json = JSON.stringify(catalogue, null, 2);
+const crops = await cropImages({ atlas, source: generatedImageBytes });
 ```
 
 Satori measures preferred widths and label bounds. `@thi.ng/layout` packs each image and
@@ -175,6 +193,8 @@ the fixed canvas; explicit image dimensions, labels, gaps, and padding remain fi
 connects group layouts; each child completes before the next sibling is allocated.
 The returned boxes supply placement and occupied bounds. Standard image ratios retain exact
 integer proportions. The canvas retains its configured dimensions and ratio.
+If fixed dimensions, labels, gaps, and padding cannot fit, `createAtlas` raises
+`RangeError` instead of returning off-canvas rectangles.
 
 Satori renders the packed positions and exposes node rectangles through
 `onNodeDetected`. The layout records those rectangles by image ID. Catalogues and
@@ -191,6 +211,19 @@ image IDs, bounds, and descriptions. Shared descriptions appear once per scope.
 Nested scopes identify their parent group. Each catalogue entry retains its full
 prompt context for individual regeneration. The output has no provider-specific
 parameters or API request format.
+`atlas.imageIds` lists group and leaf IDs in layout order. A TypeScript config
+literal preserves these IDs for `cropImages.ids` and `createGif.frames`.
+For a large grouped job, `createAtlasPages({ config, maxImages: 48 })` returns
+page configs and atlases. It keeps each root image family together, assigns a
+stable page ID, and names the page in its prompt. The CLI guide action accepts
+`--max-images 48` or the config's `maxImages` value and saves a page manifest
+with the guide, prompt, config, and layout paths. The command option overrides
+the config. Saved page configs omit `maxImages` so each page can be rendered
+on its own. The crop action accepts the manifest and ordered generated
+sources through `--sources` to export all page catalogues in one action.
+When `output.transparentCrops` is true, the prompt requests transparent
+background pixels inside each image rectangle and `output.background` outside
+the rectangles. The schematic can use its own background and image fills.
 
 ## Image catalogue and crops
 
@@ -198,24 +231,60 @@ Each catalogue entry records its image ID, row, column, crop bounds, label, prom
 context, and output reference when a crop exists. The catalogue contains JSON data;
 image bytes and font bytes remain separate.
 
-`cropImages` from `imagegen-guide/core/image` takes source bytes, a catalogue,
-optional image IDs, and an output format. It returns cropped image bytes with
-their IDs and format. Omit IDs to extract all leaf entries. Select a group ID to
-extract its complete image region. Formats are PNG (default),
+`cropImages` takes an atlas and source bytes, optional image IDs, and an output
+format. It reads the actual source dimensions and maps the atlas geometry to
+them. Advanced callers can pass a catalogue with detected or planned bounds.
+It returns each image's ID, source crop rectangle, bytes, and format. Omit IDs
+to extract all leaf entries in layout order. Supplied IDs set output order and
+can repeat an image. Select a group ID to extract its complete image region.
+Formats are PNG (default),
 JPEG, WebP, and AVIF. The caller saves files or imports bytes into an artifact store.
+Unknown IDs raise `RangeError` instead of returning fewer images.
+PNG crops preserve source alpha. They do not remove opaque backgrounds or content
+that crosses the planned crop boundary.
+Set `size: 256` for square 256×256 outputs, or supply `{ width, height }`.
+Set `sizes` to a map of image IDs and `{ width, height }` values when one atlas
+needs different output sizes. A call-level `size` overrides that map. The CLI
+reads `crop.sizes` from the saved config and writes each size to the catalogue.
+Sharp contains the complete source crop within that output size. PNG preserves
+transparent padding when the aspect ratios differ. Each `Crop` includes the
+source `crop` rectangle and the final pixel `size`. The crop command accepts
+`--size 256`; its saved catalogue records each exported file's `outputSize`.
+Set `kernel: "nearest"` or `--kernel nearest` when reducing pixel art to an
+exact texture size. The default resize kernel is Sharp's `lanczos3`.
 
-`detectCatalogue({ source, catalogue, options })` locates separated foreground
-tiles on a uniform background. OpenCV segments connected components and matches
-their normalized positions to planned leaf positions. The default background is
-the first source pixel, the threshold is 5, and the minimum component area is
-one quarter of the smallest planned leaf area. Configuration can override these
-values through `crop.detect`.
+`createGif({ atlas, source })` uses every leaf image in layout order. The default
+delay is 100 ms per frame and `loop: 0` repeats indefinitely. Pass `delay` to
+change all frame delays. Pass `frames` as ordered IDs or `{ id, delay }` entries
+to select, repeat, and override frames. A group ID expands to its descendant
+leaves in layout order; its delay override applies to every expanded frame.
+An empty sequence or unknown ID raises `RangeError`. Advanced callers can pass
+a catalogue instead of an atlas. Frames use a shared transparent canvas sized
+to the largest crop; smaller crops are centered without resizing. The caller
+saves the returned GIF bytes.
 
-Detected leaf bounds describe the source pixels. They do not enforce the planned
-ratio through padding or resizing. Shadows can affect these bounds. Group bounds
-remain planned; detection does not locate their labels or certify their crops.
-Merged tiles, retained guide outlines, and nonuniform backgrounds do not meet this
-segmentation contract.
+`detectCatalogue({ source, catalogue, options })` first matches sufficiently
+large separated foreground components to the planned leaves. When the component
+count differs from the leaf count, it locates foreground inside each planned
+leaf and the nearest half of its gaps to other leaves. Those search areas
+cannot overlap. The
+default background is the first pixel of the source viewport, or the first source
+pixel when no viewport is set; `crop.detect.background` overrides it. For a transparent background, alpha alone defines foreground. For an opaque
+background, foreground must differ from that color and pass the alpha threshold.
+The default color threshold is 10; `alphaThreshold` is 127. Each tile needs at
+least one foreground pixel by default. Set `crop.detect.threshold`,
+`alphaThreshold`, or `minArea` to change these values. `detectRegions` filters
+unassigned components below one quarter of the smallest planned leaf area by
+default; its `minArea` option changes that threshold.
+
+Detected leaf bounds describe source pixels without padding or resizing. Detected
+group bounds enclose their detected descendants; labels do not enter those
+bounds. Detection can divide connected artwork between neighboring tiles but
+cannot reconstruct artwork that crosses a search-area boundary. Shadows and
+guide markings can affect bounds. If a tile has too little foreground,
+`detectCatalogue` raises `RangeError` with its ID. It does not return a catalogue
+with missing crops. `detectRegions` still reports unassigned connected components
+from the same foreground mask, with source coordinates restricted to the viewport.
 
 `compareCatalogues({ expected, actual })` returns each leaf ID, both rectangles,
 and signed differences for x, y, width, and height. Both catalogues use the same

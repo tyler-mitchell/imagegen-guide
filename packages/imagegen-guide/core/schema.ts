@@ -17,18 +17,34 @@ export const schema = type.module({
   DetectionOptions: {
     "background?": "string",
     "threshold?": "Nonnegative",
+    "alphaThreshold?": "Nonnegative",
     "minArea?": "Nonnegative",
   },
   CropOptions: {
     "format?": "ImageFormat",
     "detect?": "DetectionOptions",
     "viewport?": "Rectangle",
+    "size?": "CropSize",
+    "sizes?": "CropSizes",
+    "kernel?": "ResizeKernel",
+  },
+  PixelSize: { width: "number.integer > 0", height: "number.integer > 0" },
+  CropSize: "number.integer > 0 | PixelSize",
+  CropSizes: { "[string]": "PixelSize" },
+  ResizeKernel:
+    "'nearest' | 'linear' | 'cubic' | 'mitchell' | 'lanczos2' | 'lanczos3' | 'mks2013' | 'mks2021'",
+  OutputOptions: {
+    "background?": "string",
+    "transparentCrops?": "boolean",
   },
   ImageStyle: {
     "fill?": "string",
     "backgroundImage?": "string",
     "backgroundSize?": "string",
     "backgroundPosition?": "string",
+    "backgroundRepeat?": "'repeat' | 'repeat-x' | 'repeat-y' | 'no-repeat'",
+    "dimensionLines?": "boolean",
+    "dimensionLineColor?": "string",
     "stroke?": "string",
     "strokeWidth?": "Nonnegative",
     "radius?": "Nonnegative",
@@ -36,6 +52,8 @@ export const schema = type.module({
   LabelStyle: {
     "position?": "'above' | 'below'",
     "fontFamily?": "string",
+    "fontWeight?": "100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900",
+    "fontStyle?": "'normal' | 'italic'",
     "fontSize?": "Positive",
     "lineHeight?": "Positive",
     "color?": "string",
@@ -59,6 +77,7 @@ export const schema = type.module({
     id: "string",
     "row?": "Index",
     "column?": "Index",
+    "rowSpan?": "number.integer > 0",
     "columnSpan?": "number.integer > 0",
     "children?": "Grid",
   },
@@ -67,7 +86,7 @@ export const schema = type.module({
   WidthCanvas: { width: "Positive", aspectRatio: "AspectRatio", "padding?": "Padding" },
   HeightCanvas: { height: "Positive", aspectRatio: "AspectRatio", "padding?": "Padding" },
   Grid: {
-    grid: { columns: "Tracks", "gap?": "Gap", "padding?": "Padding" },
+    grid: { columns: "Tracks", "rows?": "Tracks", "gap?": "Gap", "padding?": "Padding" },
     "defaults?": "CellOptions",
     "rows?": { "[string]": "CellOptions" },
     "columns?": { "[string]": "CellOptions" },
@@ -79,9 +98,11 @@ export const schema = type.module({
     id: "string",
     canvas: "Canvas",
     "layout?": "'grid' | 'masonry'",
+    "maxImages?": "number.integer > 0",
     "align?": "Alignment",
     "verticalAlign?": "Alignment",
     "crop?": "CropOptions",
+    "output?": "OutputOptions",
     "appearance?": {
       "preset?": "'light' | 'dark'",
       "background?": "string",
@@ -108,9 +129,26 @@ export const schema = type.module({
     height: "number.integer > 0",
     cells: "ResolvedCell[]",
   },
-  Atlas: { layout: "Layout", schematic: "string", prompt: "string" },
+  GuidePage: {
+    id: "string",
+    schematic: "string",
+    guide: "string",
+    layout: "string",
+    config: "string",
+    prompt: "string",
+  },
+  GuideManifest: { id: "string", pages: "GuidePage[]" },
+  Atlas: { layout: "Layout", schematic: "string", prompt: "string", imageIds: "string[]" },
   ImageFormat: "'png' | 'jpeg' | 'webp' | 'avif'",
-  Crop: { id: "string", bytes: type.instanceOf(Uint8Array), format: "ImageFormat" },
+  Crop: {
+    id: "string",
+    bytes: type.instanceOf(Uint8Array),
+    format: "ImageFormat",
+    crop: "Rectangle",
+    size: "PixelSize",
+  },
+  FrameDelay: "number.integer > 0",
+  GifFrame: { id: "string", "delay?": "FrameDelay" },
   Source: {
     id: "string",
     "uri?": "string",
@@ -126,6 +164,7 @@ export const schema = type.module({
     "label?": "Label",
     context: "string[]",
     "output?": "string",
+    "outputSize?": "PixelSize",
     "children?": "CatalogueImage[]",
   },
   Catalogue: { atlasId: "string", source: "Source", images: "CatalogueImage[]" },
@@ -148,8 +187,17 @@ export const schema = type.module({
 
 export type Config = typeof schema.Config.infer;
 export type Layout = typeof schema.Layout.infer;
+export type GuideManifest = typeof schema.GuideManifest.infer;
 export type Rectangle = typeof schema.Rectangle.infer;
 export type Catalogue = typeof schema.Catalogue.infer;
-export type Atlas = typeof schema.Atlas.infer;
+type CellId<Cell> = Cell extends { id: infer Id extends string }
+  ?
+      | Id
+      | (Cell extends { children: { cells: infer Cells extends readonly unknown[] } }
+          ? CellId<Cells[number]>
+          : never)
+  : never;
+export type ImageId<C extends Config> = CellId<C["cells"][number]>;
+export type Atlas<Id extends string = string> = typeof schema.Atlas.infer & { imageIds: Id[] };
 export type Crop = typeof schema.Crop.infer;
 export type Comparison = typeof schema.Comparison.infer;

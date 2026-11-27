@@ -1,0 +1,49 @@
+{
+  "id": "adventurer-animations",
+  "canvas": { "width": 1600, "height": 900, "padding": 0 },
+  "grid": { "columns": 4, "gap": 80, "padding": 0 },
+  "defaults": { "width": 320, "height": 360 },
+  "output": { "background": "#e7eff4", "transparentCrops": true },
+  "appearance": {
+    "background": "#e7eff4",
+    "image": { "fill": "#ffffff", "stroke": "#334155", "strokeWidth": 1, "dimensionLines": true },
+    "label": { "fontFamily": "Inter", "fontSize": 22, "fontWeight": 700, "gap": 8 }
+  },
+  "prompt": "Draw one consistent pixel-art fox adventurer in six animation frames. The first row is a four-frame run cycle. The second row is a two-frame sword attack with wider regions for the blade and its arc. Keep the character's design, height, facing direction, and foot baseline consistent. Leave visible transparent margins around every character, sword, and effect inside its crop.",
+  "cells": [
+    {
+      "id": "run-contact",
+      "label": { "text": "RUN 1 · CONTACT" },
+      "prompt": "Front foot contacts the ground while the rear arm swings forward."
+    },
+    {
+      "id": "run-passing",
+      "label": { "text": "RUN 2 · PASSING" },
+      "prompt": "Rear foot passes the planted leg."
+    },
+    {
+      "id": "run-flight",
+      "label": { "text": "RUN 3 · FLIGHT" },
+      "prompt": "Both feet leave the ground in an extended stride."
+    },
+    {
+      "id": "run-recovery",
+      "label": { "text": "RUN 4 · RECOVERY" },
+      "prompt": "Front leg reaches forward for the next contact."
+    },
+    {
+      "id": "slash-ready",
+      "columnSpan": 2,
+      "width": 720,
+      "label": { "text": "SLASH 1 · WIND-UP" },
+      "prompt": "Sword drawn back with a clear wind-up pose."
+    },
+    {
+      "id": "slash-strike",
+      "columnSpan": 2,
+      "width": 720,
+      "label": { "text": "SLASH 2 · STRIKE" },
+      "prompt": "Sword sweeps forward with a distinct body twist and a contained arc."
+    }
+  ]
+}

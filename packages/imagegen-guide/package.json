@@ -8,20 +8,20 @@
     "url": "git+https://github.com/tyler-mitchell/imagegen-guide.git",
     "directory": "packages/imagegen-guide"
   },
+  "bin": {
+    "imagegen-guide": "./dist/cli.mjs"
+  },
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
   "type": "module",
+  "sideEffects": false,
   "exports": {
-    "./core": {
-      "types": "./dist/core.d.mts",
-      "import": "./dist/core.mjs"
-    },
-    "./core/image": {
-      "types": "./dist/image.d.mts",
-      "import": "./dist/image.mjs"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
     },
     "./package.json": "./package.json"
   },
@@ -33,20 +33,26 @@
     "prepack": "pnpm run build",
     "dev": "vp pack --watch",
     "check": "vp check",
+    "test": "vp test",
     "check:fix": "vp check --fix"
   },
   "dependencies": {
     "@techstark/opencv-js": "catalog:",
     "@thi.ng/layout": "catalog:",
     "arktype": "catalog:",
+    "cmd-mesh": "catalog:",
+    "css-tree": "^3.2.1",
+    "defu": "catalog:",
+    "munkres": "^2.1.1",
+    "ofetch": "^1.5.1",
+    "package-management": "^0.1.0",
     "satori": "catalog:",
     "sharp": "catalog:"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.1",
-    "@fontsource/inter": "catalog:",
+    "@types/css-tree": "^3.2.0",
     "@types/node": "catalog:",
-    "cmd-mesh": "catalog:",
     "publint": "^0.3.8",
     "typescript": "catalog:",
     "vite": "catalog:",

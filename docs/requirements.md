@@ -39,6 +39,13 @@ inspect, and crop individual images in the generated atlas.
 | REQ-28 | Support atlases of 100 app icons, including multiple variants for each icon.                                                            |
 | REQ-29 | Configure the requested image resolution and map crops to the actual generated source resolution.                                       |
 | REQ-30 | Supply concise default layout instructions that consumers can prepend or append to their own prompts.                                   |
+| REQ-31 | Optionally draw width and height dimension lines in the guide without changing crop rectangles.                                        |
+| REQ-32 | Request transparent backgrounds inside crop regions and a configured background outside them in prompt text.                           |
+| REQ-33 | Produce an animated GIF from image IDs in a chosen frame order with frame delays and loop count.                                       |
+| REQ-34 | Optionally show a reference image in an image region of the schematic without changing crop geometry.                                 |
+| REQ-35 | Make a GIF from all leaf images in layout order with one default delay. Support ordered selections and per-frame delay overrides.      |
+| REQ-36 | Preserve literal image IDs for TypeScript crop and GIF selection. Report unknown dynamic IDs.                                          |
+| REQ-37 | Keep guide creation, image cropping, and GIF output as separate CLI actions. Report actual source dimensions on crop.                  |
 
 ## Acceptance
 
@@ -49,3 +56,6 @@ without labels or gaps. It must retain the image IDs in the catalogue.
 
 The guide defines the intended layout. It does not guarantee that an external
 image-generation model will follow that layout.
+Dimension lines must show the resolved image size without changing crop geometry.
+PNG crops must preserve alpha in the generated source. GIF frames must follow the
+chosen order and delays. A changed external config must produce a new guide.
