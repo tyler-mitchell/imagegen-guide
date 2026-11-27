@@ -26,3 +26,7 @@ peerDependencyRules:
     - vite
   allowedVersions:
     vite: "*"
+minimumReleaseAgeExclude:
+  - "@hyphened/*"
+configDependencies:
+  "@hyphened/pnpm-plugin-config": latest
