@@ -19,6 +19,7 @@
     "dependencies:list": "gh pr list --state open --search 'author:app/dependabot' --limit 100",
     "dependencies:merge": "gh pr merge --squash",
     "dependencies:sync": "git pull --ff-only origin main",
+    "dependencies:sync:merge": "git pull --no-rebase --no-edit origin main",
     "ci:cancel": "gh run cancel",
     "ci:dispatch": "gh workflow run ci.yml",
     "ci:list": "gh run list --limit 10",
