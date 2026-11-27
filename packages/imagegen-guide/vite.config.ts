@@ -16,7 +16,5 @@ export default defineConfig({
       typeCheck: true,
     },
   },
-  fmt: {
-    ignorePatterns: ["CHANGELOG.md"],
-  },
+  fmt: {},
 });
