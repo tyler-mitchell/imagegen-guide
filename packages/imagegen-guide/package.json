@@ -1,6 +1,6 @@
 {
   "name": "imagegen-guide",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Headless image-layout guides, crop geometry, and image catalogues.",
   "license": "MIT",
   "repository": {
